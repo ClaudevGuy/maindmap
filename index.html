@@ -120,9 +120,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 
 /* Left Drawing Toolbar */
 #draw-toolbar{position:fixed;left:16px;top:50%;transform:translateY(-50%);background:#1c1917;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:5px;display:flex;flex-direction:column;gap:1px;z-index:200;width:52px;box-shadow:0 4px 28px rgba(0,0,0,.55);overflow:visible}
-.dt-btn{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.42);cursor:pointer;border:1px solid transparent;background:none;transition:all .12s;position:relative;flex-shrink:0}
-.dt-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.88);border-color:rgba(255,255,255,.07)}
-.dt-btn.active{background:rgba(106,170,0,.14);color:#6aaa00;border-color:rgba(106,170,0,.22)}
+.dt-btn{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.72);cursor:pointer;border:1px solid transparent;background:none;transition:all .12s;position:relative;flex-shrink:0}
+.dt-btn:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.95);border-color:rgba(255,255,255,.08)}
+.dt-btn.active{background:rgba(106,170,0,.2);color:#6aaa00;border-color:rgba(106,170,0,.3)}
 .dt-sep{height:1px;background:rgba(255,255,255,.07);margin:3px 0}
 .lbtn-tooltip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);background:#1c1917;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 10px;font-size:11px;white-space:nowrap;z-index:300;color:rgba(255,255,255,.75);pointer-events:none;opacity:0;transition:opacity .12s;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .lbtn-tooltip kbd{background:rgba(255,255,255,.1);border-radius:4px;padding:1px 5px;font:10px 'Courier New',monospace;color:rgba(255,255,255,.45)}
@@ -310,7 +310,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .ai-stat-dot{width:8px;height:8px;border-radius:50%}
 .ai-tree-preview{font:10px 'Courier New',monospace;color:var(--text3);line-height:1.5;white-space:pre;background:rgba(255,255,255,.02);border-radius:6px;padding:6px;max-height:160px;overflow-y:auto}
 
-#ai-toggle{position:fixed;bottom:44px;right:16px;height:40px;min-width:76px;border-radius:20px;background:#6aaa00;color:#fff;font:700 12px system-ui;border:none;cursor:pointer;z-index:200;box-shadow:0 4px 20px rgba(106,170,0,.45),0 0 0 1px rgba(106,170,0,.25);display:flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;transition:right .3s,background .2s,transform .15s,box-shadow .2s}
+#ai-toggle{position:fixed;bottom:20px;right:20px;height:40px;min-width:76px;border-radius:20px;background:#6aaa00;color:#fff;font:700 12px system-ui;border:none;cursor:pointer;z-index:200;box-shadow:0 4px 20px rgba(106,170,0,.45),0 0 0 1px rgba(106,170,0,.25);display:flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;transition:right .3s,background .2s,transform .15s,box-shadow .2s}
 #ai-toggle:hover{transform:scale(1.05);background:#5a9a00;box-shadow:0 6px 24px rgba(106,170,0,.55)}
 #ai-toggle.shifted{right:356px}
 #ai-toggle.open{background:#4a8a00;box-shadow:0 2px 12px rgba(106,170,0,.35)}
@@ -318,10 +318,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 @keyframes aiP{0%,100%{box-shadow:0 4px 20px rgba(106,170,0,.45)}50%{box-shadow:0 4px 32px rgba(106,170,0,.8)}}
 
 /* Voice button */
-#voice-btn{position:fixed;bottom:44px;left:16px;height:40px;min-width:84px;border-radius:20px;background:#1c1917;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.6);font:600 12px system-ui;cursor:pointer;z-index:200;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+#voice-btn{position:fixed;bottom:20px;right:106px;left:auto;height:40px;min-width:84px;border-radius:20px;background:#1c1917;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.6);font:600 12px system-ui;cursor:pointer;z-index:200;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;transition:right .3s,all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4)}
 #voice-btn:hover{border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.9);box-shadow:0 4px 18px rgba(0,0,0,.5)}
 #voice-btn.recording{background:#1c1917;border:2px solid #f87171;color:#f87171;box-shadow:0 0 0 4px rgba(248,113,113,.12);animation:voicePulse 1.5s ease infinite}
 #voice-btn.processing{border:2px solid var(--accent);color:var(--accent)}
+#voice-btn.shifted{right:442px}
 @keyframes voicePulse{0%,100%{box-shadow:0 0 0 4px rgba(248,113,113,.12)}50%{box-shadow:0 0 0 8px rgba(248,113,113,.06)}}
 
 /* Voice panel */
@@ -370,13 +371,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .tpl-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .tpl-thumb{height:100px;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .tpl-thumb canvas{width:100%;height:100%}
-.tpl-info{padding:12px}
+.tpl-info{padding:12px;background:#1c1917;border-top:1px solid rgba(255,255,255,.07)}
 .tpl-name{font-size:13px;font-weight:600;color:#f2ede3;margin-bottom:3px}
 .tpl-desc{font-size:10px;color:rgba(255,255,255,.5);line-height:1.4;margin-bottom:6px}
 .tpl-meta{display:flex;gap:8px;align-items:center}
 .tpl-badge{font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)}
-.tpl-close{position:fixed;top:16px;right:16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:18px;cursor:pointer;z-index:510}
-.tpl-close:hover{background:rgba(255,255,255,.1)}
+.tpl-close{position:fixed;top:16px;right:16px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#f2ede3;font-size:18px;cursor:pointer;z-index:510;line-height:1}
+.tpl-close:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.5)}
 
 /* ━━━ MAP STYLES ━━━ */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Special+Elite&display=swap');
@@ -395,7 +396,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .style-paper .node-root{background:#1a1714!important;color:#f2ede3!important;border-radius:6px!important}
 .style-paper .node-branch{color:#1a1714!important}
 .style-paper .node-child{border-left:none!important}
-.style-paper .node-grandchild{border:none!important}
+.style-paper .node-grandchild{border:none!important;font-size:12px!important;min-width:90px!important}
 /* --- Minimal --- */
 .style-minimal .node{background:transparent!important;border:none!important;border-left:none!important;box-shadow:none!important;border-radius:0!important}
 .style-minimal .node.selected{text-decoration:underline!important;box-shadow:none!important;transform:translate(-50%,-50%)!important}
@@ -888,7 +889,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   <!-- Present, Templates, Connections, Note -->
   <div class="tb-group">
     <button class="tb-btn" onclick="startPresentation()" title="Present (Ctrl+P)"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
-    <button class="tb-btn" onclick="openDocOverview()" id="btn-docs" title="All documents (Ctrl+Shift+D)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg><span style="font-size:11px">Docs</span></button>
+    <button class="tb-btn" onclick="openDocOverview()" id="btn-docs" title="All documents (Ctrl+Shift+D)" style="gap:4px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="2" width="10" height="12" rx="1.5"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="9" x2="9" y2="9"/></svg><span style="font-size:11px">Docs</span></button>
     <button class="tb-btn" onclick="showTemplatesGallery()" title="Templates"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="tb-btn" onclick="toggleConnections()" id="btn-conn" title="Find connections"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
     <button class="tb-btn" id="btn-note" onclick="toggleNoteMode()" title="Sticky note (N)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></button>
@@ -1933,7 +1934,7 @@ function updateMinimap(){const cv=document.getElementById('minimap-canvas');cons
 let mx1=Infinity,my1=Infinity,mx2=-Infinity,my2=-Infinity;vis.forEach(n=>{mx1=Math.min(mx1,n.x);my1=Math.min(my1,n.y);mx2=Math.max(mx2,n.x);my2=Math.max(my2,n.y)});
 const pd=100,mw=mx2-mx1+pd*2,mh=my2-my1+pd*2,sc2=Math.min(cw/mw,ch/mh);const ox=(cw-mw*sc2)/2-(mx1-pd)*sc2,oy=(ch-mh*sc2)/2-(my1-pd)*sc2;
 vis.forEach(n=>{if(n.parentId===null||collapsedSet.has(n.parentId))return;const p=gn(n.parentId);if(!p)return;ctx.strokeStyle=n.color||'#fff';ctx.globalAlpha=.1;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(p.x*sc2+ox,p.y*sc2+oy);ctx.lineTo(n.x*sc2+ox,n.y*sc2+oy);ctx.stroke()});
-vis.forEach(n=>{const d=gd(n);ctx.fillStyle=n.color||'#fff';ctx.globalAlpha=d===0?1:d===1?1:d===2?.7:.4;ctx.beginPath();ctx.arc(n.x*sc2+ox,n.y*sc2+oy,d===0?6:d===1?4:d===2?2.5:1.5,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;
+vis.forEach(n=>{const d=gd(n);ctx.fillStyle=n.color||'#fff';ctx.globalAlpha=d===0?1:d===1?1:d===2?.7:.45;ctx.beginPath();ctx.arc(n.x*sc2+ox,n.y*sc2+oy,d===0?7:d===1?5:d===2?3:2,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;
 const vw=aiOpen?window.innerWidth-340:window.innerWidth,vh=window.innerHeight;ctx.fillStyle='rgba(106,170,0,.06)';ctx.fillRect(-panX/zoom*sc2+ox,-panY/zoom*sc2+oy,(vw/zoom)*sc2,(vh/zoom)*sc2);ctx.strokeStyle='#6aaa00';ctx.lineWidth=1.5;ctx.strokeRect(-panX/zoom*sc2+ox,-panY/zoom*sc2+oy,(vw/zoom)*sc2,(vh/zoom)*sc2);const zEl=document.getElementById('minimap-zoom');if(zEl)zEl.textContent=Math.round(zoom*100)+'%';}
 document.getElementById('minimap').addEventListener('click',e=>{const cv=document.getElementById('minimap-canvas');const r=cv.getBoundingClientRect();const mx=(e.clientX-r.left)*(cv.width/r.width),my=(e.clientY-r.top)*(cv.height/r.height);const vis=nodes.filter(n=>!isHidden(n));if(!vis.length)return;
 let mx1=Infinity,my1=Infinity,mx2=-Infinity,my2=-Infinity;vis.forEach(n=>{mx1=Math.min(mx1,n.x);my1=Math.min(my1,n.y);mx2=Math.max(mx2,n.x);my2=Math.max(my2,n.y)});const pd=100,mw=mx2-mx1+pd*2,mh=my2-my1+pd*2,cw=cv.width,ch=cv.height,sc2=Math.min(cw/mw,ch/mh);const ox=(cw-mw*sc2)/2-(mx1-pd)*sc2,oy=(ch-mh*sc2)/2-(my1-pd)*sc2;
@@ -2921,6 +2922,8 @@ function mapRootColor(mapState){
   const n=mapState.nodes&&mapState.nodes.find(x=>x.parentId===null);
   return (n&&n.color)||'#6aaa00';
 }
+const TAB_ACCENT_COLORS=['#6aaa00','#7c6fcd','#2a9d8f','#e9c46a','#e76f51','#f4a261','#e07b96','#378add'];
+function nextAccentColor(){return TAB_ACCENT_COLORS[maps.length%TAB_ACCENT_COLORS.length];}
 
 // ── Auto-generate unique tab name ──
 function genTabName(){
@@ -3038,10 +3041,11 @@ function renderTabs(){
   const only=maps.length===1;
   maps.forEach(m=>{
     const isActive=m.id===activeMapId;
-    const color=mapRootColor(m.data);
+    const color=m.accentColor||mapRootColor(m.data);
     const tab=document.createElement('div');
     tab.className='tab'+(isActive?' active':'');
     tab.dataset.id=m.id;
+    if(isActive)tab.style.boxShadow=`inset 0 -2px 0 ${color}`;
     tab.innerHTML=`<span class="tab-icon" style="background:${color}"></span>`+
       `<span class="tab-label">${escH(m.name)}</span>`+
       `<span class="tab-close${only?'':' show-close'}" title="Close">×</span>`;
@@ -3059,6 +3063,10 @@ function renderTabs(){
     });
     scroll.appendChild(tab);
   });
+  // + New button sits immediately after the last tab
+  const nb=document.createElement('button');nb.className='tab-new-btn';nb.textContent='+ New';
+  nb.addEventListener('click',()=>document.getElementById('newmap-modal').classList.add('visible'));
+  scroll.appendChild(nb);
   // Scroll active tab into view
   const active=scroll.querySelector('.tab.active');
   if(active)requestAnimationFrame(()=>active.scrollIntoView({block:'nearest',inline:'nearest'}));
@@ -3070,21 +3078,18 @@ function buildTabBar(){
   bar.id='tab-bar';
   if(aiOpen)bar.classList.add('ai-open');
   bar.innerHTML='<div class="tab-scroll" id="tab-scroll"></div>';
-  const newBtn=document.createElement('button');
-  newBtn.className='tab-new-btn';
-  newBtn.textContent='+ New';
-  newBtn.addEventListener('click',()=>document.getElementById('newmap-modal').classList.add('visible'));
-  bar.appendChild(newBtn);
   document.body.appendChild(bar);
   renderTabs();
 }
 
-// ── Patch toggleAI to sync tab bar ──
+// ── Patch toggleAI to sync tab bar + voice button ──
 const _origToggleAI=window.toggleAI;
 window.toggleAI=function(){
   _origToggleAI();
   const bar=document.getElementById('tab-bar');
   if(bar)bar.classList.toggle('ai-open',aiOpen);
+  const vb=document.getElementById('voice-btn');
+  if(vb)vb.classList.toggle('shifted',aiOpen);
 };
 
 // ── Patch toggleZen to hide/show tab bar ──
@@ -3120,7 +3125,7 @@ window.newBlankMap=function(){
   render();fitToScreen();renderCanvasNotes();updUndo();
   // Create new tab with rendered state
   const id='map-'+Date.now();
-  maps.push({id,name:genTabName(),data:captureState()});
+  maps.push({id,name:genTabName(),data:captureState(),accentColor:nextAccentColor()});
   activeMapId=id;
   renderTabs();saveAllTabs();
   setTimeout(()=>{if(nodes.length)startEdit(nodes[0].id);},100);
@@ -3141,7 +3146,7 @@ window.newTemplateMap=function(){
   world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
   layoutAll();render();fitToScreen();renderCanvasNotes();updUndo();
   const id='map-'+Date.now();
-  maps.push({id,name:'mAIndmap',data:captureState()});
+  maps.push({id,name:'mAIndmap',data:captureState(),accentColor:nextAccentColor()});
   activeMapId=id;
   renderTabs();saveAllTabs();
   toast('Loaded');
@@ -3196,7 +3201,7 @@ document.addEventListener('keydown',function(e){
   // First run: wrap state already loaded by init into tab 0
   const id='map-'+Date.now();
   const root=nodes.find(n=>n.parentId===null);
-  maps=[{id,name:(root&&root.label)||'mAIndmap',data:captureState()}];
+  maps=[{id,name:(root&&root.label)||'mAIndmap',data:captureState(),accentColor:'#6aaa00'}];
   activeMapId=id;
   buildTabBar();
   saveAllTabs();
