@@ -51,9 +51,22 @@ That's it. No `npm install`, no build, no server required.
 - Per-node icons (emoji picker), color, tags, notes, custom shape (pill / rect / circle / hex)
 - Collapse/expand subtrees
 - Markdown rendering in labels — `**bold**`, `_italic_`, `` `code` ``, `[link](url)`
-- Voting / reactions — hover a node to add 👍 ❤️ ⚡ 💡 ❓ ✅ reactions, sort by votes
 - File attachments — drag any file onto a node to attach it (📎 indicator)
 - Audio notes — record a voice memo per node (`R` key, 🎵 indicator)
+
+### Node-to-Document
+
+Double-click any node that already has a document, or press `Ctrl+Enter` on a selected node to open a full rich-text document panel:
+
+| Feature | Description |
+|---------|-------------|
+| **Rich text editor** | Bold, italic, underline, strikethrough, inline code, lists, links |
+| **Slash commands** | Type `/` in the editor for heading, quote, code block, divider, checklist, and more |
+| **AI Write** | Stream AI-generated content directly into the document |
+| **AI Summary** | Summarise the document in one click |
+| **AI Todo** | Extract action items from the document into a checklist |
+| **Docs overview** | `Ctrl+Shift+D` or the Docs button — browse all node documents across your map |
+| **Node indicator** | Nodes with documents show a small dot indicator |
 
 ### Layouts
 
@@ -100,22 +113,13 @@ Click the **✦ AI** button (bottom-right) to open the AI panel. Requires an Ant
 | **Ask anything** | Chat with Claude about your map — summarize, plan, prioritize |
 | **Import from content** | Drop a PDF, text file, or paste a URL — AI converts it to a map |
 
-### Map Health Score
-
-Click **✦ Health** in the toolbar for an AI-powered map audit:
-
-- **A–D letter grade** based on balance, depth, clarity, and completeness
-- Local metrics calculated instantly (no API needed)
-- AI-generated strengths and prioritized improvements
-- One-click "Fix with AI" per suggestion
-
 ### Drawing Tools
 
 A full drawing toolbar on the left side of the canvas:
 
 | Tool | Key | Description |
 |------|-----|-------------|
-| Select | `V` | Select and move nodes |
+| Select | `V` | Select and move nodes; click a drawn shape to select it, then `Del` to delete |
 | Pan | `H` | Pan the canvas |
 | Box select | `S` | Drag to select multiple nodes |
 | Rectangle | `R` | Draw a rectangle shape |
@@ -129,6 +133,8 @@ A full drawing toolbar on the left side of the canvas:
 | Frame | `F` | Draw a labeled container |
 | Eraser | `E` | Remove drawn elements |
 | Note | `N` | Place a sticky note |
+
+> **Tip:** Right-click any drawn shape (rectangle, diamond, ellipse, etc.) to instantly delete it.
 
 ### Import
 
@@ -158,15 +164,15 @@ A full drawing toolbar on the left side of the canvas:
 
 - **Minimap** — live overview bottom-left, click to navigate, reflects zoom/pan in real time (toggle `M`)
 - **Presentation mode** — animate through branches cinematically (`▷` in toolbar)
-- **Timeline / Gantt** — assign dates to nodes, drag bars to adjust (`Alt+T`)
 - **Voice input** — dictate nodes via Web Speech API, real-time node creation (`Ctrl+Shift+V`)
 - **Canvas sticky notes** — floating notes anywhere on canvas, 6 colors, resizable, connectable to nodes
 - **Focus mode** — dims everything except the selected branch (`Space`)
-- **Zen mode** — hides all UI chrome for distraction-free mapping (`Alt+Z`)
+- **Zen mode** — hides all UI chrome for distraction-free mapping (`Alt+Z`); a dismiss notice appears top-right
 - **Smart search** — highlights matching nodes, cycles through results (`Ctrl+F` or `/`)
 - **Multi-select** — `Shift+click` or box select, then drag all selected nodes together
 - **Align tools** — align/distribute multiple selected nodes (top, bottom, left, right, center, distribute)
 - **Templates gallery** — 20 pre-built maps: SWOT, Business Model Canvas, OKRs, Project Plan, and more
+- **Toggle grid** — dots or lines grid overlay via the `☰` menu; active state shown with a checkmark
 
 ---
 
@@ -189,7 +195,7 @@ A full drawing toolbar on the left side of the canvas:
 | `Tab` | Add child node |
 | `Enter` | Add sibling node |
 | `F2` / double-click | Edit label |
-| `Del` / `Backspace` | Delete selected node |
+| `Del` / `Backspace` | Delete selected node or drawn shape |
 | `Ctrl+Z` | Undo |
 | `Ctrl+Y` | Redo |
 | `Ctrl+C` | Copy subtree |
@@ -198,6 +204,13 @@ A full drawing toolbar on the left side of the canvas:
 | `Ctrl+Shift+N` | New root node |
 | `R` | Record audio note on selected node |
 | `N` | Place sticky note (then click canvas) |
+
+### Documents
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+Enter` | Open / close node document panel |
+| `Ctrl+Shift+D` | Open documents overview |
 
 ### Saving
 
@@ -223,7 +236,6 @@ A full drawing toolbar on the left side of the canvas:
 |----------|--------|
 | `Space` | Focus / unfocus branch |
 | `Alt+Z` | Zen mode |
-| `Alt+T` | Timeline / Gantt view |
 | `Ctrl+Shift+V` | Voice input |
 | `?` | Keyboard shortcuts panel |
 
