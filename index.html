@@ -1649,7 +1649,74 @@ else if(el.type==='pen'&&el.points){
 const pts=el.points.map(pt=>pt.join(',')).join(' ');
 const phit=document.createElementNS('http://www.w3.org/2000/svg','polyline');phit.setAttribute('points',pts);phit.setAttribute('fill','none');phit.setAttribute('stroke','transparent');phit.setAttribute('stroke-width','14');phit.setAttribute('stroke-linecap','round');phit.dataset.idx=i;drawSvg.appendChild(phit);
 const p=document.createElementNS('http://www.w3.org/2000/svg','polyline');p.setAttribute('points',pts);p.setAttribute('fill','none');p.setAttribute('stroke',sel?'#6aaa00':el.stroke||'#6aaa00');p.setAttribute('stroke-width',sel?'3':'2');p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');p.style.pointerEvents='none';drawSvg.appendChild(p)}
-else if(el.type==='text'){const fo=document.createElementNS('http://www.w3.org/2000/svg','foreignObject');fo.setAttribute('x',el.x1);fo.setAttribute('y',el.y1);fo.setAttribute('width','300');fo.setAttribute('height','40');const div=document.createElement('div');div.style.cssText='color:var(--text);font:14px system-ui;padding:4px';div.textContent=el.text||'Text';fo.appendChild(div);fo.dataset.idx=i;drawSvg.appendChild(fo)}})}
+else if(el.type==='text'){
+  const fs=el.fontSize||36;const txt=el.text||'';
+  const approxW=Math.max(txt.length*fs*0.58+20,60);const approxH=fs*1.5;
+  // Transparent hit zone
+  const hz=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  hz.setAttribute('x',el.x1-6);hz.setAttribute('y',el.y1-fs*0.88);
+  hz.setAttribute('width',approxW);hz.setAttribute('height',approxH);
+  hz.setAttribute('fill','transparent');hz.dataset.idx=i;drawSvg.appendChild(hz);
+  // SVG text element
+  const tv=document.createElementNS('http://www.w3.org/2000/svg','text');
+  tv.setAttribute('x',el.x1);tv.setAttribute('y',el.y1);
+  tv.setAttribute('font-size',fs);tv.setAttribute('font-family','system-ui,-apple-system,sans-serif');
+  tv.setAttribute('font-weight','500');
+  tv.setAttribute('fill',sel?'#6aaa00':(el.color||(isLight?'rgba(26,23,20,.82)':'rgba(255,255,255,.88)')));
+  tv.style.pointerEvents='none';tv.textContent=txt;drawSvg.appendChild(tv);
+  // Selection box
+  if(sel){const sb=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    sb.setAttribute('x',el.x1-8);sb.setAttribute('y',el.y1-fs*0.88-3);
+    sb.setAttribute('width',approxW+4);sb.setAttribute('height',approxH+4);
+    sb.setAttribute('fill','none');sb.setAttribute('stroke','#6aaa00');
+    sb.setAttribute('stroke-width','1.5');sb.setAttribute('stroke-dasharray','4,3');
+    sb.setAttribute('rx','5');sb.setAttribute('opacity','0.7');
+    sb.style.pointerEvents='none';drawSvg.appendChild(sb);
+  }
+}})}
+
+// ━━━ TEXT ELEMENT EDITING ━━━
+function _startTextEdit(wx,wy,existingIdx){
+  document.querySelectorAll('.draw-text-editor').forEach(e=>e.remove());
+  const existing=existingIdx>=0?drawElements[existingIdx]:null;
+  const existingText=existing?existing.text:'';
+  // Position the editor in viewport (screen) coordinates so it's always readable
+  const sx=Math.round(wx*zoom+panX);
+  const sy=Math.round(wy*zoom+panY);
+  const isLight=document.body.classList.contains('bg-light');
+  const ed=document.createElement('div');
+  ed.className='draw-text-editor';
+  ed.contentEditable='true';
+  ed.spellcheck=false;
+  ed.textContent=existingText;
+  ed.style.cssText=`position:fixed;left:${sx}px;top:${sy-6}px;min-width:140px;max-width:500px;padding:7px 12px;font:500 18px/1.4 system-ui,-apple-system,sans-serif;color:${isLight?'#1a1714':'#f2ede3'};background:${isLight?'rgba(255,255,255,.97)':'rgba(26,23,20,.97)'};border:2px solid #6aaa00;border-radius:8px;outline:none;z-index:5000;box-shadow:0 4px 20px rgba(0,0,0,.25);white-space:pre;cursor:text`;
+  document.body.appendChild(ed);
+  requestAnimationFrame(()=>{
+    ed.focus();
+    if(existingText){const r=document.createRange();r.selectNodeContents(ed);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}
+    else{const r=document.createRange();r.setStart(ed,0);r.collapse(true);const s=window.getSelection();s.removeAllRanges();s.addRange(r);}
+  });
+  let committed=false;
+  function commit(){
+    if(committed)return;committed=true;
+    const text=(ed.textContent||'').trim();
+    ed.remove();
+    if(!text){
+      if(existingIdx>=0){snap();drawElements.splice(existingIdx,1);selectedDrawIdx=null;render();schSave();}
+      return;
+    }
+    snap();
+    if(existingIdx>=0){drawElements[existingIdx].text=text;}
+    else{drawElements.push({type:'text',x1:wx,y1:wy,text,fontSize:36});}
+    render();schSave();
+  }
+  ed.addEventListener('keydown',e=>{
+    e.stopPropagation();
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();commit();}
+    if(e.key==='Escape'){committed=true;ed.remove();}
+  });
+  ed.addEventListener('blur',()=>setTimeout(commit,120));
+}
 
 // ━━━ DRAWING TOOLS ━━━
 function setTool(t){currentTool=t;document.querySelectorAll('.dt-btn').forEach(b=>b.classList.toggle('active',b.dataset.tool==='select'?t==='select'||t==='boxsel':b.dataset.tool===t));
@@ -1675,12 +1742,15 @@ if(tool==='boxsel'||tool==='select'){
 if(tool==='hand'){isPanning=true;psx=e.clientX;psy=e.clientY;ppx=panX;ppy=panY;viewport.classList.add('grabbing');return}
 if(['rect','ellipse','diamond','arrow','line'].includes(tool)){drawingShape={type:tool,x1:wp.x,y1:wp.y,x2:wp.x,y2:wp.y};return}
 if(tool==='pen'){drawingShape={type:'pen',points:[[wp.x,wp.y]]};return}
-if(tool==='text'){snap();drawElements.push({type:'text',x1:wp.x,y1:wp.y,text:'Text'});render();schSave();toast('Text added');return}
+if(tool==='text'){_startTextEdit(wp.x,wp.y,-1);return}
 if(tool==='eraser'){const t2=e.target.closest('[data-idx]');if(t2){snap();drawElements.splice(parseInt(t2.dataset.idx),1);render();schSave();toast('Removed')}return}
 }
 
 viewport.addEventListener('mousedown',handleCanvasMouseDown);
 viewport.addEventListener('dblclick',e=>{
+  // Double-click to edit a text draw element
+  const drawHit=e.target.closest('[data-idx]');
+  if(drawHit&&currentTool==='select'){const idx=parseInt(drawHit.dataset.idx);if(drawElements[idx]&&drawElements[idx].type==='text'){const el=drawElements[idx];_startTextEdit(el.x1,el.y1,idx);return;}}
   if(e.target.closest('.node')||e.target.closest('.canvas-note')||e.target.closest('#toolbar')||e.target.closest('#draw-toolbar')||e.target.closest('.modal-overlay'))return;
   if(currentTool!=='select'||noteMode||_noteConnectMode!==null)return;
   const wp=screenToWorld(e.clientX,e.clientY);createCanvasNote(wp.x,wp.y);});
