@@ -122,7 +122,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #draw-toolbar{position:fixed;left:16px;top:50%;transform:translateY(-50%);background:#1c1917;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:5px;display:flex;flex-direction:column;gap:1px;z-index:200;width:52px;box-shadow:0 4px 28px rgba(0,0,0,.55);overflow:visible}
 .dt-btn{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.72);cursor:pointer;border:1px solid transparent;background:none;transition:all .12s;position:relative;flex-shrink:0}
 .dt-btn:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.95);border-color:rgba(255,255,255,.08)}
-.dt-btn.active{background:rgba(106,170,0,.2);color:#6aaa00;border-color:rgba(106,170,0,.3)}
+.dt-btn.active{background:#1a1714;color:#6aaa00;border-color:rgba(106,170,0,.4)}
 .dt-sep{height:1px;background:rgba(255,255,255,.07);margin:3px 0}
 .lbtn-tooltip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);background:#1c1917;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 10px;font-size:11px;white-space:nowrap;z-index:300;color:rgba(255,255,255,.75);pointer-events:none;opacity:0;transition:opacity .12s;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .lbtn-tooltip kbd{background:rgba(255,255,255,.1);border-radius:4px;padding:1px 5px;font:10px 'Courier New',monospace;color:rgba(255,255,255,.45)}
@@ -808,6 +808,29 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .dtpl-reset{font-size:10px;font-family:'Courier New',monospace;color:rgba(26,23,20,.3);cursor:pointer;text-align:center;padding:6px;display:none}
 .dtpl-reset:hover{color:#6aaa00;text-decoration:underline}
 
+/* ━━━ WELCOME SCREEN ━━━ */
+#welcome-screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:9000;background:rgba(26,23,20,.3);backdrop-filter:blur(4px)}
+#welcome-card{background:#fff;border-radius:16px;border:1px solid rgba(26,23,20,.1);padding:40px 48px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.1);max-width:480px;width:calc(100% - 48px)}
+#welcome-logo{width:48px;height:48px;border-radius:50%;background:#6aaa00;color:#fff;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;letter-spacing:-.03em}
+#welcome-title{font-size:26px;font-weight:700;color:#1a1714;letter-spacing:-.02em;margin-top:16px;font-family:system-ui,-apple-system,sans-serif}
+#welcome-sub{font-size:14px;color:rgba(26,23,20,.5);line-height:1.6;margin-top:8px;font-family:system-ui}
+#welcome-divider{height:1px;background:rgba(26,23,20,.08);margin:24px 0}
+#welcome-opts{display:flex;gap:10px}
+.welcome-opt{height:80px;flex:1;border:1.5px solid rgba(26,23,20,.1);border-radius:10px;cursor:pointer;padding:14px;background:#fff;text-align:left;display:flex;flex-direction:column;gap:3px;transition:all .12s;font-family:system-ui,-apple-system,sans-serif}
+.welcome-opt:hover{border-color:rgba(26,23,20,.25);background:rgba(26,23,20,.02)}
+.welcome-opt-icon{width:28px;height:28px;border-radius:50%;background:rgba(26,23,20,.08);display:flex;align-items:center;justify-content:center;font-size:16px;color:#1a1714;margin-bottom:2px;flex-shrink:0}
+.welcome-opt-label{font-size:13px;font-weight:500;color:#1a1714}
+.welcome-opt-sub{font-size:11px;color:rgba(26,23,20,.4)}
+#welcome-example-opt{border-color:rgba(26,23,20,.15)}
+#welcome-or{font-size:11px;color:rgba(26,23,20,.35);margin:12px 0}
+#welcome-ai-inp{width:100%;height:40px;border-radius:8px;border:1px solid rgba(26,23,20,.15);padding:0 14px;font-size:13px;background:rgba(26,23,20,.02);outline:none;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#1a1714;transition:border-color .12s}
+#welcome-ai-inp:focus{border-color:rgba(26,23,20,.35)}
+#welcome-ai-inp::placeholder{color:rgba(26,23,20,.3)}
+#welcome-key-wrap{display:flex;gap:6px;margin-top:8px}
+#welcome-key-inp{flex:1;height:36px;border-radius:8px;border:1px solid rgba(26,23,20,.15);padding:0 10px;font-size:12px;background:rgba(26,23,20,.02);outline:none;font-family:'Courier New',monospace;color:#1a1714}
+#welcome-key-save{height:36px;padding:0 14px;border-radius:8px;background:#1a1714;color:#f2ede3;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:system-ui;white-space:nowrap}
+#welcome-key-save:hover{background:#2c2a26}
+#welcome-generating{font-size:12px;color:#6aaa00;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px;font-family:'Courier New',monospace}
 /* ━━━ TAB BAR ━━━ */
 #tab-bar{position:fixed;top:60px;left:0;right:0;height:40px;background:#0f0e0c;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 8px;gap:0;z-index:199;overflow:hidden}
 #tab-bar.ai-open{right:340px}
@@ -1178,6 +1201,34 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   <div class="tpl-grid" id="tpl-grid"></div>
 </div>
 
+<!-- WELCOME SCREEN -->
+<div id="welcome-screen">
+  <div id="welcome-card">
+    <div id="welcome-logo">m</div>
+    <div id="welcome-title">Welcome to mAIndmap</div>
+    <div id="welcome-sub">The thinking tool that grows with your ideas.</div>
+    <div id="welcome-divider"></div>
+    <div id="welcome-opts">
+      <button class="welcome-opt" onclick="welcomeBlank()">
+        <div class="welcome-opt-icon">+</div>
+        <div class="welcome-opt-label">Blank map</div>
+        <div class="welcome-opt-sub">Start from scratch</div>
+      </button>
+      <button class="welcome-opt" id="welcome-example-opt" onclick="welcomeExample()">
+        <div class="welcome-opt-icon"><svg width="16" height="13" viewBox="0 0 16 13" fill="none"><circle cx="8" cy="6.5" r="2" fill="currentColor"/><circle cx="1.5" cy="1.5" r="1.5" fill="currentColor"/><circle cx="14.5" cy="1.5" r="1.5" fill="currentColor"/><circle cx="1.5" cy="11.5" r="1.5" fill="currentColor"/><circle cx="14.5" cy="11.5" r="1.5" fill="currentColor"/><line x1="8" y1="6.5" x2="1.5" y2="1.5" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="6.5" x2="14.5" y2="1.5" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="6.5" x2="1.5" y2="11.5" stroke="currentColor" stroke-width="1.2"/><line x1="8" y1="6.5" x2="14.5" y2="11.5" stroke="currentColor" stroke-width="1.2"/></svg></div>
+        <div class="welcome-opt-label">See an example</div>
+        <div class="welcome-opt-sub">Load the demo map</div>
+      </button>
+    </div>
+    <div id="welcome-or">or</div>
+    <input id="welcome-ai-inp" type="text" placeholder="Describe your map topic and press Enter..." autocomplete="off">
+    <div id="welcome-key-wrap" style="display:none">
+      <input id="welcome-key-inp" type="password" placeholder="Anthropic API key" autocomplete="off">
+      <button id="welcome-key-save" onclick="welcomeKeySave()">Save &amp; generate</button>
+    </div>
+    <div id="welcome-generating"><div class="ai-spinner" style="width:10px;height:10px;border-width:1.5px"></div> Generating map...</div>
+  </div>
+</div>
 <!-- FEATURE 1: DROP ZONE + CONTENT GEN PANEL -->
 <div id="drop-overlay"><div class="drop-box"><div class="drop-icon">&#128196;</div><div class="drop-text">Drop file to generate map</div><div class="drop-sub">TXT &middot; MD &middot; HTML &middot; CSV</div></div></div>
 <div id="content-gen-panel">
@@ -1398,33 +1449,63 @@ else if(currentLayout==='td')layoutTD(root);
 function layoutRadial(root){
 root.x=CX;root.y=CY;
 const branches=gvc(root.id);if(!branches.length)return;
-// STEP 1: calculate subtree leaf size (visible nodes) bottom-up
+// STEP 1: count leaf nodes per subtree (visible)
 const stSz={};
 function calcSz(id){const ch=gvc(id);if(!ch.length){stSz[id]=1;return 1;}let s=0;ch.forEach(c=>{s+=calcSz(c.id);});stSz[id]=Math.max(s,1);return stSz[id];}
 calcSz(root.id);
-// STEP 2-3: place nodes using proportional angular wedges, recursively
-// depth 0 = root, depth 1 = branches (350px from root), depth 2 = children (280px), depth 3+ = grandchildren (220px)
-const DISTS=[350,280,220];
-function placeNodes(par,children,a0,a1,depth){
-  const dist=DISTS[Math.min(depth-1,2)];
-  const span=a1-a0;
-  const tot=children.reduce((s,c)=>s+(stSz[c.id]||1),0);
-  let a=a0;
+// STEP 2+3: distribute angles by weight with min 40° per branch
+const TWO_PI=2*Math.PI;
+const MIN_ANG=40*Math.PI/180;
+const totW=branches.reduce((s,b)=>s+(stSz[b.id]||1),0);
+let spans=branches.map(b=>Math.max(((stSz[b.id]||1)/totW)*TWO_PI,MIN_ANG));
+const spanSum=spans.reduce((s,a)=>s+a,0);
+spans=spans.map(a=>a*(TWO_PI/spanSum)); // normalize to exactly 360°
+// STEP 4: assign branch center angles, start at top (12 o'clock), go clockwise
+const BRANCH_DIST=320,CHILD_DIST=260,GRAND_DIST=200;
+const bData=[];let cur=-Math.PI/2;
+branches.forEach((b,i)=>{
+  const span=spans[i];const ang=cur+span/2;
+  bData.push({b,ang,span});cur+=span;
+});
+// STEP 4-6: position branches, children, grandchildren
+bData.forEach(({b,ang,span})=>{
+  b.x=root.x+Math.cos(ang)*BRANCH_DIST;
+  b.y=root.y+Math.sin(ang)*BRANCH_DIST;
+  const children=gvc(b.id);if(!children.length)return;
+  // STEP 5: children spread within childWedge centered on branch angle
+  const childWedge=span*0.7;
+  const cTot=children.reduce((s,c)=>s+(stSz[c.id]||1),0);
+  let ca=ang-childWedge/2;
   children.forEach(c=>{
-    const w=((stSz[c.id]||1)/tot)*span;
-    const mid=a+w/2;
-    c.x=par.x+Math.cos(mid)*dist;
-    c.y=par.y+Math.sin(mid)*dist;
-    const ch=gvc(c.id);
-    if(ch.length)placeNodes(c,ch,mid-w/2,mid+w/2,depth+1);
-    a+=w;
+    const cSpan=((stSz[c.id]||1)/cTot)*childWedge;
+    const cAng=ca+cSpan/2;
+    c.x=b.x+Math.cos(cAng)*CHILD_DIST;
+    c.y=b.y+Math.sin(cAng)*CHILD_DIST;
+    // STEP 6: grandchildren
+    const grands=gvc(c.id);if(grands.length){
+      const gWedge=cSpan*0.6;
+      const gTot=grands.reduce((s,g)=>s+(stSz[g.id]||1),0);
+      let ga=cAng-gWedge/2;
+      grands.forEach(g=>{
+        const gSpan=((stSz[g.id]||1)/gTot)*gWedge;
+        const gAng=ga+gSpan/2;
+        g.x=c.x+Math.cos(gAng)*GRAND_DIST;
+        g.y=c.y+Math.sin(gAng)*GRAND_DIST;
+        // deeper levels
+        const deepers=gvc(g.id);if(deepers.length){
+          const dWedge=gSpan*0.55;const dTot=deepers.reduce((s,d)=>s+(stSz[d.id]||1),0);let da=gAng-dWedge/2;
+          deepers.forEach(d=>{const dSpan=((stSz[d.id]||1)/dTot)*dWedge;const dAng=da+dSpan/2;d.x=g.x+Math.cos(dAng)*160;d.y=g.y+Math.sin(dAng)*160;da+=dSpan;});
+        }
+        ga+=gSpan;
+      });
+    }
+    ca+=cSpan;
   });
-}
-placeNodes(root,branches,-Math.PI/2,-Math.PI/2+2*Math.PI,1);
-// STEP 4: collision detection – iteratively push overlapping bounding boxes apart
+});
+// STEP 7: collision resolution (100 iterations), re-anchor branches after each pass
 const vis=nodes.filter(n=>n.parentId!==null&&!isHidden(n));
-const PAD=25;
-for(let iter=0;iter<50;iter++){
+const PAD=24;
+for(let iter=0;iter<100;iter++){
   let moved=false;
   for(let i=0;i<vis.length;i++)for(let j=i+1;j<vis.length;j++){
     const a=vis[i],b=vis[j];
@@ -1437,6 +1518,8 @@ for(let iter=0;iter<50;iter++){
       else{const p=oy/2*(dy>=0?1:-1);a.y-=p;b.y+=p;}
     }
   }
+  // Re-anchor branch nodes to correct distance from root (allow rotation, prevent drift)
+  branches.forEach(b=>{const dx=b.x-root.x,dy=b.y-root.y;const d=Math.sqrt(dx*dx+dy*dy)||1;b.x=root.x+(dx/d)*BRANCH_DIST;b.y=root.y+(dy/d)*BRANCH_DIST;});
   if(!moved)break;
 }
 }
@@ -3158,12 +3241,12 @@ window.newBlankMap=function(){
   try{audioNotes={};}catch(e){}try{ganttDates={};}catch(e){}
   world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
   render();fitToScreen();renderCanvasNotes();updUndo();
-  // Create new tab with rendered state
+  // Create new tab — name starts as "Untitled map", immediately enters rename mode
   const id='map-'+Date.now();
-  maps.push({id,name:genTabName(),data:captureState(),accentColor:nextAccentColor()});
+  maps.push({id,name:'Untitled map',data:captureState(),accentColor:nextAccentColor()});
   activeMapId=id;
   renderTabs();saveAllTabs();
-  setTimeout(()=>{if(nodes.length)startEdit(nodes[0].id);},100);
+  setTimeout(()=>startTabRename(id),50);
 };
 
 // ── Patch newTemplateMap to create a new tab ──
@@ -3216,6 +3299,77 @@ document.addEventListener('keydown',function(e){
   }
 },true);
 
+// ── Welcome screen ──
+function _welcomeDismiss(){
+  localStorage.setItem('maindmap-welcomed','true');
+  const ws=document.getElementById('welcome-screen');
+  if(ws)ws.style.display='none';
+}
+function _welcomeSyncTab(){
+  const m=maps.find(x=>x.id===activeMapId);
+  if(m){m.data=captureState();m.name=(nodes.find(n=>n.parentId===null)||{}).label||m.name;renderTabs();saveAllTabs();}
+}
+function welcomeBlank(){
+  _welcomeDismiss();
+  nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];
+  nextId=2;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};
+  drawElements=[];canvasNotes=[];noteIdSeq=1;selectedId=null;undoStack=[];redoStack=[];
+  world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
+  render();fitToScreen();schSave();_welcomeSyncTab();
+  setTimeout(()=>startEdit(1),100);
+}
+function welcomeExample(){
+  _welcomeDismiss();
+  nodes=buildData();nextId=nodes.reduce((m,n)=>Math.max(m,n.id),0)+1;
+  collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};
+  drawElements=[];canvasNotes=[];noteIdSeq=1;selectedId=null;currentLayout='radial';undoStack=[];redoStack=[];
+  world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
+  layoutAll();render();fitToScreen();schSave();_welcomeSyncTab();
+}
+async function welcomeGenerate(topic){
+  const key=localStorage.getItem('mindmap-api-key');
+  if(!key){
+    document.getElementById('welcome-key-wrap').style.display='flex';
+    document.getElementById('welcome-key-inp').dataset.topic=topic;
+    setTimeout(()=>document.getElementById('welcome-key-inp').focus(),50);
+    return;
+  }
+  document.getElementById('welcome-generating').style.display='flex';
+  document.getElementById('welcome-ai-inp').disabled=true;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2048,messages:[{role:'user',content:`Create a detailed mindmap about: ${topic}\n\nReturn ONLY valid JSON:\n{"root":"Topic","branches":[{"name":"Branch","children":[{"name":"Child","children":["GC1","GC2"]}]}]}\n\nCreate 5-7 branches, 3-5 children each, 2-3 grandchildren each.`}]})});
+    const data=await res.json();
+    const json=JSON.parse(data.content[0].text.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+    _welcomeDismiss();
+    nodes=[];nextId=1;
+    const rid=nextId++;nodes.push({id:rid,label:json.root,parentId:null,color:'#6aaa00',x:CX,y:CY});
+    (json.branches||[]).forEach((b,bi)=>{const color=COLORS[bi%COLORS.length];const bid=nextId++;nodes.push({id:bid,label:b.name,parentId:rid,color,x:CX,y:CY});
+      (b.children||[]).forEach(c=>{const cn=typeof c==='string'?c:c.name;const cid=nextId++;nodes.push({id:cid,label:cn,parentId:bid,color,x:CX,y:CY});
+        if(typeof c==='object'&&c.children)(c.children||[]).forEach(g=>{nodes.push({id:nextId++,label:typeof g==='string'?g:g.name,parentId:cid,color,x:CX,y:CY});});
+      });
+    });
+    collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;selectedId=null;currentLayout='radial';undoStack=[];redoStack=[];
+    world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
+    layoutAll();render();fitToScreen();schSave();_welcomeSyncTab();
+  }catch(err){
+    document.getElementById('welcome-generating').style.display='none';
+    document.getElementById('welcome-ai-inp').disabled=false;
+    toast('AI generate failed — check your API key');
+  }
+}
+function welcomeKeySave(){
+  const k=document.getElementById('welcome-key-inp').value.trim();
+  const topic=document.getElementById('welcome-key-inp').dataset.topic||'';
+  if(!k)return;
+  localStorage.setItem('mindmap-api-key',k);
+  document.getElementById('welcome-key-wrap').style.display='none';
+  welcomeGenerate(topic);
+}
+document.getElementById('welcome-ai-inp').addEventListener('keydown',function(e){if(e.key==='Enter'){const t=this.value.trim();if(t)welcomeGenerate(t);}});
+document.getElementById('welcome-key-inp').addEventListener('keydown',function(e){if(e.key==='Enter')welcomeKeySave();});
+
 // ── Initialize ──
 (function initTabs(){
   try{
@@ -3233,13 +3387,20 @@ document.addEventListener('keydown',function(e){
       }
     }
   }catch(e){}
-  // First run: wrap state already loaded by init into tab 0
+  // First run: start with a blank single-node map
+  nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];
+  nextId=2;collapsedSet.clear();render();fitToScreen();
   const id='map-'+Date.now();
-  const root=nodes.find(n=>n.parentId===null);
-  maps=[{id,name:(root&&root.label)||'mAIndmap',data:captureState(),accentColor:'#6aaa00'}];
+  maps=[{id,name:'My Map',data:captureState(),accentColor:'#6aaa00'}];
   activeMapId=id;
-  buildTabBar();
-  saveAllTabs();
+  buildTabBar();saveAllTabs();
+  // Show welcome screen on first ever visit
+  if(!localStorage.getItem('maindmap-welcomed')){
+    requestAnimationFrame(()=>{
+      const ws=document.getElementById('welcome-screen');
+      if(ws)ws.style.display='flex';
+    });
+  }
 })();
 
 })(); // end tab system
