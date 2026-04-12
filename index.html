@@ -53,7 +53,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .node-tags{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);display:flex;gap:3px;pointer-events:none}
 .node-tag{font-size:8px;padding:1px 5px;border-radius:100px;color:#fff;font-weight:600;white-space:nowrap}
 .node-controls{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;opacity:0;transition:opacity .12s}
-.node:hover .node-controls{opacity:1;pointer-events:auto}
+.node:hover .node-controls,.node.selected .node-controls{opacity:1;pointer-events:auto}
 .nc-btn{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:700;border:none;transition:transform .1s;z-index:9999}
 .nc-btn:hover{transform:scale(1.15)}
 .nc-add{width:20px;height:20px;background:var(--accent);color:#fff;font-size:12px}
@@ -249,7 +249,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .breadcrumb-seg:hover{text-decoration:underline}
 .breadcrumb-arrow{color:rgba(255,255,255,.15);padding:0 3px}
 #focus-exit{position:fixed;top:100px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.1);border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font:11px 'Courier New',monospace;color:var(--text3);cursor:pointer;z-index:250;display:none}
-#minimap{position:fixed;bottom:94px;left:76px;width:160px;height:110px;background:var(--surface);border:1px solid rgba(255,255,255,.15);border-radius:10px;z-index:190;display:none;flex-direction:column;overflow:hidden}
+#minimap{position:fixed;bottom:52px;left:76px;width:160px;height:110px;background:var(--surface);border:1px solid rgba(255,255,255,.15);border-radius:10px;z-index:190;display:none;flex-direction:column;overflow:hidden}
 #minimap.visible{display:flex}
 #minimap-header{display:flex;align-items:center;justify-content:space-between;padding:5px 8px 3px}
 #minimap-label{font:600 7px 'Courier New',monospace;color:var(--text3);letter-spacing:.1em}
@@ -768,7 +768,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .doc-export-btn:hover{background:rgba(26,23,20,.05);color:#1a1714}
 #doc-done-btn{height:26px;padding:0 12px;border-radius:5px;background:#1a1714;color:#f2ede3;font-size:11px;border:none;cursor:pointer;font-family:system-ui;transition:background .1s}
 #doc-done-btn:hover{background:#2c2a26}
-#doc-overview-panel{position:fixed;top:96px;right:0;width:380px;height:calc(100% - 96px);background:#fff;border-left:1px solid rgba(26,23,20,.1);display:flex;flex-direction:column;z-index:201;transform:translateX(100%);transition:transform .25s ease}
+#doc-overview-panel{position:fixed;top:100px;right:0;width:380px;height:calc(100% - 100px);background:#fff;border-left:1px solid rgba(26,23,20,.1);display:flex;flex-direction:column;z-index:201;transform:translateX(100%);transition:transform .25s ease}
 #doc-overview-panel.open{transform:translateX(0)}
 #doc-ov-header{height:52px;padding:0 20px;border-bottom:1px solid rgba(26,23,20,.07);display:flex;align-items:center;gap:12px;flex-shrink:0}
 #doc-ov-search{flex:1;height:30px;border-radius:6px;border:1px solid rgba(26,23,20,.1);padding:0 10px;font-size:12px;background:rgba(26,23,20,.03);color:#1a1714;outline:none}
@@ -785,43 +785,65 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .doc-ov-empty{padding:40px 20px;text-align:center;color:rgba(26,23,20,.35);font-size:12px;line-height:1.7}
 #doc-ai-stream-indicator{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:rgba(26,23,20,.8);color:#f2ede3;font-size:11px;border-radius:100px;padding:5px 14px;display:none;gap:8px;align-items:center}
 #doc-ai-stream-indicator.on{display:flex}
+/* ━━━ DOC TEMPLATE PICKER ━━━ */
+#doc-template-picker{padding:20px 24px 24px;display:none;flex-direction:column;gap:14px;overflow-y:auto;flex:1}
+.dtpl-suggest-label{font:700 9px 'Courier New',monospace;color:#6aaa00;text-transform:uppercase;letter-spacing:.1em}
+.dtpl-suggest-card{background:rgba(106,170,0,.06);border:1.5px solid rgba(106,170,0,.25);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.dtpl-suggest-top{display:flex;align-items:center;gap:10px}
+.dtpl-suggest-icon{font-size:22px;line-height:1;flex-shrink:0}
+.dtpl-suggest-name{font-size:14px;font-weight:600;color:#1a1714}
+.dtpl-suggest-desc{font-size:12px;color:rgba(26,23,20,.52);margin-top:2px}
+.dtpl-use-btn{width:100%;height:36px;border-radius:6px;background:#1a1714;color:#f2ede3;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:system-ui;transition:background .1s}
+.dtpl-use-btn:hover{background:#2c2a26}
+.dtpl-divider{display:flex;align-items:center;gap:10px;color:rgba(26,23,20,.28);font:10px 'Courier New',monospace;flex-shrink:0}
+.dtpl-divider::before,.dtpl-divider::after{content:'';flex:1;height:1px;background:rgba(26,23,20,.1)}
+.dtpl-all-label{font:700 9px 'Courier New',monospace;color:rgba(26,23,20,.38);text-transform:uppercase;letter-spacing:.1em}
+.dtpl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dtpl-card{padding:10px 12px;border-radius:8px;border:1px solid rgba(26,23,20,.08);cursor:pointer;transition:all .12s;display:flex;flex-direction:column;gap:4px;background:none;text-align:left}
+.dtpl-card:hover{border-color:rgba(26,23,20,.22);background:rgba(26,23,20,.025);transform:translateY(-1px)}
+.dtpl-card-icon{font-size:18px;line-height:1}
+.dtpl-card-name{font-size:11px;font-weight:500;color:#1a1714;line-height:1.3}
+.dtpl-ai-filling{background:rgba(106,170,0,.06);border:1px solid rgba(106,170,0,.2);border-radius:6px;padding:8px 12px;font-size:11px;font-family:'Courier New',monospace;color:#6aaa00;display:none;align-items:center;gap:8px}
+.dtpl-ai-filling.on{display:flex}
+.dtpl-reset{font-size:10px;font-family:'Courier New',monospace;color:rgba(26,23,20,.3);cursor:pointer;text-align:center;padding:6px;display:none}
+.dtpl-reset:hover{color:#6aaa00;text-decoration:underline}
 
 /* ━━━ TAB BAR ━━━ */
-#tab-bar{position:fixed;top:60px;left:0;right:0;height:36px;background:#141210;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:stretch;z-index:199;overflow:hidden}
+#tab-bar{position:fixed;top:60px;left:0;right:0;height:40px;background:#0f0e0c;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 8px;gap:0;z-index:199;overflow:hidden}
 #tab-bar.ai-open{right:340px}
-#tab-bar::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to left,#141210,transparent);pointer-events:none;z-index:2}
+#tab-bar::after{content:'';position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to left,#0f0e0c,transparent);pointer-events:none;z-index:2}
 #tab-bar.ai-open::after{display:none}
-.tab-scroll{display:flex;align-items:stretch;flex:1;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;position:relative;z-index:1}
+.tab-scroll{display:flex;align-items:center;flex:1;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;position:relative;z-index:1;gap:2px;padding:4px 0}
 .tab-scroll::-webkit-scrollbar{display:none}
-.tab{height:36px;padding:0 12px 0 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-family:system-ui,-apple-system,sans-serif;cursor:pointer;border-right:1px solid rgba(255,255,255,0.06);max-width:180px;min-width:80px;flex-shrink:0;color:rgba(255,255,255,0.45);transition:background .1s,color .1s;user-select:none;position:relative}
-.tab:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.75)}
-.tab.active{background:rgba(255,255,255,0.07);color:#ffffff;font-weight:500;box-shadow:inset 0 -2px 0 #6aaa00}
-.tab-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.tab-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
-.tab-close{width:16px;height:16px;display:none;align-items:center;justify-content:center;font-size:14px;color:rgba(255,255,255,0.35);border-radius:3px;flex-shrink:0;line-height:1;transition:color .1s,background .1s}
+.tab{height:32px;padding:0 10px 0 12px;display:flex;align-items:center;gap:7px;font-size:12px;font-family:system-ui,-apple-system,sans-serif;font-weight:500;cursor:pointer;border-radius:8px;max-width:180px;min-width:80px;flex-shrink:0;color:rgba(255,255,255,0.4);transition:background .15s,color .15s;user-select:none;position:relative}
+.tab:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.72)}
+.tab.active{background:rgba(255,255,255,0.1);color:#ffffff;font-weight:600;box-shadow:0 0 0 1px rgba(255,255,255,0.1),0 2px 8px rgba(0,0,0,0.3)}
+.tab-icon{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 4px currentColor}
+.tab-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;letter-spacing:0.01em}
+.tab-close{width:16px;height:16px;display:none;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,0.3);border-radius:4px;flex-shrink:0;line-height:1;transition:color .1s,background .1s}
 .tab:hover .tab-close.show-close,.tab.active .tab-close.show-close{display:flex}
-.tab-close:hover{color:rgba(255,255,255,0.85)!important;background:rgba(255,255,255,0.12)}
-.tab-new-btn{height:36px;padding:0 14px;display:flex;align-items:center;font-size:12px;font-family:system-ui,-apple-system,sans-serif;cursor:pointer;color:rgba(255,255,255,0.38);flex-shrink:0;transition:color .1s,background .1s;white-space:nowrap;border:none;background:transparent}
-.tab-new-btn:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.05)}
-.tab-rename-input{background:transparent;border:none;outline:none;font-size:12px;font-family:system-ui,-apple-system,sans-serif;color:inherit;padding:0;width:80px;min-width:30px;max-width:130px}
-.tab-close-confirm{position:fixed;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.5);font-size:11px;color:var(--text2);min-width:180px}
-.tab-close-confirm p{margin:0 0 8px;line-height:1.5}
+.tab-close:hover{color:rgba(255,255,255,0.9)!important;background:rgba(255,255,255,0.12)}
+.tab-new-btn{height:28px;padding:0 12px;display:flex;align-items:center;gap:4px;font-size:12px;font-family:system-ui,-apple-system,sans-serif;font-weight:500;cursor:pointer;color:rgba(255,255,255,0.3);flex-shrink:0;transition:color .15s,background .15s;white-space:nowrap;border:1px solid transparent;background:transparent;border-radius:8px;margin-left:2px}
+.tab-new-btn:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.1)}
+.tab-rename-input{background:transparent;border:none;outline:none;font-size:12px;font-family:system-ui,-apple-system,sans-serif;font-weight:600;color:inherit;padding:0;width:80px;min-width:30px;max-width:130px}
+.tab-close-confirm{position:fixed;background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.6);font-size:11px;color:var(--text2);min-width:180px}
+.tab-close-confirm p{margin:0 0 10px;line-height:1.5}
 .tab-close-confirm-btns{display:flex;gap:6px;justify-content:flex-end}
-.tab-confirm-btn{height:24px;padding:0 10px;border-radius:100px;border:none;cursor:pointer;font-size:10px;font-weight:600;font-family:system-ui;transition:background .1s}
+.tab-confirm-btn{height:26px;padding:0 12px;border-radius:100px;border:none;cursor:pointer;font-size:10px;font-weight:600;font-family:system-ui;transition:background .1s}
 .tab-confirm-btn.tcc-yes{background:rgba(248,113,113,.18);color:#f87171}
 .tab-confirm-btn.tcc-yes:hover{background:rgba(248,113,113,.32)}
 .tab-confirm-btn.tcc-no{background:rgba(255,255,255,.07);color:var(--text2)}
 .tab-confirm-btn.tcc-no:hover{background:rgba(255,255,255,.13)}
 /* light bg */
-.bg-light #tab-bar{background:#f0ede8;border-bottom-color:rgba(26,23,20,0.08)}
-.bg-light #tab-bar::after{background:linear-gradient(to left,#f0ede8,transparent)}
-.bg-light .tab{color:rgba(26,23,20,0.45);border-right-color:rgba(26,23,20,0.06)}
-.bg-light .tab:hover{background:rgba(26,23,20,0.04);color:rgba(26,23,20,0.75)}
-.bg-light .tab.active{background:rgba(26,23,20,0.06);color:#1a1714}
-.bg-light .tab-close{color:rgba(26,23,20,0.3)}
-.bg-light .tab-close:hover{color:rgba(26,23,20,0.75)!important;background:rgba(26,23,20,0.08)}
-.bg-light .tab-new-btn{color:rgba(26,23,20,0.38)}
-.bg-light .tab-new-btn:hover{color:rgba(26,23,20,0.75);background:rgba(26,23,20,0.04)}
+.bg-light #tab-bar{background:#e8e4dd;border-bottom-color:rgba(26,23,20,0.07)}
+.bg-light #tab-bar::after{background:linear-gradient(to left,#e8e4dd,transparent)}
+.bg-light .tab{color:rgba(26,23,20,0.42)}
+.bg-light .tab:hover{background:rgba(26,23,20,0.06);color:rgba(26,23,20,0.75)}
+.bg-light .tab.active{background:#ffffff;color:#1a1714;box-shadow:0 0 0 1px rgba(26,23,20,0.08),0 2px 8px rgba(0,0,0,0.1)}
+.bg-light .tab-close{color:rgba(26,23,20,0.28)}
+.bg-light .tab-close:hover{color:rgba(26,23,20,0.8)!important;background:rgba(26,23,20,0.07)}
+.bg-light .tab-new-btn{color:rgba(26,23,20,0.35)}
+.bg-light .tab-new-btn:hover{color:rgba(26,23,20,0.75);background:rgba(26,23,20,0.06);border-color:rgba(26,23,20,0.1)}
 </style>
 </head>
 <body>
@@ -1252,6 +1274,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
     <div class="dfb-sep"></div>
     <button class="dfb dfb-ai" onclick="triggerDocAIWrite()" title="AI write">✦ AI write</button>
   </div>
+  <div id="doc-template-picker"></div>
   <div id="doc-body">
     <div id="doc-node-title" contenteditable="true" spellcheck="false" data-placeholder="Node title"></div>
     <div id="doc-meta"></div>
@@ -1261,6 +1284,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
       <span id="doc-ai-sum-regen" onclick="genDocAISummary()">↻ Regenerate</span>
     </div>
     <div id="doc-editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or type / for commands..."></div>
+    <div class="dtpl-reset" id="doc-tpl-reset" onclick="_docShowTplPicker()">↩ choose a different template</div>
   </div>
   <div id="doc-ai-stream-indicator"><div class="ai-spinner" style="width:10px;height:10px;border-width:1.5px"></div> AI writing...</div>
   <div id="doc-footer">
@@ -3229,6 +3253,169 @@ function docWordCount(html){const tmp=document.createElement('div');tmp.innerHTM
 function docGetNode(){return docOpenNodeId!=null?gn(docOpenNodeId):null}
 function docEnsure(node){if(!node.document)node.document={content:'',createdAt:Date.now(),updatedAt:Date.now(),wordCount:0}}
 
+// ── DOC TEMPLATES ──
+const DOC_TEMPLATES={
+  meeting:{icon:'📋',name:'Meeting Notes',desc:'Agenda, notes & action items',
+    keywords:['meeting','standup','stand-up','sync','call','review','retrospective','retro','kickoff','1:1','one-on-one','discussion','session','workshop'],
+    content:'<h2>📅 Agenda</h2><ul><li></li></ul><h2>🗒 Notes</h2><p></p><h2>✅ Action Items</h2><ul><li></li></ul><h2>⚡ Decisions Made</h2><ul><li></li></ul>'},
+  decision:{icon:'⚖️',name:'Decision Log',desc:'Options, pros/cons & rationale',
+    keywords:['decision','decide','choice','option','tradeoff','vs','versus','pick','choose','select','evaluate'],
+    content:'<h2>🎯 Context</h2><p>What problem are we solving?</p><h2>⚙️ Options Considered</h2><h3>Option A</h3><p></p><h3>Option B</h3><p></p><h2>✅ Decision</h2><p></p><h2>💭 Rationale</h2><p></p><h2>⚠️ Trade-offs</h2><p></p>'},
+  product:{icon:'🚀',name:'Product Spec',desc:'Problem, solution & requirements',
+    keywords:['feature','spec','product','requirement','prd','story','epic','mvp','launch','user story','build'],
+    content:'<h2>🎯 Problem</h2><p></p><h2>🔑 Solution</h2><p></p><h2>👤 Users</h2><p>Who is this for?</p><h2>✅ Requirements</h2><ul><li></li></ul><h2>📐 Out of Scope</h2><ul><li></li></ul><h2>📊 Success Metrics</h2><ul><li></li></ul>'},
+  project:{icon:'📅',name:'Project Plan',desc:'Goal, milestones & risks',
+    keywords:['project','plan','roadmap','milestone','timeline','sprint','phase','initiative','quarter','program'],
+    content:'<h2>🎯 Goal</h2><p></p><h2>📦 Deliverables</h2><ul><li></li></ul><h2>🗓 Milestones</h2><ul><li></li></ul><h2>⚠️ Risks</h2><ul><li></li></ul><h2>👥 Team</h2><ul><li></li></ul>'},
+  research:{icon:'🔬',name:'Research',desc:'Findings, insights & sources',
+    keywords:['research','study','analysis','finding','insight','investigation','explore','survey','interview','data','experiment'],
+    content:'<h2>❓ Question</h2><p></p><h2>🔍 Findings</h2><p></p><h2>💡 Insights</h2><ul><li></li></ul><h2>📚 Sources</h2><ul><li></li></ul><h2>🔜 Next Steps</h2><ul><li></li></ul>'},
+  person:{icon:'👤',name:'Person',desc:'Bio, skills & contact info',
+    keywords:['person','people','contact','team','member','profile','bio','stakeholder','client','customer','founder','partner'],
+    content:'<h2>👤 About</h2><p></p><h2>🏢 Role</h2><p></p><h2>🛠 Skills</h2><ul><li></li></ul><h2>📬 Contact</h2><ul><li>Email: </li><li>LinkedIn: </li></ul><h2>🔗 Relationships</h2><p></p>'},
+  goal:{icon:'🎯',name:'Goal / OKR',desc:'Objective, key results & progress',
+    keywords:['goal','okr','objective','target','kpi','metric','aim','ambition','outcome','north star','result'],
+    content:'<h2>🎯 Objective</h2><p></p><h2>📊 Key Results</h2><ul><li>KR1: </li><li>KR2: </li><li>KR3: </li></ul><h2>🗓 Timeline</h2><p></p><h2>📈 Progress</h2><p></p><h2>🚧 Blockers</h2><ul><li></li></ul>'},
+  problem:{icon:'🐛',name:'Problem Statement',desc:'Issue, impact & proposed fix',
+    keywords:['problem','issue','bug','error','incident','failure','pain','blocker','challenge','obstacle','defect'],
+    content:'<h2>🐛 Problem</h2><p></p><h2>💥 Impact</h2><p></p><h2>🔍 Root Cause</h2><p></p><h2>🔧 Proposed Solution</h2><p></p><h2>✅ Success Criteria</h2><ul><li></li></ul>'},
+  idea:{icon:'💡',name:'Idea',desc:'Concept, benefits & next steps',
+    keywords:['idea','concept','proposal','suggestion','brainstorm','innovation','invention','hypothesis','pitch'],
+    content:'<h2>💡 The Idea</h2><p></p><h2>✨ Why It Matters</h2><p></p><h2>🔧 How It Works</h2><p></p><h2>⚡ Quick Wins</h2><ul><li></li></ul><h2>🔜 Next Step</h2><p></p>'},
+  process:{icon:'⚙️',name:'Process / SOP',desc:'Steps, owner & checklist',
+    keywords:['process','sop','procedure','workflow','runbook','checklist','steps','how to','guide','playbook','protocol'],
+    content:'<h2>🎯 Purpose</h2><p></p><h2>👤 Owner</h2><p></p><h2>📋 Steps</h2><ol><li></li><li></li><li></li></ol><h2>☑ Checklist</h2><ul><li></li></ul><h2>⚠️ Notes</h2><p></p>'},
+  note:{icon:'📝',name:'General Note',desc:'Freeform content',keywords:[],content:'<p></p>'}
+};
+
+function detectDocTemplate(label){
+  const l=label.toLowerCase();
+  for(const[key,tpl]of Object.entries(DOC_TEMPLATES)){
+    if(key==='note')continue;
+    if(tpl.keywords.some(kw=>l.includes(kw)))return key;
+  }
+  return 'note';
+}
+
+function _showTemplatePicker(node){
+  const sugKey=node.preferredTemplate||detectDocTemplate(node.label);
+  const sug=DOC_TEMPLATES[sugKey];
+  const hasKey=!!localStorage.getItem('mindmap-api-key');
+  let html=`<div class="dtpl-suggest-label">✦ SUGGESTED FOR THIS NODE</div>
+  <div class="dtpl-suggest-card">
+    <div class="dtpl-suggest-top">
+      <div class="dtpl-suggest-icon">${sug.icon}</div>
+      <div><div class="dtpl-suggest-name">${sug.name}</div><div class="dtpl-suggest-desc">${sug.desc}</div></div>
+    </div>
+    <button class="dtpl-use-btn" onclick="_applyDocTemplate(${node.id},'${sugKey}',false)">Use template</button>
+    ${hasKey?`<button class="dtpl-use-btn" style="margin-top:6px;background:rgba(106,170,0,.1);color:#4a8a00;border:1.5px solid rgba(106,170,0,.3);font-weight:500" onclick="_applyDocTemplate(${node.id},'${sugKey}',true)">✦ AI pre-fill</button>`:''}
+  </div>
+  <div class="dtpl-divider">all templates</div>
+  <div class="dtpl-grid">`;
+  for(const[key,tpl]of Object.entries(DOC_TEMPLATES)){
+    html+=`<button class="dtpl-card" onclick="_applyDocTemplate(${node.id},'${key}',false)" title="${tpl.desc}">
+      <div class="dtpl-card-icon">${tpl.icon}</div>
+      <div class="dtpl-card-name">${tpl.name}</div>
+    </button>`;
+  }
+  html+=`</div><button onclick="_applyDocTemplate(${node.id},'_blank',false)" style="height:34px;border-radius:6px;background:none;border:1px solid rgba(26,23,20,.1);color:rgba(26,23,20,.42);font-size:12px;cursor:pointer;font-family:system-ui;transition:all .12s;flex-shrink:0" onmouseover="this.style.background='rgba(26,23,20,.04)'" onmouseout="this.style.background='none'">Start blank →</button>`;
+  const picker=document.getElementById('doc-template-picker');
+  picker.innerHTML=html;
+  picker.style.display='flex';
+  document.getElementById('doc-body').style.display='none';
+  document.getElementById('doc-fmt-bar').style.display='none';
+}
+
+function _hideTemplatePicker(){
+  document.getElementById('doc-template-picker').style.display='none';
+  document.getElementById('doc-body').style.display='flex';
+  document.getElementById('doc-fmt-bar').style.display='flex';
+}
+
+function _docShowTplPicker(){
+  const node=docGetNode();if(!node)return;
+  _showTemplatePicker(node);
+}
+
+function _applyDocTemplate(nodeId,key,aiPrefill){
+  const node=gn(nodeId);if(!node)return;
+  docEnsure(node);
+  if(key!=='_blank')node.preferredTemplate=key;
+  _hideTemplatePicker();
+  const ed=document.getElementById('doc-editor');
+  if(key!=='_blank'){
+    const tpl=DOC_TEMPLATES[key];
+    if(tpl){ed.innerHTML=tpl.content;node.document.content=tpl.content;}
+  }else{
+    ed.innerHTML='';node.document.content='';
+  }
+  node.document.updatedAt=Date.now();
+  schSave();_updateDocMeta(node);_updateDocFooter(node);
+  document.getElementById('doc-tpl-reset').style.display='none';
+  if(aiPrefill){_aiPrefillDoc(node);}
+  else{
+    ed.focus();
+    const first=ed.querySelector('p,h1,h2,h3,li');
+    if(first){const r=document.createRange();const s=window.getSelection();r.setStart(first,0);r.collapse(true);s.removeAllRanges();s.addRange(r);}
+  }
+}
+
+function _insertDocTpl(key){
+  const tpl=DOC_TEMPLATES[key];if(!tpl)return;
+  const ed=document.getElementById('doc-editor');
+  ed.focus();
+  document.execCommand('insertHTML',false,tpl.content);
+  const node=docGetNode();
+  if(node){docEnsure(node);node.document.content=ed.innerHTML;node.document.updatedAt=Date.now();schSave();_updateDocMeta(node);_updateDocFooter(node);}
+}
+
+async function _aiPrefillDoc(node){
+  const key=localStorage.getItem('mindmap-api-key');
+  if(!key){toast('Set API key in AI panel');return;}
+  const tplKey=node.preferredTemplate;
+  const tpl=DOC_TEMPLATES[tplKey];if(!tpl)return;
+  const indicator=document.getElementById('doc-ai-stream-indicator');
+  indicator.classList.add('on');_docAIStreaming=true;
+  const root=nodes.find(n=>n.parentId===null);
+  const par=node.parentId?gn(node.parentId):null;
+  const children=gc(node.id).map(c=>c.label);
+  const prompt=`You are filling a "${tpl.name}" document template for a mindmap node.
+Node: "${node.label}"
+Map: ${root?root.label:'(unnamed)'} | Parent: ${par?par.label:'(root)'} | Children: ${children.join(', ')||'none'}
+Template type: ${tpl.name} — ${tpl.desc}
+
+Write specific, actionable content filling each section of this template.
+Return ONLY clean HTML using: h2 h3 p ul ol li strong em code.
+Fill EVERY section with relevant, specific content based on the node name.
+Do not copy the template structure — write actual, useful content.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true','anthropic-beta':'messages-2023-12-15'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1500,stream:true,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok||!res.body){const j=await res.json();toast(j.error?.message||'AI failed');indicator.classList.remove('on');return;}
+    const ed=document.getElementById('doc-editor');
+    ed.innerHTML='';
+    let accumulated='';
+    const reader=res.body.getReader();const decoder=new TextDecoder();
+    while(true){
+      const{done,value}=await reader.read();if(done)break;
+      const chunk=decoder.decode(value);
+      const lines=chunk.split('\n').filter(l=>l.startsWith('data:'));
+      for(const line of lines){
+        const data=line.slice(5).trim();if(data==='[DONE]')break;
+        try{const j=JSON.parse(data);
+          if(j.type==='content_block_delta'&&j.delta?.text){accumulated+=j.delta.text;ed.innerHTML=_mdToHtml(accumulated);}
+        }catch(err){}
+      }
+      if(!_docAIStreaming)break;
+    }
+    if(accumulated)ed.innerHTML=_mdToHtml(accumulated);
+    node.document.content=ed.innerHTML;node.document.updatedAt=Date.now();
+    schSave();_updateDocMeta(node);_updateDocFooter(node);
+  }catch(err){toast('AI prefill failed');}
+  indicator.classList.remove('on');_docAIStreaming=false;
+}
+
 // ── open / close ──
 function openDocPanel(nodeId){
   const node=gn(nodeId);if(!node)return;
@@ -3287,8 +3474,19 @@ function _renderDocPanel(node){
   } else { sumBlock.style.display='none'; }
   // Editor
   const ed=document.getElementById('doc-editor');
-  ed.innerHTML=node.document.content||'';
+  const content=node.document.content||'';
+  ed.innerHTML=content;
   _updateDocFooter(node);
+  // Show template picker for empty docs, else show editor
+  const isEmpty=!content.trim()||content.trim()==='<p></p>'||content.trim()==='<p><br></p>';
+  if(isEmpty){
+    _showTemplatePicker(node);
+  }else{
+    document.getElementById('doc-template-picker').style.display='none';
+    document.getElementById('doc-body').style.display='flex';
+    document.getElementById('doc-fmt-bar').style.display='flex';
+    document.getElementById('doc-tpl-reset').style.display='none';
+  }
 }
 
 function _updateDocMeta(node){
@@ -3311,12 +3509,16 @@ function _hexToRgb(hex){hex=hex.replace('#','');if(hex.length===3)hex=hex.split(
 document.getElementById('doc-editor').addEventListener('input',()=>{
   const node=docGetNode();if(!node)return;
   docEnsure(node);
-  node.document.content=document.getElementById('doc-editor').innerHTML;
+  const ed=document.getElementById('doc-editor');
+  node.document.content=ed.innerHTML;
   node.document.updatedAt=Date.now();
   node.document.wordCount=docWordCount(node.document.content);
   _updateDocMeta(node);
   _updateDocFooter(node);
   document.getElementById('doc-footer-left').textContent=node.document.wordCount+' words · Saving...';
+  // Show/hide template reset link
+  const c=ed.textContent.trim();
+  document.getElementById('doc-tpl-reset').style.display=(c===''&&node.preferredTemplate)?'block':'none';
   clearTimeout(_docSaveTimer);
   _docSaveTimer=setTimeout(()=>{schSave();document.getElementById('doc-footer-left').textContent=node.document.wordCount+' words · Saved';render();},500);
 });
@@ -3425,6 +3627,16 @@ const SLASH_CMDS=[
   {icon:'✦',label:'AI write',hint:'ai',fn:()=>triggerDocAIWrite()},
   {icon:'✦',label:'AI summarize',hint:'ai',fn:()=>genDocAISummary()},
   {icon:'✦',label:'AI todo',hint:'ai',fn:()=>docAITodo()},
+  {icon:'📋',label:'Meeting Notes',hint:'meeting template',fn:()=>_insertDocTpl('meeting')},
+  {icon:'⚖️',label:'Decision Log',hint:'decision template',fn:()=>_insertDocTpl('decision')},
+  {icon:'🚀',label:'Product Spec',hint:'product template',fn:()=>_insertDocTpl('product')},
+  {icon:'📅',label:'Project Plan',hint:'project template',fn:()=>_insertDocTpl('project')},
+  {icon:'🔬',label:'Research',hint:'research template',fn:()=>_insertDocTpl('research')},
+  {icon:'👤',label:'Person',hint:'person template',fn:()=>_insertDocTpl('person')},
+  {icon:'🎯',label:'Goal / OKR',hint:'goal template',fn:()=>_insertDocTpl('goal')},
+  {icon:'🐛',label:'Problem Statement',hint:'problem template',fn:()=>_insertDocTpl('problem')},
+  {icon:'💡',label:'Idea',hint:'idea template',fn:()=>_insertDocTpl('idea')},
+  {icon:'⚙️',label:'Process / SOP',hint:'process template',fn:()=>_insertDocTpl('process')},
 ];
 let _slashFilter='',_slashIdx=0,_slashRange=null;
 
