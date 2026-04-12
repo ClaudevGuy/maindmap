@@ -273,44 +273,209 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #pres-esc{position:fixed;top:16px;right:16px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:6px 14px;font:11px 'Courier New',monospace;color:rgba(255,255,255,.6);cursor:pointer;z-index:602;display:none}
 #pres-esc.active{display:block}
 
-/* AI Panel */
-#ai-panel{position:fixed;top:0;right:-340px;bottom:0;width:340px;background:var(--bg2);border-left:1px solid var(--border);z-index:180;display:flex;flex-direction:column;transition:right .3s;overflow:hidden}
-#ai-panel.open{right:0}
-.ai-header{padding:12px 16px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.ai-header h3{font:700 10px 'Courier New',monospace;color:var(--accent);letter-spacing:.1em}
-.ai-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px}
-.ai-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:12px}
-.ai-section{display:flex;flex-direction:column;gap:6px}
-.ai-label{font:600 8px 'Courier New',monospace;color:var(--text3);letter-spacing:.08em;text-transform:uppercase}
-.ai-input{background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:6px;padding:6px 10px;font:12px system-ui;color:var(--text);outline:none;width:100%}
-.ai-input:focus{border-color:var(--accent)}
-.ai-textarea{resize:vertical;min-height:50px}
-.ai-btn{background:rgba(106,170,0,.12);border:1px solid rgba(106,170,0,.25);border-radius:100px;padding:7px 14px;font:600 11px system-ui;color:var(--accent);cursor:pointer;transition:all .15s;text-align:center}
-.ai-btn:hover{background:rgba(106,170,0,.2)}
-.ai-btn:disabled{opacity:.4;pointer-events:none}
-.ai-btn-sm{font-size:10px;padding:4px 10px}
-.ai-result{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:11px;color:var(--text2);line-height:1.5}
-.ai-check-list{display:flex;flex-direction:column;gap:3px}
-.ai-check-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)}
-.ai-check-item input{accent-color:var(--accent)}
-.ai-pill{display:inline-block;background:rgba(255,255,255,.06);border:1px solid var(--border2);border-radius:100px;padding:3px 10px;font-size:10px;color:var(--text2);cursor:pointer;margin:2px}
-.ai-pill:hover{background:rgba(106,170,0,.12);color:var(--accent)}
-.ai-gap-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:8px}
-.ai-gap-card .gap-name{font-weight:600;font-size:11px;color:var(--text)}
-.ai-gap-card .gap-reason{font-size:10px;color:var(--text3)}
-.ai-gap-card .gap-parent{font-size:9px;color:var(--accent)}
-.ai-chat{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
-.ai-chat-msg{padding:6px 8px;border-radius:6px;font-size:10px;line-height:1.4;color:var(--text2)}
-.ai-chat-msg.user{background:rgba(106,170,0,.08);align-self:flex-end;max-width:85%}
-.ai-chat-msg.bot{background:rgba(255,255,255,.04);align-self:flex-start;max-width:90%}
-.ai-spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+/* AI Panel — always white, context-aware */
+#ai-panel{position:fixed;top:0;right:-340px;bottom:0;width:340px;background:#fff;border-left:1px solid rgba(26,23,20,.1);z-index:180;display:flex;flex-direction:column;transition:right .3s;overflow:hidden}
+#ai-panel.open{right:0;box-shadow:-4px 0 20px rgba(0,0,0,.1)}
+.aip-header{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(26,23,20,.08);flex-shrink:0}
+.aip-header-left{display:flex;align-items:center;gap:7px}
+.aip-header-title{font:600 12px system-ui;color:#1a1714;letter-spacing:-.01em}
+.aip-header-btns{display:flex;align-items:center;gap:2px}
+.aip-icon-btn{background:none;border:none;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(26,23,20,.35);transition:all .12s;flex-shrink:0}
+.aip-icon-btn:hover{background:rgba(26,23,20,.06);color:#1a1714}
+.aip-key-section{border-bottom:1px solid rgba(26,23,20,.06);padding:8px 16px;flex-shrink:0;background:#fff}
+.aip-key-ok{display:flex;align-items:center;gap:6px;font:500 10px 'DM Mono',monospace;color:#6aaa00}
+.aip-key-change{font:400 10px system-ui;color:rgba(26,23,20,.35);cursor:pointer;margin-left:auto;background:none;border:none;padding:0}
+.aip-key-change:hover{color:#1a1714}
+.aip-key-label{font:600 8px system-ui;color:rgba(26,23,20,.3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.aip-key-inp{width:100%;border:1px solid rgba(26,23,20,.12);border-radius:6px;padding:7px 10px;font:12px system-ui;color:#1a1714;outline:none;background:rgba(26,23,20,.02);box-sizing:border-box}
+.aip-key-inp:focus{border-color:#6aaa00}
+.aip-key-save{width:100%;margin-top:6px;height:32px;background:#1a1714;color:#f2ede3;border:none;border-radius:6px;font:600 11px system-ui;cursor:pointer;transition:background .12s}
+.aip-key-save:hover{background:#2d2a26}
+.aip-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-height:0}
+.aip-context-wrap{padding:12px 16px;border-bottom:1px solid rgba(26,23,20,.06);flex-shrink:0}
+.aip-empty-state{display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px 0;color:rgba(26,23,20,.25);text-align:center}
+.aip-empty-text{font:400 12px system-ui}
+.aip-ctx-card{background:rgba(26,23,20,.03);border:1px solid rgba(26,23,20,.08);border-radius:8px;padding:11px 13px;animation:aipFadeIn .2s ease}
+@keyframes aipFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.aip-ctx-top{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.aip-ctx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.aip-ctx-label{font:600 13px system-ui;color:#1a1714;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aip-ctx-breadcrumb{font:400 10px monospace;color:rgba(26,23,20,.35);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aip-ctx-meta-row{font:400 10px system-ui;color:rgba(26,23,20,.45);display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:5px}
+.aip-ctx-child-pill{background:rgba(26,23,20,.06);border-radius:100px;padding:2px 7px;font:500 9px system-ui;color:rgba(26,23,20,.5)}
+.aip-ctx-doc-link{cursor:pointer;color:#6aaa00;text-decoration:underline}
+.aip-ctx-stale{color:#d97706;display:flex;align-items:center;gap:5px;font:500 10px system-ui;margin-top:5px}
+.aip-actions-wrap{padding:10px 16px 8px;border-bottom:1px solid rgba(26,23,20,.06);flex-shrink:0}
+.aip-section-label{font:600 8px system-ui;color:rgba(26,23,20,.3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.aip-actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.aip-action-btn{height:36px;background:rgba(26,23,20,.03);border:1px solid rgba(26,23,20,.08);border-radius:8px;font:500 11px system-ui;color:rgba(26,23,20,.7);cursor:pointer;display:flex;align-items:center;gap:6px;padding:0 10px;transition:all .12s;white-space:nowrap;overflow:hidden}
+.aip-action-btn:hover{background:rgba(26,23,20,.07);color:#1a1714;border-color:rgba(26,23,20,.15)}
+.aip-action-btn:disabled{opacity:.45;pointer-events:none}
+.aip-action-icon{font-size:11px;flex-shrink:0;color:#6aaa00}
+.aip-result-area{padding:0 16px;flex-shrink:0}
+.aip-result-card{background:rgba(106,170,0,.04);border:1px solid rgba(106,170,0,.18);border-radius:8px;padding:11px 13px;margin:8px 0}
+.aip-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.aip-result-title{font:600 10px monospace;color:#6aaa00}
+.aip-result-close{background:none;border:none;cursor:pointer;color:rgba(26,23,20,.3);font-size:15px;line-height:1;padding:0}
+.aip-result-close:hover{color:#1a1714}
+.aip-check-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.aip-check-item{display:flex;align-items:center;gap:7px;font:400 11px system-ui;color:rgba(26,23,20,.75)}
+.aip-check-item input{accent-color:#6aaa00}
+.aip-add-btn{width:100%;height:32px;background:#1a1714;color:#f2ede3;border:none;border-radius:6px;font:600 11px system-ui;cursor:pointer;transition:background .12s}
+.aip-add-btn:hover{background:#2d2a26}
+.aip-result-text{font:400 12px system-ui;color:rgba(26,23,20,.7);line-height:1.7}
+.aip-gap-list{display:flex;flex-direction:column}
+.aip-gap-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid rgba(26,23,20,.05)}
+.aip-gap-row:last-child{border-bottom:none}
+.aip-gap-info .gap-name{font:600 11px system-ui;color:#1a1714}
+.aip-gap-info .gap-parent{font:400 9px system-ui;color:rgba(26,23,20,.4);margin-top:2px}
+.aip-gap-add{height:24px;padding:0 9px;background:rgba(106,170,0,.1);border:1px solid rgba(106,170,0,.2);border-radius:4px;font:600 10px system-ui;color:#6aaa00;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .12s}
+.aip-gap-add:hover{background:rgba(106,170,0,.2)}
+.aip-pill-row{display:flex;flex-wrap:wrap;gap:6px}
+.aip-rewrite-pill{background:rgba(26,23,20,.05);border:1.5px solid rgba(26,23,20,.1);border-radius:100px;padding:5px 13px;font:500 11px system-ui;color:rgba(26,23,20,.7);cursor:pointer;transition:all .12s}
+.aip-rewrite-pill:hover{background:rgba(106,170,0,.08);border-color:rgba(106,170,0,.3);color:#6aaa00}
+.aip-chat-section{flex:1;display:flex;flex-direction:column;min-height:0;border-bottom:1px solid rgba(26,23,20,.06)}
+.aip-chat-thread{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:8px;min-height:80px}
+.aip-chat-empty{font:400 12px system-ui;color:rgba(26,23,20,.25);text-align:center;padding:20px 0;align-self:center}
+.aip-msg-user{display:flex;justify-content:flex-end}
+.aip-msg-user .aip-bubble{background:#1a1714;color:#f2ede3;border-radius:10px 10px 2px 10px;padding:8px 12px;font:400 12px system-ui;max-width:85%;line-height:1.5}
+.aip-msg-ai{display:flex;gap:8px;align-items:flex-start}
+.aip-avatar{width:22px;height:22px;border-radius:50%;background:#6aaa00;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.aip-msg-ai .aip-bubble{background:rgba(26,23,20,.04);border:1px solid rgba(26,23,20,.08);border-radius:2px 10px 10px 10px;padding:9px 12px;font:400 12px system-ui;line-height:1.6;color:rgba(26,23,20,.8);flex:1;min-width:0}
+.aip-msg-meta{display:flex;gap:10px;margin-top:3px;padding-left:30px}
+.aip-msg-meta-btn{font:400 9px monospace;color:rgba(26,23,20,.3);cursor:pointer;background:none;border:none;padding:0;transition:color .1s}
+.aip-msg-meta-btn:hover{color:#1a1714}
+.aip-typing{display:flex;gap:4px;align-items:center;height:14px}
+.aip-typing span{width:5px;height:5px;border-radius:50%;background:#6aaa00;animation:aipDot 1.2s ease infinite}
+.aip-typing span:nth-child(2){animation-delay:.2s}
+.aip-typing span:nth-child(3){animation-delay:.4s}
+@keyframes aipDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.aip-input-area{border-top:1px solid rgba(26,23,20,.08);padding:10px 14px 12px;flex-shrink:0;background:#fff}
+.aip-input-wrap{position:relative}
+.aip-chat-inp{width:100%;min-height:36px;max-height:80px;border:1px solid rgba(26,23,20,.12);border-radius:8px;padding:8px 38px 8px 11px;font:400 12px system-ui;color:#1a1714;resize:none;outline:none;background:rgba(26,23,20,.02);box-sizing:border-box;line-height:1.45;overflow-y:auto}
+.aip-chat-inp:focus{border-color:rgba(26,23,20,.25)}
+.aip-send-btn{position:absolute;right:6px;bottom:6px;width:24px;height:24px;border-radius:50%;background:#1a1714;color:#f2ede3;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s;flex-shrink:0}
+.aip-send-btn:hover{background:#2d2a26}
+.aip-send-btn:disabled{opacity:.35;pointer-events:none}
+.aip-ctx-toggle{display:flex;align-items:center;gap:5px;margin-top:7px;font:400 10px monospace;color:rgba(26,23,20,.35)}
+.aip-ctx-pill{padding:2px 8px;border-radius:100px;border:1px solid rgba(26,23,20,.1);cursor:pointer;transition:all .12s;user-select:none}
+.aip-ctx-pill.active{background:#1a1714;color:#f2ede3;border-color:#1a1714}
+.aip-ctx-pill:not(.active):hover{border-color:rgba(26,23,20,.2);color:rgba(26,23,20,.6)}
+.aip-collapsible{border-top:1px solid rgba(26,23,20,.06);flex-shrink:0}
+.aip-coll-header{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;cursor:pointer;user-select:none;transition:background .1s}
+.aip-coll-header:hover{background:rgba(26,23,20,.02)}
+.aip-coll-title{font:600 8px system-ui;color:rgba(26,23,20,.3);letter-spacing:.08em;text-transform:uppercase}
+.aip-coll-arrow{font-size:10px;color:rgba(26,23,20,.25);transition:transform .15s}
+.aip-coll-body{padding:0 16px 12px;display:none}
+.aip-collapsible.open .aip-coll-body{display:block}
+.aip-collapsible.open .aip-coll-arrow{transform:rotate(180deg)}
+.aip-insight-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(26,23,20,.05);font:400 11px system-ui;color:rgba(26,23,20,.6);line-height:1.5}
+.aip-insight-row:last-child{border-bottom:none}
+.aip-insight-row.warn{color:#d97706}
+.aip-activity-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid rgba(26,23,20,.04)}
+.aip-activity-row:last-child{border-bottom:none}
+.aip-activity-time{font:400 9px monospace;color:rgba(26,23,20,.3);flex-shrink:0;padding-top:1px}
+.aip-activity-text{font:400 11px system-ui;color:rgba(26,23,20,.6);line-height:1.4}
+.aip-no-activity{font:400 11px system-ui;color:rgba(26,23,20,.3);text-align:center;padding:10px 0}
+.aip-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid rgba(26,23,20,.12);border-top-color:#6aaa00;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ai-key-ok{color:var(--accent);font-size:10px}
-.ai-key-clear{font-size:9px;color:var(--text3);cursor:pointer;text-decoration:underline;margin-left:6px}
-.ai-stats{display:flex;flex-direction:column;gap:3px}
-.ai-stat-row{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text3)}
-.ai-stat-dot{width:8px;height:8px;border-radius:50%}
-.ai-tree-preview{font:10px 'Courier New',monospace;color:var(--text3);line-height:1.5;white-space:pre;background:rgba(255,255,255,.02);border-radius:6px;padding:6px;max-height:160px;overflow-y:auto}
+
+/* ━━━ YOUTUBE TIMESTAMPS ━━━ */
+.yt-ts-badge{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);background:rgba(220,38,38,.9);color:#fff;border-radius:3px;padding:1px 6px;font:600 9px 'DM Mono',monospace;cursor:pointer;white-space:nowrap;z-index:10;transition:transform .12s;line-height:1.5;pointer-events:auto}
+.yt-ts-badge:hover{transform:translateX(-50%) scale(1.1)}
+#yt-no-transcript-banner{position:fixed;bottom:0;left:52px;right:0;z-index:170;background:#92400e;color:#fef3c7;font:500 13px/1.4 'DM Sans',sans-serif;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 -2px 8px rgba(0,0,0,.25);transform:translateY(100%);transition:transform .3s ease}
+#yt-no-transcript-banner.open{transform:translateY(0)}
+#yt-no-transcript-banner.ai-open{right:340px}
+#yt-no-transcript-banner span{flex:1}
+#yt-no-transcript-banner button{background:rgba(255,255,255,.15);border:none;color:#fef3c7;border-radius:4px;padding:3px 10px;cursor:pointer;font:500 12px 'DM Sans',sans-serif;white-space:nowrap}
+#yt-no-transcript-banner button:hover{background:rgba(255,255,255,.28)}
+#yt-panel{position:fixed;bottom:-210px;left:52px;right:0;height:200px;background:#1a1714;border-top:1px solid rgba(255,255,255,.08);z-index:160;display:flex;transition:bottom .3s ease;overflow:hidden}
+#yt-panel.open{bottom:0}
+#yt-panel.ai-open{right:340px}
+.yt-thumb-wrap{position:relative;width:280px;flex-shrink:0;overflow:hidden;cursor:pointer}
+.yt-thumb-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.yt-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(220,38,38,.9);display:flex;align-items:center;justify-content:center;transition:transform .15s;pointer-events:none}
+.yt-thumb-wrap:hover .yt-play-btn{transform:translate(-50%,-50%) scale(1.1)}
+.yt-info{flex:1;padding:14px 18px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.yt-title{font:600 13px system-ui;color:#fff;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px}
+.yt-author{font:400 11px system-ui;color:rgba(255,255,255,.45);margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.yt-ts-label{font:600 8px monospace;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;flex-shrink:0}
+.yt-ts-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.yt-ts-row{display:flex;align-items:center;gap:8px;padding:3px 0;cursor:pointer}
+.yt-ts-time{font:600 10px monospace;color:rgba(220,38,38,.85);flex-shrink:0;min-width:38px}
+.yt-ts-text{font:400 11px system-ui;color:rgba(255,255,255,.6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .1s}
+.yt-ts-row:hover .yt-ts-text{color:#fff}
+#yt-panel-close{position:absolute;top:8px;right:12px;background:none;border:none;color:rgba(255,255,255,.3);font-size:18px;cursor:pointer;line-height:1;padding:0;transition:color .1s;z-index:5}
+#yt-panel-close:hover{color:#fff}
+.tb-yt-btn{display:none}
+
+/* ━━━ SLIDES EDITOR ━━━ */
+#slides-editor{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+#slides-editor.open{display:flex}
+.slides-ed-card{background:#fff;border-radius:16px;width:min(920px,95vw);max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.4)}
+.slides-ed-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid rgba(26,23,20,.08);flex-shrink:0}
+.slides-ed-title{font:700 16px system-ui;color:#1a1714}
+.slides-ed-sub{font:400 12px system-ui;color:rgba(26,23,20,.4);margin-top:2px}
+.slides-ed-close{background:none;border:none;font-size:20px;cursor:pointer;color:rgba(26,23,20,.3);padding:0;line-height:1}
+.slides-ed-close:hover{color:#1a1714}
+.slides-ed-body{flex:1;overflow-y:auto;padding:20px 24px}
+.slides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.slide-card{border-radius:8px;border:2px solid rgba(26,23,20,.06);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.slide-card:hover{border-color:rgba(26,23,20,.15);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.slide-thumb-wrap{width:100%;overflow:hidden;position:relative;background:#f5f5f5}
+.slides-ed-foot{padding:14px 24px;border-top:1px solid rgba(26,23,20,.08);display:flex;align-items:center;gap:8px;flex-shrink:0;background:#fff}
+.sfoot-btn{height:34px;padding:0 16px;border-radius:7px;font:600 12px system-ui;cursor:pointer;transition:all .12s;border:none;white-space:nowrap}
+.sfoot-primary{background:#1a1714;color:#f2ede3}.sfoot-primary:hover{background:#2d2a26}
+.sfoot-sec{background:rgba(26,23,20,.07);color:#1a1714;border:none}.sfoot-sec:hover{background:rgba(26,23,20,.12)}
+.sfoot-ghost{background:none;border:1px solid rgba(26,23,20,.12);color:rgba(26,23,20,.6)}.sfoot-ghost:hover{border-color:rgba(26,23,20,.3);color:#1a1714}
+.sfoot-spacer{flex:1}
+.slide-label{padding:7px 10px;background:#fff;border-top:1px solid rgba(26,23,20,.06)}
+.slide-name{font:500 11px system-ui;color:#1a1714;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px}
+.slide-actions{display:flex;gap:8px}
+.slide-act-btn{font:400 9px system-ui;color:rgba(26,23,20,.35);background:none;border:none;cursor:pointer;padding:0;transition:color .1s}
+.slide-act-btn:hover{color:#1a1714}
+
+/* Slide edit form */
+#slide-edit-modal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
+#slide-edit-modal.open{display:flex}
+.se-card{background:#fff;border-radius:12px;padding:24px;width:460px;box-shadow:0 16px 48px rgba(0,0,0,.25)}
+.se-label{font:600 8px system-ui;color:rgba(26,23,20,.3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.se-inp{width:100%;border:1px solid rgba(26,23,20,.12);border-radius:6px;padding:8px 11px;font:400 13px system-ui;color:#1a1714;outline:none;box-sizing:border-box;margin-bottom:14px}
+.se-inp:focus{border-color:rgba(26,23,20,.3)}
+.se-textarea{min-height:100px;resize:vertical}
+.se-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+
+/* Full-screen slide presenter */
+#slides-presenter{position:fixed;inset:0;z-index:600;background:#000;display:none;flex-direction:column;align-items:stretch;justify-content:stretch}
+#slides-presenter.open{display:flex}
+#sp-viewport{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+#sp-slide-wrap{position:relative;overflow:hidden}
+.sp-slide{position:absolute;top:0;left:0;transition:transform .25s ease;will-change:transform}
+.sp-enter-right{transform:translateX(100%)}
+.sp-enter-left{transform:translateX(-100%)}
+.sp-active{transform:translateX(0)}
+.sp-exit-left{transform:translateX(-100%)}
+.sp-exit-right{transform:translateX(100%)}
+#sp-counter{position:fixed;top:14px;right:160px;font:400 12px monospace;color:rgba(255,255,255,.35);z-index:10;user-select:none}
+#sp-progress{position:fixed;bottom:0;left:0;height:3px;background:#6aaa00;transition:width .3s ease,background .3s ease;z-index:12;pointer-events:none}
+#sp-esc-btn{position:fixed;top:10px;right:14px;font:400 11px system-ui;color:rgba(255,255,255,.4);cursor:pointer;z-index:10;padding:6px 12px;border-radius:6px;background:rgba(255,255,255,.08);border:none;transition:background .1s}
+#sp-esc-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+#sp-export-btn{position:fixed;top:10px;right:96px;font:400 11px system-ui;color:rgba(255,255,255,.4);cursor:pointer;z-index:10;padding:6px 12px;border-radius:6px;background:rgba(255,255,255,.08);border:none;transition:background .1s}
+#sp-export-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+.sp-nav{position:fixed;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s;z-index:10}
+.sp-nav:hover{background:rgba(255,255,255,.2);color:#fff}
+#sp-prev{left:14px}
+#sp-next{right:14px}
+#sp-thumbs{position:fixed;bottom:3px;left:0;right:0;height:88px;background:rgba(0,0,0,.75);display:none;align-items:center;gap:6px;padding:0 14px;overflow-x:auto;z-index:11}
+#sp-thumbs.open{display:flex}
+.sp-thumb{flex-shrink:0;width:120px;height:68px;border-radius:4px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .12s;position:relative;background:#111}
+.sp-thumb.sp-thumb-active{border-color:#fff}
+.sp-thumb-inner{transform-origin:top left;pointer-events:none;position:absolute;top:0;left:0}
+.sp-thumb-num{position:absolute;bottom:2px;right:4px;font:600 8px monospace;color:rgba(255,255,255,.45)}
+#sp-export-dd{position:fixed;z-index:700;background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);overflow:hidden;display:none;min-width:190px}
+#sp-export-dd.open{display:block}
+.sp-export-item{padding:10px 16px;font:400 12px system-ui;color:#1a1714;cursor:pointer;transition:background .1s}
+.sp-export-item:hover{background:rgba(26,23,20,.05)}
 
 #ai-toggle{position:fixed;bottom:52px;right:20px;height:40px;min-width:76px;border-radius:20px;background:#6aaa00;color:#fff;font:700 12px system-ui;border:none;cursor:pointer;z-index:200;box-shadow:0 4px 20px rgba(106,170,0,.45),0 0 0 1px rgba(106,170,0,.25);display:flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;transition:right .3s,background .2s,transform .15s,box-shadow .2s}
 #ai-toggle:hover{transform:scale(1.05);background:#5a9a00;box-shadow:0 6px 24px rgba(106,170,0,.55)}
@@ -624,17 +789,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .theme-light #voice-btn.recording,.theme-portent #voice-btn.recording{background:#fff;border-color:#dc2626;color:#dc2626}
 .theme-light #minimap,.theme-portent #minimap{background:#ffffff;border-color:rgba(26,23,20,.15)}
 .theme-light #minimap-label,.theme-portent #minimap-label{color:rgba(26,23,20,.3)}
-.theme-light #ai-panel,.theme-portent #ai-panel{background:#f7f3ec;border-left-color:rgba(26,23,20,.1)}
-.theme-light .ai-header,.theme-portent .ai-header{border-bottom-color:rgba(26,23,20,.1)}
-.theme-light .ai-header h3,.theme-portent .ai-header h3{color:rgba(26,23,20,.45)}
-.theme-light .ai-close,.theme-portent .ai-close{color:rgba(26,23,20,.4)}
-.theme-light .ai-input,.theme-portent .ai-input{background:#ffffff;border-color:rgba(26,23,20,.15);color:#1a1714}
-.theme-light .ai-label,.theme-portent .ai-label{color:rgba(26,23,20,.35)}
-.theme-light .ai-result,.theme-portent .ai-result{background:rgba(26,23,20,.03);border-color:rgba(26,23,20,.08);color:rgba(26,23,20,.75)}
-.theme-light .ai-btn,.theme-portent .ai-btn{background:rgba(106,170,0,.1);border-color:rgba(106,170,0,.2);color:#3d7a00}
-.theme-light .ai-btn:hover,.theme-portent .ai-btn:hover{background:rgba(106,170,0,.18)}
-.theme-light .ai-chat-msg.user,.theme-portent .ai-chat-msg.user{background:rgba(106,170,0,.1)}
-.theme-light .ai-chat-msg.bot,.theme-portent .ai-chat-msg.bot{background:rgba(26,23,20,.04)}
+/* AI panel is always white — no theme overrides needed */
 .theme-light #ctx-menu,.theme-portent #ctx-menu{background:#ffffff;border-color:rgba(26,23,20,.1)}
 .theme-light .ctx-item,.theme-portent .ctx-item{color:rgba(26,23,20,.75)}
 .theme-light .ctx-item:hover,.theme-portent .ctx-item:hover{background:rgba(26,23,20,.05)}
@@ -680,8 +835,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .theme-midnight #voice-btn:hover{border-color:rgba(150,150,255,.35);color:rgba(200,200,255,.9)}
 .theme-midnight #minimap{background:#0d0d1f;border-color:rgba(130,130,255,.2)}
 .theme-midnight #minimap-label{color:rgba(150,150,255,.35)}
-.theme-midnight #ai-panel{background:#080818;border-left-color:rgba(100,100,255,.12)}
-.theme-midnight .ai-input{background:rgba(100,100,255,.06);border-color:rgba(130,130,255,.18);color:#e0e0ff}
+/* AI panel is always white — no midnight override */
 .theme-midnight #ctx-menu{background:#0d0d1f;border-color:rgba(130,130,255,.18)}
 .theme-midnight .ctx-item{color:rgba(200,200,255,.75)}
 .theme-midnight .ctx-item:hover{background:rgba(100,100,255,.1)}
@@ -871,6 +1025,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .bg-light .tab-new-btn{color:rgba(26,23,20,0.35)}
 .bg-light .tab-new-btn:hover{color:rgba(26,23,20,0.75);background:rgba(26,23,20,0.06);border-color:rgba(26,23,20,0.1)}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div id="viewport">
@@ -936,13 +1092,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   <div class="tb-sep"></div>
   <!-- Present, Templates, Connections, Note -->
   <div class="tb-group">
-    <button class="tb-btn" onclick="startPresentation()" title="Present (Ctrl+P)"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
+    <button class="tb-btn" onclick="openSlidesEditor()" title="Present as slides"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span style="font-size:11px">Slides</span></button>
+    <button class="tb-btn tb-yt-btn" id="btn-yt-video" onclick="showYTPanel()" title="Video panel" style="gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;flex-shrink:0"></span><span style="font-size:11px">Video</span></button>
     <button class="tb-btn" onclick="openDocOverview()" id="btn-docs" title="All documents (Ctrl+Shift+D)" style="gap:4px"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="2" width="10" height="12" rx="1.5"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="9" x2="9" y2="9"/></svg><span style="font-size:11px">Docs</span></button>
     <button class="tb-btn" onclick="showTemplatesGallery()" title="Templates"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
     <button class="tb-btn" onclick="toggleConnections()" id="btn-conn" title="Find connections"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
     <button class="tb-btn" id="btn-note" onclick="toggleNoteMode()" title="Sticky note (N)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></button>
   </div>
-  <div class="tb-sep"></div>
   <div class="tb-sep"></div>
   <!-- Import, Export, Reset, Shortcuts -->
   <div class="tb-group">
@@ -1141,16 +1297,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 <div class="modal-overlay" id="import-modal">
   <div class="modal-card">
     <div class="modal-title">Import to mindmap</div><div class="modal-sub">Create a map from text, markdown, or AI</div>
-    <div class="modal-tabs"><div class="modal-tab active" onclick="setImportTab(0)">Text Outline</div><div class="modal-tab" onclick="setImportTab(1)">Markdown</div><div class="modal-tab" onclick="setImportTab(2)">AI Generate</div><div class="modal-tab" onclick="setImportTab(3)">From Content</div></div>
+    <div class="modal-tabs"><div class="modal-tab active" onclick="setImportTab(0)">Text Outline</div><div class="modal-tab" onclick="setImportTab(1)">Markdown</div><div class="modal-tab" onclick="setImportTab(2)">AI Generate</div><div class="modal-tab" onclick="setImportTab(3)">From Content</div><div class="modal-tab" onclick="setImportTab(4)" style="color:#dc2626">🎬 YouTube</div></div>
     <div id="import-tab-0"><textarea class="modal-textarea" id="import-text" placeholder="Paste an outline with indentation:&#10;&#10;Root Topic&#10;  Branch 1&#10;    Child 1&#10;    Child 2&#10;  Branch 2"></textarea><button class="modal-btn" onclick="importFromText()">Generate map &rarr;</button></div>
     <div id="import-tab-1" style="display:none"><textarea class="modal-textarea" id="import-md" placeholder="# Root&#10;## Branch 1&#10;### Child 1&#10;### Child 2&#10;## Branch 2"></textarea><button class="modal-btn" onclick="importFromMarkdown()">Generate map &rarr;</button></div>
     <div id="import-tab-2" style="display:none"><textarea class="modal-textarea ai-textarea" id="import-ai-prompt" placeholder="Describe your mindmap topic...&#10;e.g. 'Marketing strategy for a SaaS product'"></textarea><button class="modal-btn" onclick="importFromAI()">&#10022; Generate with AI &rarr;</button><div id="import-ai-result"></div></div>
     <div id="import-tab-3" style="display:none">
       <p style="font-size:11px;color:var(--text3);margin-bottom:10px">Enter a URL or paste content to extract a mindmap with AI.</p>
-      <input class="modal-textarea" id="import-content-url" type="url" style="min-height:36px;padding:8px 12px;display:block;margin-bottom:8px" placeholder="https://article-url.com (press Enter to fetch)">
-      <textarea class="modal-textarea" id="import-content-text" placeholder="Or paste text / article content here..." style="min-height:100px"></textarea>
+      <input class="modal-textarea" id="import-content-url" type="url" style="min-height:36px;padding:8px 12px;display:block;margin-bottom:4px" placeholder="https://article-url.com or YouTube URL" oninput="ytDetectHint(this.value)">
+      <div id="yt-detect-hint" style="font-size:10px;color:#6aaa00;margin-bottom:8px;display:none">🎬 YouTube detected — will include timestamps</div>
+      <textarea class="modal-textarea" id="import-content-text" placeholder="Or paste text / article content here..." style="min-height:80px"></textarea>
       <button class="modal-btn" onclick="importFromContent()">&#10022; Generate from content &rarr;</button>
       <div id="import-content-result"></div>
+    </div>
+    <div id="import-tab-4" style="display:none;padding:4px 0">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><span style="font-size:20px">🎬</span><div><div style="font:600 15px system-ui;color:#1a1714">YouTube to Mindmap</div><div style="font:400 12px system-ui;color:rgba(26,23,20,.5);margin-top:2px">Paste a YouTube URL — AI generates a map with clickable timestamps on every node</div></div></div>
+      <input id="yt-url-inp" type="url" placeholder="https://youtube.com/watch?v=..." style="width:100%;height:44px;border-radius:8px;border:1.5px solid rgba(26,23,20,.15);padding:0 14px;font-size:14px;font-family:system-ui;outline:none;box-sizing:border-box;transition:border-color .15s;margin-bottom:6px" oninput="ytTabDetect(this.value)">
+      <div id="yt-tab-hint" style="font:600 11px monospace;color:#6aaa00;margin-bottom:8px;display:none">🎬 YouTube video detected</div>
+      <div id="yt-tab-preview" style="display:none;background:rgba(26,23,20,.03);border:1px solid rgba(26,23,20,.08);border-radius:8px;padding:10px;margin-bottom:12px;align-items:center;gap:12px">
+        <img id="yt-tab-thumb" style="height:80px;border-radius:6px;object-fit:cover;flex-shrink:0" src="" alt="">
+        <div style="min-width:0"><div id="yt-tab-vtitle" style="font:600 13px system-ui;color:#1a1714;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div><div id="yt-tab-vauthor" style="font:400 11px system-ui;color:rgba(26,23,20,.45);margin-top:2px"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+        <label style="display:flex;align-items:center;gap:8px;font:400 12px system-ui;color:rgba(26,23,20,.7);cursor:pointer"><input type="checkbox" id="yt-opt-ts" checked style="accent-color:#dc2626"> Include timestamps on nodes</label>
+        <label style="display:flex;align-items:center;gap:8px;font:400 12px system-ui;color:rgba(26,23,20,.7);cursor:pointer"><input type="checkbox" id="yt-opt-panel" checked style="accent-color:#dc2626"> Show video panel after import</label>
+      </div>
+      <button onclick="ytTabGenerate()" style="width:100%;height:44px;border-radius:8px;border:none;background:#ff0000;color:#fff;font:600 14px system-ui;cursor:pointer;transition:background .15s" onmouseover="this.style.background='#cc0000'" onmouseout="this.style.background='#ff0000'">🎬 Generate map →</button>
+      <div style="font:400 10px monospace;color:rgba(26,23,20,.28);text-align:center;margin-top:8px">Requires Anthropic API key for map generation</div>
+      <div id="yt-tab-result"></div>
     </div>
     <button class="modal-cancel" onclick="hideModal('import-modal')">Cancel</button>
   </div>
@@ -1163,8 +1336,125 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 <div id="minimap" class="visible"><div id="minimap-header"><div id="minimap-label">OVERVIEW</div><div id="minimap-zoom">100%</div></div><canvas id="minimap-canvas" width="320" height="200"></canvas></div>
 <div id="status"><div id="status-left"></div><div id="status-center"></div><div id="status-right"></div></div>
 <div id="pres-label"></div><div id="pres-dots"></div><div id="pres-esc" onclick="endPresentation()">ESC exit</div>
-<div id="ai-panel"><div class="ai-header"><h3>&#10022; AI</h3><button class="ai-close" onclick="toggleAI()">&times;</button></div><div class="ai-body" id="ai-body"></div></div>
+<div id="ai-panel">
+  <div class="aip-header">
+    <div class="aip-header-left">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#6aaa00" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      <span class="aip-header-title">AI Assistant</span>
+    </div>
+    <div class="aip-header-btns">
+      <button class="aip-icon-btn" onclick="aipToggleKey()" title="API key settings"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></button>
+      <button class="aip-icon-btn" onclick="toggleAI()" title="Close"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div id="aip-key-section"></div>
+  <div class="aip-body" id="aip-body">
+    <div class="aip-context-wrap" id="aip-context-wrap"></div>
+    <div id="aip-actions-wrap"></div>
+    <div class="aip-result-area" id="aip-result-area"></div>
+    <div class="aip-chat-section">
+      <div class="aip-chat-thread" id="aip-chat-thread"></div>
+    </div>
+    <div class="aip-collapsible" id="aip-insights-section">
+      <div class="aip-coll-header" onclick="aipToggleInsights()">
+        <span class="aip-coll-title">Map Insights</span>
+        <span class="aip-coll-arrow">▾</span>
+      </div>
+      <div class="aip-coll-body" id="aip-insights-body"></div>
+    </div>
+    <div class="aip-collapsible" id="aip-activity-section">
+      <div class="aip-coll-header" onclick="aipToggleActivity()">
+        <span class="aip-coll-title">Recent Activity</span>
+        <span class="aip-coll-arrow">▾</span>
+      </div>
+      <div class="aip-coll-body" id="aip-activity-body"></div>
+    </div>
+  </div>
+  <div class="aip-input-area">
+    <div class="aip-input-wrap">
+      <textarea class="aip-chat-inp" id="aip-chat-inp" placeholder="Ask about your map..." rows="1"></textarea>
+      <button class="aip-send-btn" id="aip-send-btn" onclick="aipSend()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+    <div class="aip-ctx-toggle">
+      <span>Context:</span>
+      <span class="aip-ctx-pill active" id="aip-ctx-map" onclick="aipSetCtx('map')">Whole map</span>
+      <span class="aip-ctx-pill" id="aip-ctx-node" onclick="aipSetCtx('node')">Selected node</span>
+    </div>
+  </div>
+</div>
 <button id="ai-toggle" onclick="toggleAI()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>AI</button>
+
+<!-- YOUTUBE NO-TRANSCRIPT BANNER -->
+<div id="yt-no-transcript-banner"><span>⚠ No transcript found — map generated from video title. Timestamps unavailable.</span><button onclick="document.getElementById('yt-no-transcript-banner').classList.remove('open')">Dismiss</button></div>
+
+<!-- YOUTUBE VIDEO PANEL -->
+<div id="yt-panel">
+  <div class="yt-thumb-wrap">
+    <img id="yt-thumb-img" src="" alt="">
+    <div class="yt-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+  </div>
+  <div class="yt-info">
+    <div class="yt-title" id="yt-title"></div>
+    <div class="yt-author" id="yt-author"></div>
+    <div class="yt-ts-label">Timestamps</div>
+    <div class="yt-ts-list" id="yt-ts-list"></div>
+  </div>
+  <button id="yt-panel-close" onclick="hideYTPanel()">✕</button>
+</div>
+
+<!-- SLIDES EDITOR OVERLAY -->
+<div id="slides-editor">
+  <div class="slides-ed-card">
+    <div class="slides-ed-head">
+      <div>
+        <div class="slides-ed-title">Your slides</div>
+        <div class="slides-ed-sub" id="slides-ed-sub">0 slides</div>
+      </div>
+      <button class="slides-ed-close" onclick="closeSlidesEditor()">✕</button>
+    </div>
+    <div class="slides-ed-body">
+      <div class="slides-grid" id="slides-grid"></div>
+    </div>
+    <div class="slides-ed-foot">
+      <button class="sfoot-btn sfoot-sec" onclick="addBlankSlide()">+ Add slide</button>
+      <div class="sfoot-spacer"></div>
+      <button class="sfoot-btn sfoot-ghost" onclick="spExportMarkdown()">Copy outline</button>
+      <button class="sfoot-btn sfoot-ghost" onclick="spExportPDF()">↓ PDF</button>
+      <button class="sfoot-btn sfoot-primary" onclick="startSlidePresentation()">▶ Present</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE EDIT MODAL -->
+<div id="slide-edit-modal">
+  <div class="se-card">
+    <div class="se-label">Slide title</div>
+    <input class="se-inp" id="se-title-inp" type="text" placeholder="Slide title">
+    <div class="se-label">Content (one bullet per line)</div>
+    <textarea class="se-inp se-textarea" id="se-content-inp" placeholder="Bullet point 1&#10;Bullet point 2"></textarea>
+    <div class="se-btns">
+      <button class="sfoot-btn sfoot-ghost" onclick="closeSlideEdit()">Cancel</button>
+      <button class="sfoot-btn sfoot-primary" onclick="saveSlideEdit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDES FULL-SCREEN PRESENTER -->
+<div id="slides-presenter">
+  <div id="sp-viewport"></div>
+  <button class="sp-nav" id="sp-prev" onclick="spPrev()">&#8249;</button>
+  <button class="sp-nav" id="sp-next" onclick="spNext()">&#8250;</button>
+  <div id="sp-counter">1 / 1</div>
+  <button id="sp-export-btn" onclick="spToggleExport(event)">↓ Export</button>
+  <button id="sp-esc-btn" onclick="exitSlidePresentation()">✕ ESC</button>
+  <div id="sp-progress"></div>
+  <div id="sp-thumbs"></div>
+  <div id="sp-export-dd">
+    <div class="sp-export-item" onclick="spExportPDF()">↓ Export as PDF</div>
+    <div class="sp-export-item" onclick="spExportPNG()">↓ Export as PNG (all slides)</div>
+    <div class="sp-export-item" onclick="spExportMarkdown()">📋 Copy as Markdown outline</div>
+  </div>
+</div>
 
 <!-- VOICE BUTTON -->
 <button id="voice-btn" onclick="toggleVoice()" title="Voice to mindmap (Ctrl+Shift+V)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Voice</button>
@@ -1386,6 +1676,8 @@ let currentTheme='',lastSaveTime=Date.now(),currentLayout='radial';
 let currentTool='select',drawElements=[],drawingShape=null,selectedDrawIdx=null;
 let zenMode=false,gridMode='none',filterTag=null;
 let selBoxStart=null,selBoxEl=null;
+let _drawDragState=null; // {idx,ox,oy,sx,sy,moved} — drag state for draw elements
+let _lastDrawHit={time:0,idx:-1}; // double-click detection for draw elements
 let canvasNotes=[],noteIdSeq=1,noteMode=false,_noteConnectMode=null;
 let docOpenNodeId=null; // declared early for render()
 
@@ -1607,6 +1899,7 @@ if(noteMap[node.id]){const nd=document.createElement('div');nd.className='note-d
 if(node.document&&node.document.content){const dd=document.createElement('div');dd.className='node-doc-dot';dd.title='Open document';dd.addEventListener('click',e=>{e.stopPropagation();openDocPanel(node.id)});el.appendChild(dd)}
 if(docOpenNodeId===node.id)el.classList.add('doc-open');
 if(tagMap[node.id]&&tagMap[node.id].length){const tg=document.createElement('div');tg.className='node-tags';tagMap[node.id].forEach(t=>{const tp=document.createElement('span');tp.className='node-tag';tp.style.background=t.color;tp.textContent=t.text;tg.appendChild(tp)});el.appendChild(tg)}
+if(node.ytTimestamp&&node.youtubeVideoId){const badge=document.createElement('div');badge.className='yt-ts-badge';badge.textContent='▶ '+node.ytTimestamp;badge.title='Open in YouTube at '+node.ytTimestamp;badge.addEventListener('click',e=>{e.stopPropagation();window.open('https://youtube.com/watch?v='+node.youtubeVideoId+'&t='+node.ytSeconds+'s','_blank')});el.appendChild(badge)}
 
 const ct=document.createElement('div');ct.className='node-controls';
 const ab=document.createElement('button');ab.className='nc-btn nc-add';ab.textContent='+';ab.style.cssText='position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%)';ab.onclick=e=>{e.stopPropagation();selectedId=node.id;addChild()};ct.appendChild(ab);
@@ -1737,25 +2030,49 @@ const tool=currentTool;const wp=screenToWorld(e.clientX,e.clientY);
 if(tool==='boxsel'||tool==='select'){
   if(e.ctrlKey||e.metaKey){isPanning=true;psx=e.clientX;psy=e.clientY;ppx=panX;ppy=panY;viewport.classList.add('grabbing');return}
   const drawHit=e.target.closest('[data-idx]');
-  if(drawHit){selectedDrawIdx=parseInt(drawHit.dataset.idx);selectedId=null;multiSel.clear();renderDrawElements();render();return}
+  if(drawHit){
+    const idx=parseInt(drawHit.dataset.idx);
+    // Double-click detection: if same element clicked within 400ms, open text editor
+    const now=Date.now();
+    if(drawElements[idx]&&drawElements[idx].type==='text'&&_lastDrawHit.idx===idx&&now-_lastDrawHit.time<400){
+      _lastDrawHit={time:0,idx:-1};
+      const el=drawElements[idx];_startTextEdit(el.x1,el.y1,idx);return;
+    }
+    _lastDrawHit={time:now,idx};
+    selectedDrawIdx=idx;selectedId=null;multiSel.clear();renderDrawElements();render();
+    const de=drawElements[idx];
+    _drawDragState={idx,sx:e.clientX,sy:e.clientY,moved:false,
+      ox1:de.x1,oy1:de.y1,ox2:de.x2,oy2:de.y2,
+      origPoints:de.points?de.points.map(p=>[...p]):null};
+    return;
+  }
   selectedDrawIdx=null;selectedId=null;multiSel.clear();render();selBoxStart={sx:e.clientX,sy:e.clientY,wx:wp.x,wy:wp.y};return}
 if(tool==='hand'){isPanning=true;psx=e.clientX;psy=e.clientY;ppx=panX;ppy=panY;viewport.classList.add('grabbing');return}
 if(['rect','ellipse','diamond','arrow','line'].includes(tool)){drawingShape={type:tool,x1:wp.x,y1:wp.y,x2:wp.x,y2:wp.y};return}
 if(tool==='pen'){drawingShape={type:'pen',points:[[wp.x,wp.y]]};return}
-if(tool==='text'){_startTextEdit(wp.x,wp.y,-1);return}
+if(tool==='text'){
+  // Don't create text on top of existing draw elements — dblclick handles re-editing
+  if(e.target.closest('[data-idx]'))return;
+  _startTextEdit(wp.x,wp.y,-1);return;
+}
 if(tool==='eraser'){const t2=e.target.closest('[data-idx]');if(t2){snap();drawElements.splice(parseInt(t2.dataset.idx),1);render();schSave();toast('Removed')}return}
 }
 
 viewport.addEventListener('mousedown',handleCanvasMouseDown);
-viewport.addEventListener('dblclick',e=>{
-  // Double-click to edit a text draw element
-  const drawHit=e.target.closest('[data-idx]');
-  if(drawHit&&currentTool==='select'){const idx=parseInt(drawHit.dataset.idx);if(drawElements[idx]&&drawElements[idx].type==='text'){const el=drawElements[idx];_startTextEdit(el.x1,el.y1,idx);return;}}
-  if(e.target.closest('.node')||e.target.closest('.canvas-note')||e.target.closest('#toolbar')||e.target.closest('#draw-toolbar')||e.target.closest('.modal-overlay'))return;
-  if(currentTool!=='select'||noteMode||_noteConnectMode!==null)return;
-  const wp=screenToWorld(e.clientX,e.clientY);createCanvasNote(wp.x,wp.y);});
+viewport.addEventListener('dblclick',e=>{});
 window.addEventListener('mousemove',e=>{
 if(isPanning){panX=ppx+(e.clientX-psx);panY=ppy+(e.clientY-psy);apT();return}
+if(_drawDragState){
+  const ds=_drawDragState;const ddx=(e.clientX-ds.sx)/zoom,ddy=(e.clientY-ds.sy)/zoom;
+  if(!ds.moved&&Math.abs(ddx)+Math.abs(ddy)>3){ds.moved=true;snap();}
+  if(ds.moved){
+    const el=drawElements[ds.idx];
+    if(ds.origPoints){el.points=ds.origPoints.map(([px,py])=>[px+ddx,py+ddy]);}
+    else{el.x1=ds.ox1+ddx;el.y1=ds.oy1+ddy;if(ds.ox2!==undefined)el.x2=ds.ox2+ddx;if(ds.oy2!==undefined)el.y2=ds.oy2+ddy;}
+    renderDrawElements();
+  }
+  return;
+}
 if(drawingShape){const wp=screenToWorld(e.clientX,e.clientY);
 if(drawingShape.type==='pen'){drawingShape.points.push([wp.x,wp.y])}else{drawingShape.x2=wp.x;drawingShape.y2=wp.y}
 const temp=[...drawElements,drawingShape];const old=drawElements;drawElements=temp;renderDrawElements();drawElements=old;return}
@@ -1766,6 +2083,7 @@ const wp1=screenToWorld(x,y),wp2=screenToWorld(x+w,y+h);
 selBoxEl.style.left=wp1.x+'px';selBoxEl.style.top=wp1.y+'px';selBoxEl.style.width=(wp2.x-wp1.x)+'px';selBoxEl.style.height=(wp2.y-wp1.y)+'px'}});
 
 window.addEventListener('mouseup',e=>{
+if(_drawDragState){if(_drawDragState.moved)schSave();_drawDragState=null;}
 if(isPanning){isPanning=false;viewport.classList.remove('grabbing')}
 if(drawingShape){snap();if(drawingShape.type==='pen'&&drawingShape.points.length>2){drawElements.push(drawingShape)}else if(drawingShape.type!=='pen'){const dx=Math.abs(drawingShape.x2-drawingShape.x1),dy=Math.abs(drawingShape.y2-drawingShape.y1);if(dx>5||dy>5)drawElements.push(drawingShape)}
 drawingShape=null;render();schSave()}
@@ -2175,54 +2493,782 @@ case'ArrowRight':if(selectedId){const ch=gvc(selectedId);if(ch.length){selectedI
 document.addEventListener('click',e=>{if(!e.target.closest('#ctx-menu'))hideCtx();if(!e.target.closest('.dropdown')&&!e.target.closest('#btn-export')&&!e.target.closest('#btn-layout')&&!e.target.closest('#btn-menu')&&!e.target.closest('#btn-style'))hideDD();if(!e.target.closest('#tag-editor')&&!e.target.closest('[data-a="tag"]'))document.getElementById('tag-editor').classList.remove('visible');if(!e.target.closest('#emoji-picker')&&!e.target.closest('[data-a="icon"]'))document.getElementById('emoji-picker').classList.remove('visible')});
 
 // ━━━ AI PANEL ━━━
-function toggleAI(){aiOpen=!aiOpen;document.getElementById('ai-panel').classList.toggle('open',aiOpen);document.getElementById('ai-toggle').classList.toggle('shifted',aiOpen);document.getElementById('ai-toggle').classList.toggle('open',aiOpen);document.getElementById('viewport').classList.toggle('ai-open',aiOpen);document.getElementById('status').classList.toggle('ai-open',aiOpen);document.getElementById('toolbar').classList.toggle('ai-open',aiOpen);
-renderAI();setTimeout(fitToScreen,350)}
+let aipKeyOpen=false,aipChatCtx='map',aipInsightsOpen=false,aipActivityOpen=false,aiActivityLog=[];
 
-async function callAI(prompt){const key=localStorage.getItem('mindmap-api-key');if(!key){toast('Set API key');return null}
-aiLoading=true;document.getElementById('ai-toggle').innerHTML='&#10022; thinking...';document.getElementById('ai-toggle').classList.add('loading');
-try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,messages:[{role:'user',content:prompt}]})});
-const data=await res.json();aiLoading=false;document.getElementById('ai-toggle').innerHTML=aiOpen?'&#10022; AI &times;':'&#10022; AI';document.getElementById('ai-toggle').classList.remove('loading');
-if(data.error){toast('AI error');return null}return data.content[0].text}catch(e){aiLoading=false;document.getElementById('ai-toggle').innerHTML=aiOpen?'&#10022; AI &times;':'&#10022; AI';document.getElementById('ai-toggle').classList.remove('loading');toast('Failed');return null}}
+function toggleAI(){
+  aiOpen=!aiOpen;
+  document.getElementById('ai-panel').classList.toggle('open',aiOpen);
+  document.getElementById('ai-toggle').classList.toggle('shifted',aiOpen);
+  document.getElementById('ai-toggle').classList.toggle('open',aiOpen);
+  document.getElementById('viewport').classList.toggle('ai-open',aiOpen);
+  document.getElementById('status').classList.toggle('ai-open',aiOpen);
+  document.getElementById('toolbar').classList.toggle('ai-open',aiOpen);
+  document.getElementById('yt-no-transcript-banner').classList.toggle('ai-open',aiOpen);
+  if(aiOpen)renderAI();
+  setTimeout(fitToScreen,350);
+}
 
-function getMapOutline(){let o='';function w(id,d){const n=gn(id);if(!n)return;o+='  '.repeat(d)+n.label+'\n';gc(id).forEach(c=>w(c.id,d+1))}const r=nodes.find(n=>n.parentId===null);if(r)w(r.id,0);return o}
+async function callAI(prompt){
+  const key=localStorage.getItem('mindmap-api-key');if(!key){toast('Add API key in AI panel');return null}
+  aiLoading=true;document.getElementById('ai-toggle').classList.add('loading');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();aiLoading=false;document.getElementById('ai-toggle').classList.remove('loading');
+    if(data.error){toast('AI: '+(data.error.message||'error'));return null}
+    return data.content[0].text;
+  }catch(e){aiLoading=false;document.getElementById('ai-toggle').classList.remove('loading');toast('AI request failed');return null}
+}
 
-function renderAI(){const body=document.getElementById('ai-body');if(!aiOpen){body.innerHTML='';return}const key=localStorage.getItem('mindmap-api-key')||'';const sel=selectedId?gn(selectedId):null;let h='';
-h+=`<div class="ai-section"><div class="ai-label">API KEY</div>${key?`<span class="ai-key-ok">&#10003; Saved</span><span class="ai-key-clear" onclick="localStorage.removeItem('mindmap-api-key');renderAI()">Clear</span>`:`<input class="ai-input" type="password" placeholder="sk-ant-..." onchange="localStorage.setItem('mindmap-api-key',this.value);renderAI()">`}</div>`;
-h+=`<div class="ai-section"><button class="ai-btn" onclick="aiFindGaps()" ${!key?'disabled':''}>&#10022; What am I missing?</button><div id="ai-gaps-result"></div></div>`;
-if(sel){h+=`<div class="ai-section" style="border-top:1px solid var(--border);padding-top:10px"><div class="ai-label">SELECTED: ${sel.label}</div>`;
-h+=`<button class="ai-btn" onclick="aiExpand()" ${!key?'disabled':''}>&#10022; Expand node</button><div id="ai-expand-result"></div>`;
-h+=`<button class="ai-btn" onclick="aiRewrite()" ${!key?'disabled':''}>&#10022; Rewrite label</button><div id="ai-rewrite-result"></div></div>`}
-h+=`<div class="ai-section" style="border-top:1px solid var(--border);padding-top:10px"><div class="ai-label">ASK</div><div class="ai-chat" id="ai-chat">`;
-chatHistory.slice(-5).forEach(m=>{h+=`<div class="ai-chat-msg ${m.role}">${escH(m.text)}</div>`});
-h+=`</div><textarea class="ai-input ai-textarea" id="ai-ask-input" placeholder="Ask about your map..."></textarea><button class="ai-btn ai-btn-sm" onclick="aiAsk()" ${!key?'disabled':''} style="margin-top:4px">Ask &rarr;</button></div>`;
-if(!sel){const root=nodes.find(n=>n.parentId===null);if(root){h+=`<div class="ai-section" style="border-top:1px solid var(--border);padding-top:10px"><div class="ai-label">STATS</div><div class="ai-stats">`;gc(root.id).forEach(b=>{h+=`<div class="ai-stat-row"><div class="ai-stat-dot" style="background:${b.color}"></div>${b.label.toUpperCase()}: ${gall(b.id).length+1}</div>`});h+=`</div></div>`}}
-body.innerHTML=h}
+async function callAIStream(prompt,onChunk){
+  const key=localStorage.getItem('mindmap-api-key');if(!key){toast('Add API key in AI panel');return null}
+  aiLoading=true;document.getElementById('ai-toggle').classList.add('loading');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1200,stream:true,messages:[{role:'user',content:prompt}]})});
+    const reader=res.body.getReader();const dec=new TextDecoder();let full='';
+    while(true){const{done,value}=await reader.read();if(done)break;
+      const lines=dec.decode(value).split('\n');
+      for(const ln of lines){if(ln.startsWith('data: ')){try{const ev=JSON.parse(ln.slice(6));if(ev.type==='content_block_delta'&&ev.delta?.text){full+=ev.delta.text;onChunk(full);}}catch(e){}}}
+    }
+    aiLoading=false;document.getElementById('ai-toggle').classList.remove('loading');return full;
+  }catch(e){aiLoading=false;document.getElementById('ai-toggle').classList.remove('loading');toast('AI request failed');return null}
+}
 
-async function aiExpand(){if(!selectedId)return;const n=gn(selectedId),root=nodes.find(x=>x.parentId===null),p=n.parentId?gn(n.parentId):null;
-document.getElementById('ai-expand-result').innerHTML='<div class="ai-spinner"></div>';
-const r=await callAI(`Mindmap node '${n.label}' (parent: '${p?p.label:'root'}', map: '${root.label}'). Generate 6 child nodes. Return ONLY JSON array: ["c1","c2","c3","c4","c5","c6"]`);
-if(!r)return;try{const items=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
-let h='<div class="ai-check-list">';items.forEach(it=>{h+=`<label class="ai-check-item"><input type="checkbox" checked data-label="${escH(it)}">${escH(it)}</label>`});
-h+='</div><button class="ai-btn ai-btn-sm" onclick="aiAddChecked()" style="margin-top:4px">Add selected &rarr;</button>';
-document.getElementById('ai-expand-result').innerHTML=h}catch(e){document.getElementById('ai-expand-result').innerHTML=`<div class="ai-result">${escH(r)}</div>`}}
-function aiAddChecked(){if(!selectedId)return;snap();const p=gn(selectedId);if(collapsedSet.has(p.id))collapsedSet.delete(p.id);let i=0;document.querySelectorAll('#ai-expand-result input:checked').forEach(cb=>{setTimeout(()=>{nodes.push({id:nextId++,label:cb.dataset.label,parentId:p.id,color:p.color,x:p.x+140,y:p.y});layoutAll();render();schSave()},i*100);i++});toast('Adding...')}
+function getMapOutline(){let o='';function w(id,d){const n=gn(id);if(!n)return;o+='  '.repeat(d)+n.label+'\n';gc(id).forEach(c=>w(c.id,d+1))}nodes.filter(n=>n.parentId===null).forEach(r=>w(r.id,0));return o}
 
-async function aiRewrite(){if(!selectedId)return;const n=gn(selectedId),root=nodes.find(x=>x.parentId===null);
-document.getElementById('ai-rewrite-result').innerHTML='<div class="ai-spinner"></div>';
-const r=await callAI(`Rewrite mindmap label 3 ways, clearer/specific. Current: '${n.label}'. Context: '${root.label}'. Return ONLY JSON: ["opt1","opt2","opt3"]. Max 5 words each.`);
-if(!r)return;try{const opts=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
-let h='';opts.forEach(o=>{h+=`<span class="ai-pill" onclick="snap();gn(${selectedId}).label='${o.replace(/'/g,"\\'")}';render();schSave();toast('Updated')">${escH(o)}</span>`});
-document.getElementById('ai-rewrite-result').innerHTML=h}catch(e){document.getElementById('ai-rewrite-result').innerHTML=`<div class="ai-result">${escH(r)}</div>`}}
+function aipLog(action,nodeLabel){aiActivityLog.unshift({time:Date.now(),action,nodeLabel});if(aiActivityLog.length>50)aiActivityLog.pop();if(aipActivityOpen)aipRenderActivity()}
 
-async function aiFindGaps(){document.getElementById('ai-gaps-result').innerHTML='<div class="ai-spinner"></div>';
-const r=await callAI(`Mindmap:\n${getMapOutline()}\nFind 5 missing topics. Return ONLY JSON: [{"gap":"topic","reason":"why","suggestedParent":"node name"}]`);
-if(!r)return;try{const gaps=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());let h='';
-gaps.forEach(g=>{const p=nodes.find(n=>n.label.toLowerCase().includes(g.suggestedParent.toLowerCase()));
-h+=`<div class="ai-gap-card"><div class="gap-name">${escH(g.gap)}</div><div class="gap-reason">${escH(g.reason)}</div><div class="gap-parent">&rarr; ${escH(g.suggestedParent)}</div>${p?`<button class="ai-btn ai-btn-sm" onclick="snap();nodes.push({id:nextId++,label:'${g.gap.replace(/'/g,"\\'")}',parentId:${p.id},color:gn(${p.id}).color,x:gn(${p.id}).x+140,y:gn(${p.id}).y});layoutAll();render();schSave();toast('Added')" style="margin-top:4px">+ Add</button>`:''}</div>`});
-document.getElementById('ai-gaps-result').innerHTML=h}catch(e){document.getElementById('ai-gaps-result').innerHTML=`<div class="ai-result">${escH(r)}</div>`}}
+function aipTimeAgo(ts){const d=Math.floor((Date.now()-ts)/1000);if(d<60)return d+'s ago';if(d<3600)return Math.floor(d/60)+'m ago';if(d<86400)return Math.floor(d/3600)+'h ago';if(d<172800)return 'Yesterday';return Math.floor(d/86400)+'d ago'}
 
-async function aiAsk(){const input=document.getElementById('ai-ask-input');const q=input.value.trim();if(!q)return;chatHistory.push({role:'user',text:q});input.value='';renderAI();
-const r=await callAI(`Mindmap:\n${getMapOutline()}\n\nQ: ${q}\n\nAnswer concisely.`);if(r)chatHistory.push({role:'bot',text:r});renderAI()}
+function renderAI(){
+  if(!aiOpen)return;
+  aipRenderKey();aipRenderContext();aipRenderChat();
+  const inp=document.getElementById('aip-chat-inp');
+  if(inp&&!inp._aipBound){inp._aipBound=true;inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aipSend()}});inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,80)+'px'});}
+}
+
+function aipToggleKey(){aipKeyOpen=!aipKeyOpen;aipRenderKey()}
+
+function aipRenderKey(){
+  const el=document.getElementById('aip-key-section');if(!el)return;
+  const key=localStorage.getItem('mindmap-api-key')||'';
+  if(key&&!aipKeyOpen){
+    el.className='aip-key-section';
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:6px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6aaa00" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span class="aip-key-ok">API key connected</span><button class="aip-key-change" onclick="aipToggleKey()">Change</button></div>`;
+  }else{
+    el.className='aip-key-section';
+    el.innerHTML=`<div class="aip-key-label">Anthropic API Key</div><input class="aip-key-inp" type="password" id="aip-key-inp" placeholder="sk-ant-..." value="${escH(key)}"><button class="aip-key-save" onclick="aipSaveKey()">Save key</button>`;
+  }
+}
+
+function aipSaveKey(){const v=(document.getElementById('aip-key-inp')?.value||'').trim();if(v){localStorage.setItem('mindmap-api-key',v);aipKeyOpen=false;aipRenderKey();toast('API key saved')}}
+
+function aipBreadcrumb(node){const parts=[];let n=node;while(n){parts.unshift(n.label);n=n.parentId?gn(n.parentId):null;if(parts.length>4)break}return parts.join(' → ')}
+
+function aipIsStale(node){return !!(node.document?.updatedAt&&(Date.now()-node.document.updatedAt)>30*24*60*60*1000)}
+
+function aipRenderContext(){
+  const el=document.getElementById('aip-context-wrap');
+  const actWrap=document.getElementById('aip-actions-wrap');
+  if(!el||!actWrap)return;
+  const sel=selectedId?gn(selectedId):null;
+  if(!sel){
+    el.innerHTML=`<div class="aip-empty-state"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg><span class="aip-empty-text">Select a node to see AI actions</span></div>`;
+    actWrap.innerHTML='';return;
+  }
+  const children=gc(sel.id);const stale=aipIsStale(sel);
+  const hasDoc=!!(sel.document?.content?.trim()&&sel.document.content.trim()!=='<p></p>'&&sel.document.content.trim()!=='<p><br></p>');
+  const wordCount=hasDoc?sel.document.content.replace(/<[^>]+>/g,' ').split(/\s+/).filter(Boolean).length:0;
+  let childPills='';
+  if(children.length){const shown=children.slice(0,3).map(c=>`<span class="aip-ctx-child-pill">${escH(c.label)}</span>`).join('');const more=children.length>3?`<span class="aip-ctx-child-pill">+${children.length-3}</span>`:'';childPills=`<div class="aip-ctx-meta-row">↳ ${children.length} child node${children.length!==1?'s':''} &nbsp;${shown}${more}</div>`}
+  const docRow=hasDoc?`<div class="aip-ctx-meta-row"><span>📄</span><span class="aip-ctx-doc-link" onclick="openDocPanel(${sel.id});toggleAI()">Has document · ${wordCount} word${wordCount!==1?'s':''}</span></div>`:'';
+  const staleRow=stale?`<div class="aip-ctx-stale"><span style="width:7px;height:7px;border-radius:50%;background:#d97706;display:inline-block;flex-shrink:0"></span>Not updated in 30+ days</div>`:'';
+  el.innerHTML=`<div class="aip-ctx-card"><div class="aip-ctx-top"><div class="aip-ctx-dot" style="background:${sel.color||'#6aaa00'}"></div><div class="aip-ctx-label" title="${escH(sel.label)}">${escH(sel.label)}</div></div><div class="aip-ctx-breadcrumb">${escH(aipBreadcrumb(sel))}</div>${childPills}${docRow}${staleRow}</div>`;
+  const key=localStorage.getItem('mindmap-api-key')||'';const d=key?'':'disabled';
+  const lastBtn=stale?`<button class="aip-action-btn" ${d} onclick="aipRefresh()"><span class="aip-action-icon">✦</span>Refresh</button>`:`<button class="aip-action-btn" ${d} onclick="aipConnect()"><span class="aip-action-icon">✦</span>Connect</button>`;
+  actWrap.innerHTML=`<div class="aip-actions-wrap"><div class="aip-section-label">Actions</div><div class="aip-actions-grid"><button class="aip-action-btn" ${d} onclick="aipExpand()"><span class="aip-action-icon">✦</span>Expand</button><button class="aip-action-btn" ${d} onclick="aipSummarize()"><span class="aip-action-icon">✦</span>Summarize</button><button class="aip-action-btn" onclick="aipWriteDoc()"><span class="aip-action-icon">✦</span>Write doc</button><button class="aip-action-btn" ${d} onclick="aipFindGaps()"><span class="aip-action-icon">✦</span>Find gaps</button><button class="aip-action-btn" ${d} onclick="aipRewrite()"><span class="aip-action-icon">✦</span>Rewrite</button>${lastBtn}</div></div>`;
+}
+
+function aipShowResult(title,html){
+  const area=document.getElementById('aip-result-area');if(!area)return;
+  area.innerHTML=`<div class="aip-result-card"><div class="aip-result-header"><span class="aip-result-title">✦ ${escH(title)}</span><button class="aip-result-close" onclick="document.getElementById('aip-result-area').innerHTML=''">×</button></div>${html}</div>`;
+}
+
+function aipSetBtnsLoading(label,loading){
+  document.querySelectorAll('.aip-action-btn').forEach(b=>{if(b.textContent.includes(label)){b.disabled=loading;if(loading)b.innerHTML=`<span class="aip-spinner"></span><span>Working...</span>`}});
+}
+
+async function aipExpand(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  const p=n.parentId?gn(n.parentId):null;
+  aipSetBtnsLoading('Expand',true);
+  const r=await callAI(`Mindmap node "${n.label}" (parent: "${p?p.label:'root'}"). Generate 6 concise child node suggestions. Return ONLY a JSON array: ["item1","item2","item3","item4","item5","item6"]`);
+  aipRenderContext();if(!r)return;
+  try{const items=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+  const checks=items.map(it=>`<label class="aip-check-item"><input type="checkbox" checked data-label="${escH(it)}">${escH(it)}</label>`).join('');
+  aipShowResult(`Expand — ${n.label}`,`<div class="aip-check-list">${checks}</div><button class="aip-add-btn" onclick="aipAddChecked()">Add selected nodes →</button>`);
+  aipLog('Expanded node',n.label);}catch(e){aipShowResult('Expand',`<div class="aip-result-text">${escH(r)}</div>`)}
+}
+
+function aipAddChecked(){
+  if(!selectedId)return;snap();const p=gn(selectedId);if(!p)return;
+  if(collapsedSet.has(p.id))collapsedSet.delete(p.id);
+  let count=0;
+  document.querySelectorAll('#aip-result-area input:checked').forEach(cb=>{const lbl=cb.dataset.label;setTimeout(()=>{nodes.push({id:nextId++,label:lbl,parentId:p.id,color:p.color,x:p.x+140,y:p.y});layoutAll();render();schSave()},count*80);count++});
+  toast(`Adding ${count} nodes...`);aipLog(`Added ${count} nodes to`,p.label);
+  document.getElementById('aip-result-area').innerHTML='';
+}
+
+async function aipSummarize(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  aipSetBtnsLoading('Summarize',true);
+  const desc=gall(n.id).map(id=>gn(id)).filter(Boolean).map(x=>x.label).join(', ');
+  const r=await callAI(`Write a concise 2-3 sentence summary of this mind map branch.\nBranch: "${n.label}"\nDescendants: ${desc||'none'}.\nBe specific.`);
+  aipRenderContext();if(!r)return;
+  chatHistory.push({role:'bot',text:`**Summary of "${n.label}"**\n\n${r}`});
+  aipRenderChat();aipLog('Summarized',n.label);
+  setTimeout(()=>{const t=document.getElementById('aip-chat-thread');if(t)t.scrollTop=t.scrollHeight},50);
+}
+
+function aipWriteDoc(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  openDocPanel(n.id);if(aiOpen)toggleAI();aipLog('Opened document',n.label);
+}
+
+async function aipFindGaps(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  aipSetBtnsLoading('Find gaps',true);
+  const desc=gall(n.id).map(id=>gn(id)).filter(Boolean).map(x=>x.label).join(', ');
+  const r=await callAI(`Mindmap branch "${n.label}" contains: ${desc||'no children yet'}.\nFind 4 missing but important topics.\nReturn ONLY JSON: [{"gap":"topic","reason":"why","suggestedParent":"${n.label}"}]`);
+  aipRenderContext();if(!r)return;
+  try{const gaps=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+  const rows=gaps.map(g=>{const par=nodes.find(x=>x.label.toLowerCase().includes((g.suggestedParent||'').toLowerCase()))||n;
+  return `<div class="aip-gap-row"><div class="aip-gap-info"><div class="gap-name">${escH(g.gap)}</div><div class="gap-parent">→ ${escH(g.suggestedParent||n.label)}</div></div><button class="aip-gap-add" onclick="snap();nodes.push({id:nextId++,label:${JSON.stringify(g.gap)},parentId:${par.id},color:gn(${par.id})?.color||'#6aaa00',x:(gn(${par.id})?.x||5000)+140,y:gn(${par.id})?.y||5000});layoutAll();render();schSave();toast('Added');aipLog('Added gap','${g.gap.replace(/'/g,"\\'")}')">+ Add</button></div>`}).join('');
+  aipShowResult(`Find gaps — ${n.label}`,`<div class="aip-gap-list">${rows}</div>`);aipLog('Found gaps in',n.label);}
+  catch(e){aipShowResult('Find gaps',`<div class="aip-result-text">${escH(r)}</div>`)}
+}
+
+async function aipRewrite(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  aipSetBtnsLoading('Rewrite',true);
+  const r=await callAI(`Suggest 3 improved alternatives for this mindmap label. Current: "${n.label}". Clearer, more specific, max 5 words each.\nReturn ONLY JSON array: ["opt1","opt2","opt3"]`);
+  aipRenderContext();if(!r)return;
+  try{const opts=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+  const sid=selectedId;
+  const pills=opts.map(o=>`<span class="aip-rewrite-pill" onclick="snap();const _n=gn(${sid});if(_n){_n.label=${JSON.stringify(o)};render();schSave();toast('Renamed');document.getElementById('aip-result-area').innerHTML='';aipRenderContext();aipLog('Rewrote label',${JSON.stringify(o)})}">${escH(o)}</span>`).join('');
+  aipShowResult(`Rewrite — ${n.label}`,`<div class="aip-pill-row">${pills}</div>`);}
+  catch(e){aipShowResult('Rewrite',`<div class="aip-result-text">${escH(r)}</div>`)}
+}
+
+async function aipRefresh(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  aipSetBtnsLoading('Refresh',true);
+  const desc=gall(n.id).map(id=>gn(id)).filter(Boolean).map(x=>x.label).join(', ');
+  const r=await callAI(`Mindmap node "${n.label}" hasn't been updated in 30+ days. Children: ${desc||'none'}.\nSuggest 3 specific updates. Return ONLY JSON: [{"type":"ADD|UPDATE","content":"suggestion","reason":"brief reason"}]`);
+  aipRenderContext();if(!r)return;
+  try{const sugs=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+  const rows=sugs.map(s=>`<div class="aip-gap-row"><div class="aip-gap-info"><span style="background:${s.type==='ADD'?'rgba(106,170,0,.1)':'rgba(59,130,246,.1)'};color:${s.type==='ADD'?'#6aaa00':'#3b82f6'};font:600 8px monospace;padding:1px 5px;border-radius:3px;margin-bottom:3px;display:inline-block">${s.type}</span><div class="gap-name">${escH(s.content)}</div><div class="gap-parent">${escH(s.reason)}</div></div></div>`).join('');
+  aipShowResult(`Refresh — ${n.label}`,`<div class="aip-gap-list">${rows}</div>`);aipLog('Refreshed stale node',n.label);}
+  catch(e){aipShowResult('Refresh',`<div class="aip-result-text">${escH(r)}</div>`)}
+}
+
+async function aipConnect(){
+  if(!selectedId)return;const n=gn(selectedId);if(!n)return;
+  aipSetBtnsLoading('Connect',true);
+  const allLabels=nodes.filter(x=>x.id!==n.id).map(x=>x.label).slice(0,60).join(', ');
+  const r=await callAI(`In this mindmap, "${n.label}" exists alongside: ${allLabels}.\nFind 4 non-obvious conceptual connections between "${n.label}" and other nodes.\nReturn ONLY JSON: [{"to":"node name","reason":"connection reason"}]`);
+  aipRenderContext();if(!r)return;
+  try{const conns=JSON.parse(r.replace(/```json?\n?/g,'').replace(/```/g,'').trim());
+  const rows=conns.map(c=>`<div class="aip-gap-row"><div class="aip-gap-info"><div class="gap-name">${escH(c.to)}</div><div class="gap-parent">${escH(c.reason)}</div></div></div>`).join('');
+  aipShowResult(`Connect — ${n.label}`,`<div class="aip-gap-list">${rows}</div>`);aipLog('Found connections for',n.label);}
+  catch(e){aipShowResult('Connect',`<div class="aip-result-text">${escH(r)}</div>`)}
+}
+
+function aipRenderChat(){
+  const el=document.getElementById('aip-chat-thread');if(!el)return;
+  if(!chatHistory.length){el.innerHTML='<div class="aip-chat-empty">Ask anything about your map...</div>';return}
+  el.innerHTML=chatHistory.slice(-8).map(m=>{
+    if(m.role==='user')return `<div class="aip-msg-user"><div class="aip-bubble">${escH(m.text)}</div></div>`;
+    const html=m.text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+    const txt=JSON.stringify(m.text);
+    return `<div class="aip-msg-ai"><div class="aip-avatar"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div><div><div class="aip-bubble">${html}</div><div class="aip-msg-meta"><button class="aip-msg-meta-btn" onclick="navigator.clipboard.writeText(${txt});toast('Copied')">📋 Copy</button></div></div></div>`;
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function aipSetCtx(ctx){aipChatCtx=ctx;document.getElementById('aip-ctx-map')?.classList.toggle('active',ctx==='map');document.getElementById('aip-ctx-node')?.classList.toggle('active',ctx==='node')}
+
+async function aipSend(){
+  const inp=document.getElementById('aip-chat-inp');if(!inp)return;
+  const q=(inp.value||'').trim();if(!q)return;
+  const key=localStorage.getItem('mindmap-api-key');if(!key){toast('Add API key first');aipToggleKey();return}
+  chatHistory.push({role:'user',text:q});inp.value='';inp.style.height='auto';
+  const thread=document.getElementById('aip-chat-thread');
+  aipRenderChat();
+  if(thread){thread.innerHTML+=`<div class="aip-msg-ai" id="aip-typing"><div class="aip-avatar"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div><div class="aip-bubble"><div class="aip-typing"><span></span><span></span><span></span></div></div></div>`;thread.scrollTop=thread.scrollHeight;}
+  const sel=selectedId?gn(selectedId):null;
+  const ctx=aipChatCtx==='node'&&sel?`Selected node: "${sel.label}"\nDescendants: ${gall(sel.id).map(id=>gn(id)).filter(Boolean).map(x=>x.label).join(', ')||'none'}`:`Map:\n${getMapOutline()}`;
+  const r=await callAI(`${ctx}\n\nQuestion: ${q}\n\nAnswer concisely.`);
+  document.getElementById('aip-typing')?.remove();
+  if(r){chatHistory.push({role:'bot',text:r});aipLog('Asked',q.slice(0,40))}
+  aipRenderChat();
+}
+
+function aipCalcInsights(){
+  const el=document.getElementById('aip-insights-body');if(!el)return;
+  const root=nodes.find(n=>n.parentId===null);
+  if(!root){el.innerHTML='<div class="aip-no-activity">No map data yet.</div>';return}
+  const branches=gc(root.id);const ins=[];
+  if(branches.length>=2){
+    const sz=branches.map(b=>({b,s:gall(b.id).length+1}));
+    const mx=sz.reduce((a,x)=>x.s>a.s?x:a);const mn=sz.reduce((a,x)=>x.s<a.s?x:a);
+    if(mx.b.id!==mn.b.id&&mn.s>0&&mx.s/mn.s>2.5)ins.push({warn:true,icon:'⚠',text:`<strong>${escH(mx.b.label)}</strong> has ${Math.round(mx.s/mn.s)}× more nodes than <strong>${escH(mn.b.label)}</strong>`});
+  }
+  const shallow=branches.filter(b=>{const d=gall(b.id);if(!d.length)return true;const avg=d.map(id=>{let depth=0,n=gn(id);while(n?.parentId&&n.id!==b.id){depth++;n=gn(n.parentId);}return depth}).reduce((a,x)=>a+x,0)/d.length;return avg<2});
+  if(shallow.length)ins.push({icon:'↕',text:`<strong>${escH(shallow[0].label)}</strong> is shallow — consider expanding it`});
+  const staleCount=nodes.filter(n=>aipIsStale(n)).length;
+  if(staleCount)ins.push({warn:true,icon:'⏰',text:`${staleCount} node${staleCount!==1?'s':''} haven't been updated in 30+ days`});
+  let tdepth=0,dcnt=0;nodes.forEach(n=>{if(n.parentId!==null){let d=0,x=n;while(x?.parentId){d++;x=gn(x.parentId);}tdepth+=d;dcnt++;}});
+  ins.push({icon:'📊',text:`${nodes.length} nodes · ${branches.length} branches · avg depth ${dcnt?Math.round(tdepth/dcnt*10)/10:0}`});
+  el.innerHTML=ins.map(i=>`<div class="aip-insight-row${i.warn?' warn':''}"><span>${i.icon}</span><span>${i.text}</span></div>`).join('');
+}
+
+function aipRenderActivity(){
+  const el=document.getElementById('aip-activity-body');if(!el)return;
+  if(!aiActivityLog.length){el.innerHTML='<div class="aip-no-activity">No AI actions yet.</div>';return}
+  el.innerHTML=aiActivityLog.slice(0,10).map(e=>`<div class="aip-activity-row"><span class="aip-activity-time">${aipTimeAgo(e.time)}</span><span class="aip-activity-text">${escH(e.action)}${e.nodeLabel?' — <em>'+escH(e.nodeLabel)+'</em>':''}</span></div>`).join('');
+}
+
+function aipToggleInsights(){aipInsightsOpen=!aipInsightsOpen;document.getElementById('aip-insights-section')?.classList.toggle('open',aipInsightsOpen);if(aipInsightsOpen)aipCalcInsights()}
+function aipToggleActivity(){aipActivityOpen=!aipActivityOpen;document.getElementById('aip-activity-section')?.classList.toggle('open',aipActivityOpen);if(aipActivityOpen)aipRenderActivity()}
+
+// Legacy compat
+function aiExpand(){aipExpand()}
+function aiRewrite(){aipRewrite()}
+function aiFindGaps(){aipFindGaps()}
+function aiAsk(){aipSend()}
+
+// ━━━ YOUTUBE IMPORT ━━━
+let ytVideoMeta=null,ytTimestamps=[];
+
+function ytDetect(url){const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null}
+function ytDetectHint(val){const hint=document.getElementById('yt-detect-hint');if(hint)hint.style.display=ytDetect(val.trim())?'block':'none'}
+function ytFmt(secs){const s=Math.floor(secs),m=Math.floor(s/60),h=Math.floor(m/60);if(h>0)return h+':'+String(m%60).padStart(2,'0')+':'+String(s%60).padStart(2,'0');return m+':'+String(s%60).padStart(2,'0')}
+
+async function ytFetchMeta(url){
+  try{const r=await fetch('https://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json',{signal:AbortSignal.timeout(6000)});if(r.ok)return await r.json()}catch(e){}
+  return null;
+}
+
+// ── Multi-proxy fetch ──
+const YT_PROXIES=[
+  u=>'https://api.allorigins.win/get?url='+encodeURIComponent(u),
+  u=>'https://corsproxy.io/?'+encodeURIComponent(u),
+  u=>'https://proxy.cors.sh/'+u,
+  u=>'https://cors-anywhere.herokuapp.com/'+u
+];
+
+async function ytProxyFetch(targetUrl){
+  for(const mkProxy of YT_PROXIES){
+    try{
+      const r=await fetch(mkProxy(targetUrl),{signal:AbortSignal.timeout(7000)});
+      if(!r.ok)continue;
+      const ct=r.headers.get('content-type')||'';
+      if(ct.includes('json')){const j=await r.json();const c=j.contents||j;if(typeof c==='string'&&c.length>50)return{type:'text',data:c};if(typeof c==='object')return{type:'json',data:c}}
+      else{const t=await r.text();if(t.length>50)return{type:'text',data:t}}
+    }catch(e){continue}
+  }
+  return null;
+}
+
+// ── Decode XML caption entities ──
+function ytDecodeXml(s){return s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(parseInt(n))).trim()}
+
+// ── Parse caption XML into segments ──
+function ytParseXml(xml){
+  const items=[];
+  for(const m of xml.matchAll(/<text[^>]+start="([^"]+)"[^>]*>([\s\S]*?)<\/text>/g)){
+    const text=ytDecodeXml(m[2].replace(/<[^>]+>/g,''));
+    if(text)items.push({startSeconds:parseFloat(m[1]),timestamp:ytFmt(parseFloat(m[1])),text,transcriptText:text});
+  }
+  return items;
+}
+
+// ── Parse JSON3 timedtext format ──
+function ytParseJson3(data){
+  const events=(typeof data==='string'?JSON.parse(data):data)?.events||[];
+  return events.filter(e=>e.segs).map(e=>({
+    startSeconds:Math.floor((e.tStartMs||0)/1000),
+    timestamp:ytFmt(Math.floor((e.tStartMs||0)/1000)),
+    text:(e.segs||[]).map(s=>s.utf8||'').join('').replace(/\n/g,' ').trim(),
+    transcriptText:(e.segs||[]).map(s=>s.utf8||'').join('').replace(/\n/g,' ').trim()
+  })).filter(s=>s.text);
+}
+
+// ── LAYER 1: timedtext API ──
+async function ytLayer1(videoId){
+  const langs=['en','en-US','en-GB','a.en'];
+  for(const lang of langs){
+    try{
+      const url=`https://www.youtube.com/api/timedtext?v=${videoId}&lang=${lang}&fmt=json3`;
+      const res=await ytProxyFetch(url);
+      if(!res)continue;
+      let segs;
+      if(res.type==='json')segs=ytParseJson3(res.data);
+      else{try{segs=ytParseJson3(JSON.parse(res.data))}catch(e){continue}}
+      if(segs&&segs.length>3)return segs;
+    }catch(e){continue}
+  }
+  return null;
+}
+
+// ── LAYER 2: parse ytInitialPlayerResponse ──
+async function ytLayer2(videoId){
+  const pageUrl='https://www.youtube.com/watch?v='+videoId;
+  const res=await ytProxyFetch(pageUrl);
+  if(!res||res.type!=='text')return{segs:null,rawHtml:null};
+  const html=res.data;
+  // Try 3 regex patterns to extract captionTracks
+  let baseUrl=null;
+  const p1=html.match(/"captionTracks":\[(\{[^]]*?\})\]/s);
+  const p2=html.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]+?\})\s*;/);
+  const p3=html.match(/"playerCaptionsTracklistRenderer":\{"captionTracks":\[(\{[\s\S]*?\})\]/s);
+  for(const m of [p1,p3].filter(Boolean)){
+    try{
+      const arr=JSON.parse('['+m[1]+']');
+      const track=(arr.find&&arr.find(t=>t.languageCode==='en'||t.languageCode?.startsWith('en')))||arr[0];
+      if(track?.baseUrl){baseUrl=track.baseUrl;break}
+    }catch(e){}
+  }
+  if(!baseUrl&&p2){
+    try{
+      const pr=JSON.parse(p2[1]);
+      const tracks=pr?.captions?.playerCaptionsTracklistRenderer?.captionTracks||[];
+      const track=tracks.find(t=>t.languageCode==='en'||t.languageCode?.startsWith('en'))||tracks[0];
+      if(track?.baseUrl)baseUrl=track.baseUrl;
+    }catch(e){}
+  }
+  if(!baseUrl)return{segs:null,rawHtml:html};
+  // Fetch the caption XML/JSON
+  try{
+    const cr=await ytProxyFetch(baseUrl+'&fmt=json3');
+    if(cr){
+      let segs;
+      if(cr.type==='json')segs=ytParseJson3(cr.data);
+      else{try{segs=ytParseJson3(JSON.parse(cr.data))}catch(e){}}
+      if(segs&&segs.length>3)return{segs,rawHtml:html};
+    }
+    const cr2=await ytProxyFetch(baseUrl);
+    if(cr2?.type==='text'){const segs=ytParseXml(cr2.data);if(segs.length>3)return{segs,rawHtml:html}}
+  }catch(e){}
+  return{segs:null,rawHtml:html};
+}
+
+// ── LAYER 3: Claude extracts transcript from raw HTML ──
+async function ytLayer3(videoId,title,rawHtml){
+  if(!rawHtml)return null;
+  const chunk=rawHtml.slice(0,15000);
+  const r=await callAI(`Here is raw HTML from YouTube video "${title}" (id: ${videoId}).\nExtract any transcript or caption text with timestamps.\nHTML: ${chunk}\n\nReturn ONLY valid JSON:\n{"hasTranscript":true,"segments":[{"text":"...","timestamp":"0:00","seconds":0}]}`);
+  if(!r)return null;
+  try{
+    const d=JSON.parse((r.match(/\{[\s\S]*\}/)||['{}'])[0]);
+    if(!d.hasTranscript||!d.segments?.length)return null;
+    return d.segments.map(s=>({startSeconds:s.seconds||0,timestamp:s.timestamp||ytFmt(s.seconds||0),text:s.text||'',transcriptText:s.text||''}));
+  }catch(e){return null}
+}
+
+// ── Condense transcript into ~30s chunks ──
+function ytCondense(segs,maxChars=6000){
+  if(!segs?.length)return'';
+  const chunks=[];let cur=null;
+  for(const s of segs){
+    if(!cur||s.startSeconds-cur.start>=30){
+      if(cur)chunks.push(cur);
+      cur={start:s.startSeconds,ts:s.timestamp,texts:[s.text]};
+    }else{cur.texts.push(s.text)}
+  }
+  if(cur)chunks.push(cur);
+  let out='';for(const c of chunks){const ln='['+c.ts+'] '+c.texts.join(' ')+'\n';if(out.length+ln.length>maxChars)break;out+=ln}
+  return out;
+}
+
+// ── Validate + fix timestamps ──
+function ytValidateTs(branches,segs){
+  if(!segs?.length)return branches;
+  const maxSec=segs[segs.length-1].startSeconds||99999;
+  function fix(node){
+    if(node.timestampSeconds!=null){
+      const s=parseInt(node.timestampSeconds)||0;
+      node.timestampSeconds=Math.min(s,maxSec);
+      node.timestamp=ytFmt(node.timestampSeconds);
+    }
+    if(node.children)node.children.forEach(c=>{if(typeof c==='object')fix(c)});
+    return node;
+  }
+  return branches.map(fix);
+}
+
+// ── Find transcript text closest to a timestamp ──
+function ytFindText(segs,seconds){
+  if(!segs?.length)return'';
+  let best=segs[0];
+  for(const s of segs){if(s.startSeconds<=seconds)best=s;else break}
+  return(best.transcriptText||best.text||'').slice(0,80);
+}
+
+// ── Progress UI ──
+function ytSetStep(resultEl,steps){
+  if(!resultEl)return;
+  resultEl.innerHTML='<div style="display:flex;flex-direction:column;gap:8px;padding:10px 0">'+
+    steps.map(s=>`<div style="display:flex;align-items:flex-start;gap:10px"><div style="width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px;${s.state==='active'?'border:2px solid #6aaa00;animation:spin .6s linear infinite':s.state==='done'?'background:#6aaa00;color:#fff':s.state==='error'?'background:#f87171;color:#fff':'background:rgba(26,23,20,.08);color:rgba(26,23,20,.3)'}">${s.state==='done'?'✓':s.state==='error'?'✗':s.state==='active'?'':'·'}</div><div><div style="font:500 11px system-ui;color:${s.state==='error'?'#f87171':s.state==='done'?'#1a1714':'rgba(26,23,20,.5)'}">${escH(s.label)}</div>${s.sub?`<div style="font:400 10px system-ui;color:rgba(26,23,20,.38);margin-top:2px">${escH(s.sub)}</div>`:''}</div></div>`).join('')+
+  '</div>';
+}
+
+// ── Main YouTube import ──
+async function importFromYouTube(url,videoId){
+  const resEl=document.getElementById('yt-tab-result')||document.getElementById('import-content-result');
+  const key=localStorage.getItem('mindmap-api-key');
+  if(!key){if(resEl)resEl.innerHTML='<div style="color:#f87171;font-size:11px;padding:6px 0">API key required — set it via the ✦ AI button</div>';return}
+
+  const steps=[
+    {label:'Fetching video info...',state:'active',sub:''},
+    {label:'Extracting transcript...',state:'pending',sub:''},
+    {label:'Analysing with Claude Sonnet...',state:'pending',sub:''},
+    {label:'Building map...',state:'pending',sub:''}
+  ];
+  const upd=()=>ytSetStep(resEl,steps);upd();
+
+  // Step 1 — metadata
+  const meta=await ytFetchMeta(url);
+  const title=meta?.title||'YouTube Video';const author=meta?.author_name||'';
+  steps[0]={label:'Video info',state:'done',sub:title+(author?' · '+author:'')};steps[1].state='active';upd();
+
+  // Step 2 — transcript (4 layers)
+  let segs=null;let rawHtml=null;let noTranscript=false;
+  segs=await ytLayer1(videoId);
+  if(!segs){const l2=await ytLayer2(videoId);segs=l2.segs;rawHtml=l2.rawHtml;}
+  if(!segs&&rawHtml){segs=await ytLayer3(videoId,title,rawHtml);}
+  if(segs&&segs.length){
+    steps[1]={label:'Transcript extracted',state:'done',sub:segs.length+' segments found'};
+  }else{
+    noTranscript=true;
+    steps[1]={label:'No transcript found',state:'error',sub:'Generating map from title only'};
+  }
+  steps[2].state='active';upd();
+
+  // Step 3 — Claude Sonnet generates map
+  let prompt;
+  if(!noTranscript&&segs?.length){
+    const ctx=ytCondense(segs);
+    prompt=`You are analysing a YouTube video to create a mindmap.\n\nTitle: "${title}"\nChannel: ${author}\n\nTimestamped transcript:\n${ctx}\n\nCreate a comprehensive mindmap with 5-7 branches.\n\nCRITICAL RULES:\n1. Every branch and child node object MUST have timestamp and timestampSeconds\n2. Use the EARLIEST timestamp where that topic begins in the transcript\n3. Timestamps must come from the actual transcript above\n4. Grandchildren may be plain strings (no timestamp required)\n\nReturn ONLY valid JSON:\n{"root":${JSON.stringify(title)},"branches":[{"name":"Topic","timestamp":"2:13","timestampSeconds":133,"children":[{"name":"Subtopic","timestamp":"3:45","timestampSeconds":225,"children":["detail 1","detail 2"]}]}]}`;
+  }else{
+    prompt=`Generate a mindmap for a YouTube video.\n\nTitle: "${title}"\nChannel: ${author}\n\nNo transcript available. Use your knowledge of this topic to create a logical 5-6 branch mindmap.\nSet timestampSeconds to 0 for all nodes.\n\nReturn ONLY valid JSON:\n{"root":${JSON.stringify(title)},"branches":[{"name":"Topic","timestamp":"0:00","timestampSeconds":0,"children":[{"name":"Subtopic","timestamp":"0:00","timestampSeconds":0,"children":["detail"]}]}]}`;
+  }
+  const r=await callAI(prompt);
+  if(!r){steps[2]={label:'AI generation failed',state:'error',sub:'Check your API key'};upd();return}
+  steps[2]={label:'Content analysed',state:'done',sub:''};steps[3].state='active';upd();
+
+  // Step 4 — build map
+  try{
+    const data=JSON.parse((r.match(/\{[\s\S]*\}/)||['{}'])[0]);
+    if(data.branches)data.branches=ytValidateTs(data.branches,segs);
+    hideModal('import-modal');snap();nodes=[];nextId=1;ytTimestamps=[];
+    const rid=nextId++;nodes.push({id:rid,label:data.root||title,parentId:null,color:'#6aaa00',x:CX,y:CY});
+    (data.branches||[]).forEach((b,bi)=>{
+      const col=COLORS[bi%COLORS.length];const bid=nextId++;
+      const bNode={id:bid,label:b.name||'Branch',parentId:rid,color:col,x:CX,y:CY};
+      if(!noTranscript&&b.timestampSeconds!=null){bNode.ytTimestamp=b.timestamp||ytFmt(b.timestampSeconds);bNode.ytSeconds=b.timestampSeconds;bNode.youtubeVideoId=videoId;bNode.ytTranscriptText=ytFindText(segs,b.timestampSeconds);ytTimestamps.push({label:b.name,timestamp:bNode.ytTimestamp,seconds:b.timestampSeconds})}
+      nodes.push(bNode);
+      (b.children||[]).forEach(c=>{
+        const cid=nextId++;
+        if(typeof c==='string'){nodes.push({id:cid,label:c,parentId:bid,color:col,x:CX,y:CY});}
+        else{
+          const cNode={id:cid,label:c.name||String(c),parentId:bid,color:col,x:CX,y:CY};
+          if(!noTranscript&&c.timestampSeconds!=null){cNode.ytTimestamp=c.timestamp||ytFmt(c.timestampSeconds);cNode.ytSeconds=c.timestampSeconds;cNode.youtubeVideoId=videoId;cNode.ytTranscriptText=ytFindText(segs,c.timestampSeconds);ytTimestamps.push({label:c.name,timestamp:cNode.ytTimestamp,seconds:c.timestampSeconds})}
+          nodes.push(cNode);
+          (c.children||[]).forEach(g=>nodes.push({id:nextId++,label:typeof g==='string'?g:(g.name||String(g)),parentId:cid,color:col,x:CX,y:CY}));
+        }
+      });
+    });
+    collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};
+    layoutAll();render();fitToScreen();schSave();
+    ytVideoMeta={videoId,title,author};
+    steps[3]={label:'Map built',state:'done',sub:nodes.length+' nodes created'};upd();
+    const ntBanner=document.getElementById('yt-no-transcript-banner');
+    if(noTranscript){ntBanner.classList.toggle('ai-open',!!document.getElementById('ai-panel')?.classList.contains('open'));ntBanner.classList.add('open');}else{ntBanner.classList.remove('open');toast('YouTube map with '+ytTimestamps.length+' timestamps!')}
+    showYTPanel();updateYTBtn();
+  }catch(e){steps[3]={label:'Parse error',state:'error',sub:e.message};upd()}
+}
+
+function showYTPanel(){
+  if(!ytVideoMeta)return;
+  const panel=document.getElementById('yt-panel');if(!panel)return;
+  const{videoId,title,author}=ytVideoMeta;
+  document.getElementById('yt-thumb-img').src='https://img.youtube.com/vi/'+videoId+'/mqdefault.jpg';
+  document.getElementById('yt-title').textContent=title;
+  document.getElementById('yt-author').textContent=author;
+  document.querySelector('.yt-thumb-wrap').onclick=()=>window.open('https://youtube.com/watch?v='+videoId,'_blank');
+  const list=document.getElementById('yt-ts-list');
+  list.innerHTML=ytTimestamps.map(t=>`<div class="yt-ts-row" onclick="window.open('https://youtube.com/watch?v=${videoId}&t=${t.seconds}s','_blank')"><span class="yt-ts-time">▶ ${escH(t.timestamp)}</span><span class="yt-ts-text">${escH(t.label)}</span></div>`).join('');
+  if(aiOpen)panel.classList.add('ai-open');else panel.classList.remove('ai-open');
+  panel.classList.add('open');
+}
+
+function hideYTPanel(){const p=document.getElementById('yt-panel');if(p)p.classList.remove('open')}
+function updateYTBtn(){const b=document.getElementById('btn-yt-video');if(b){b.style.display=ytVideoMeta?'flex':'none';b.style.flexDirection='row';b.style.alignItems='center'}}
+
+// Patch importFromContent to detect YouTube first
+const _origImportFromContent=window.importFromContent;
+window.importFromContent=async function(){
+  const url=(document.getElementById('import-content-url')||{}).value||'';
+  const vid=ytDetect(url.trim());
+  if(vid){await importFromYouTube(url.trim(),vid);return}
+  await _origImportFromContent();
+};
+
+// ━━━ SLIDES ━━━
+let slidesData=[],spIdx=0,spThumbsOpen=false,spEditIdx=-1,spExportDDOpen=false;
+
+function _escS(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function generateSlides(){
+  const root=nodes.find(n=>n.parentId===null);if(!root)return[];
+  const branches=gc(root.id);const slides=[];
+  slides.push({type:'title',title:root.label,subtitle:branches.length+' branches · '+nodes.length+' nodes',color:root.color||'#6aaa00'});
+  branches.forEach((branch,bi)=>{
+    const children=gc(branch.id);
+    slides.push({type:'branch',title:branch.label,color:branch.color||COLORS[bi%COLORS.length],items:children.map(child=>({label:child.label,subs:gc(child.id).slice(0,3).map(g=>g.label),more:Math.max(0,gc(child.id).length-3)}))});
+    if(branch.document?.content){const txt=branch.document.content.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,400);if(txt)slides.push({type:'doc',title:branch.label+' — Notes',color:branch.color||'#6aaa00',content:txt})}
+  });
+  slides.push({type:'summary',title:'Summary',color:'#6aaa00',items:branches.map(b=>b.label)});
+  slides.forEach((s,i)=>s._num=(i+1)+' / '+slides.length);
+  return slides;
+}
+
+function renderSlideEl(slide,scale){
+  const wrap=document.createElement('div');
+  wrap.style.cssText=`position:relative;width:1280px;height:720px;overflow:hidden;font-family:system-ui,-apple-system,sans-serif;transform:scale(${scale});transform-origin:top left;flex-shrink:0;box-sizing:border-box`;
+  const c=_escS;
+  if(slide.type==='title'){
+    wrap.style.background='#0f0d0a';
+    wrap.innerHTML=`<div style="position:absolute;left:0;top:0;width:8px;height:100%;background:${c(slide.color)}"></div><div style="position:absolute;top:50%;left:80px;right:80px;transform:translateY(-50%)"><div style="font-size:64px;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.05;max-width:900px">${c(slide.title)}</div><div style="font-size:20px;color:rgba(255,255,255,.38);margin-top:16px;font-family:monospace">${c(slide.subtitle||'')}</div></div><div style="position:absolute;bottom:22px;right:28px;font:400 11px monospace;color:rgba(255,255,255,.1)">mAIndmap</div>`;
+  }else if(slide.type==='branch'){
+    const items=slide.items||[];const cols=items.length>3?2:1;const fs=items.length>6?'15px':'17px';
+    const iHtml=items.map(it=>{const lbl=typeof it==='string'?it:(it.label||'');const subs=(typeof it==='object'&&it.subs)||[];const more=(typeof it==='object'&&it.more)||0;return `<div style="padding:9px 0;border-bottom:1px solid rgba(26,23,20,.06)"><div style="display:flex;align-items:center;gap:9px;font-size:${fs};font-weight:600;color:#1a1714"><div style="width:7px;height:7px;border-radius:50%;background:${c(slide.color)};flex-shrink:0"></div>${c(lbl)}</div>${subs.map(s=>`<div style="font-size:12px;color:rgba(26,23,20,.42);margin-top:3px;margin-left:16px">· ${c(s)}</div>`).join('')}${more?`<div style="font-size:11px;color:rgba(26,23,20,.28);margin-left:16px">+${more} more</div>`:''}</div>`}).join('');
+    wrap.style.background='#fff';
+    wrap.innerHTML=`<div style="position:absolute;top:0;left:0;right:0;height:7px;background:${c(slide.color)}"></div><div style="padding:36px 56px 0;margin-top:7px"><div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><div style="width:11px;height:11px;border-radius:50%;background:${c(slide.color)}"></div><span style="font:700 12px monospace;color:${c(slide.color)};text-transform:uppercase;letter-spacing:.15em">${c(slide.title)}</span></div><div style="font-size:40px;font-weight:700;color:#1a1714;letter-spacing:-.02em;line-height:1.1;margin-bottom:18px">${c(slide.title)}</div></div><div style="padding:0 56px;display:grid;grid-template-columns:${cols>1?'1fr 1fr':'1fr'};gap:0 36px;max-height:430px;overflow:hidden">${iHtml}</div><div style="position:absolute;bottom:14px;right:22px;font:400 10px monospace;color:rgba(26,23,20,.2)">${c(slide._num||'')}</div>`;
+  }else if(slide.type==='doc'){
+    wrap.style.background='#fff';
+    wrap.innerHTML=`<div style="position:absolute;top:0;left:0;right:0;height:7px;background:${c(slide.color)}"></div><div style="padding:48px 56px"><div style="font:700 12px monospace;color:${c(slide.color)};text-transform:uppercase;letter-spacing:.15em;margin-bottom:10px">Notes</div><div style="font-size:34px;font-weight:700;color:#1a1714;letter-spacing:-.02em;margin-bottom:22px">${c(slide.title)}</div><div style="font-size:17px;color:rgba(26,23,20,.6);line-height:1.75;max-height:400px;overflow:hidden">${c(slide.content||'')}</div></div><div style="position:absolute;bottom:14px;right:22px;font:400 10px monospace;color:rgba(26,23,20,.2)">${c(slide._num||'')}</div>`;
+  }else if(slide.type==='summary'){
+    const iHtml=(slide.items||[]).map((item,i)=>{const lbl=typeof item==='string'?item:(item.label||item);return `<div style="display:flex;align-items:baseline;gap:14px;padding:9px 0;font-size:19px;color:rgba(255,255,255,.72)"><span style="font:600 10px monospace;color:rgba(255,255,255,.28);flex-shrink:0;min-width:22px;text-align:right">${String(i+1).padStart(2,'0')}</span>${c(lbl)}</div>`}).join('');
+    wrap.style.background='#0f0d0a';
+    wrap.innerHTML=`<div style="position:absolute;left:0;top:0;width:8px;height:100%;background:${c(slide.color)}"></div><div style="padding:58px 78px"><div style="font:700 12px monospace;color:${c(slide.color)};text-transform:uppercase;letter-spacing:.15em;margin-bottom:18px">Summary</div><div style="font-size:46px;font-weight:800;color:#fff;letter-spacing:-.03em;margin-bottom:28px">${c(slide.title)}</div>${iHtml}</div><div style="position:absolute;bottom:22px;right:28px;font:400 11px monospace;color:rgba(255,255,255,.1)">mAIndmap</div>`;
+  }
+  return wrap;
+}
+
+function openSlidesEditor(){
+  slidesData=generateSlides();
+  renderSlidesEditorGrid();
+  document.getElementById('slides-editor').classList.add('open');
+}
+
+function closeSlidesEditor(){document.getElementById('slides-editor').classList.remove('open')}
+
+function renderSlidesEditorGrid(){
+  const grid=document.getElementById('slides-grid');if(!grid)return;
+  const sub=document.getElementById('slides-ed-sub');if(sub)sub.textContent=slidesData.length+' slides generated from your map';
+  grid.innerHTML='';
+  const thumbScale=200/1280;const thumbH=Math.round(720*thumbScale);
+  slidesData.forEach((slide,i)=>{
+    const card=document.createElement('div');card.className='slide-card';
+    const tw=document.createElement('div');tw.className='slide-thumb-wrap';tw.style.height=thumbH+'px';
+    const inner=renderSlideEl(slide,thumbScale);tw.appendChild(inner);card.appendChild(tw);
+    const lbl=document.createElement('div');lbl.className='slide-label';
+    lbl.innerHTML=`<div class="slide-name">${_escS(slide.title||'Slide '+(i+1))}</div><div class="slide-actions"><button class="slide-act-btn" onclick="openSlideEdit(${i})">✎ Edit</button><button class="slide-act-btn" onclick="removeSlide(${i})">✕ Remove</button></div>`;
+    card.appendChild(lbl);grid.appendChild(card);
+  });
+}
+
+function openSlideEdit(idx){
+  spEditIdx=idx;const s=slidesData[idx];if(!s)return;
+  document.getElementById('se-title-inp').value=s.title||'';
+  const cv=s.type==='doc'?s.content||'':(s.items||[]).map(it=>typeof it==='string'?it:(it.label||'')).join('\n');
+  document.getElementById('se-content-inp').value=cv;
+  document.getElementById('slide-edit-modal').classList.add('open');
+}
+
+function closeSlideEdit(){document.getElementById('slide-edit-modal').classList.remove('open')}
+
+function saveSlideEdit(){
+  if(spEditIdx<0||spEditIdx>=slidesData.length)return;
+  const s=slidesData[spEditIdx];
+  s.title=document.getElementById('se-title-inp').value.trim()||s.title;
+  const content=document.getElementById('se-content-inp').value;
+  if(s.type==='doc'){s.content=content}
+  else{s.items=content.split('\n').filter(l=>l.trim()).map(l=>({label:l.trim(),subs:[],more:0}))}
+  slidesData.forEach((sl,i)=>sl._num=(i+1)+' / '+slidesData.length);
+  closeSlideEdit();renderSlidesEditorGrid();
+}
+
+function removeSlide(idx){slidesData.splice(idx,1);slidesData.forEach((s,i)=>s._num=(i+1)+' / '+slidesData.length);renderSlidesEditorGrid()}
+
+function addBlankSlide(){slidesData.push({type:'branch',title:'New Slide',color:'#6aaa00',items:[]});slidesData.forEach((s,i)=>s._num=(i+1)+' / '+slidesData.length);renderSlidesEditorGrid()}
+
+function startSlidePresentation(){
+  closeSlidesEditor();spIdx=0;
+  document.getElementById('slides-presenter').classList.add('open');
+  spBuildViewport();spShowSlide(0,null);
+}
+
+function exitSlidePresentation(){
+  document.getElementById('slides-presenter').classList.remove('open');
+  const dd=document.getElementById('sp-export-dd');if(dd)dd.classList.remove('open');
+}
+
+function spBuildViewport(){
+  const vp=document.getElementById('sp-viewport');vp.innerHTML='';
+  const scale=Math.min(window.innerWidth/1280,(window.innerHeight-3)/720);
+  const w=Math.round(1280*scale),h=Math.round(720*scale);
+  const wrap=document.createElement('div');wrap.id='sp-slide-wrap';
+  wrap.style.cssText=`width:${w}px;height:${h}px;position:relative;overflow:hidden`;
+  vp.appendChild(wrap);spUpdateProgress();spUpdateCounter();
+}
+
+function spShowSlide(idx,dir){
+  if(idx<0||idx>=slidesData.length)return;
+  const wrap=document.getElementById('sp-slide-wrap');if(!wrap)return;
+  const scale=Math.min(window.innerWidth/1280,(window.innerHeight-3)/720);
+  const old=wrap.querySelector('.sp-active');
+  if(old&&dir){old.classList.remove('sp-active');old.classList.add(dir==='next'?'sp-exit-left':'sp-exit-right');setTimeout(()=>old.remove(),270)}
+  else if(old){old.remove()}
+  const el=renderSlideEl(slidesData[idx],scale);el.className='sp-slide';
+  if(dir){el.classList.add(dir==='next'?'sp-enter-right':'sp-enter-left');wrap.appendChild(el);requestAnimationFrame(()=>{el.classList.remove('sp-enter-right','sp-enter-left');el.classList.add('sp-active')})}
+  else{el.classList.add('sp-active');wrap.appendChild(el)}
+  spIdx=idx;spUpdateProgress();spUpdateCounter();spUpdateThumbs();
+}
+
+function spUpdateProgress(){
+  const bar=document.getElementById('sp-progress');if(!bar)return;
+  const pct=slidesData.length>1?(spIdx/(slidesData.length-1)*100):100;
+  bar.style.width=pct+'%';
+  const s=slidesData[spIdx];bar.style.background=(s?.type==='title'||s?.type==='summary')?'#6aaa00':(s?.color||'#6aaa00');
+}
+function spUpdateCounter(){const c=document.getElementById('sp-counter');if(c)c.textContent=(spIdx+1)+' / '+slidesData.length}
+function spNext(){if(spIdx<slidesData.length-1)spShowSlide(spIdx+1,'next')}
+function spPrev(){if(spIdx>0)spShowSlide(spIdx-1,'prev')}
+
+function spUpdateThumbs(){if(!spThumbsOpen)return;document.querySelectorAll('.sp-thumb').forEach((t,i)=>t.classList.toggle('sp-thumb-active',i===spIdx))}
+
+function spBuildThumbs(){
+  const strip=document.getElementById('sp-thumbs');if(!strip)return;strip.innerHTML='';
+  const sc=120/1280;
+  slidesData.forEach((slide,i)=>{
+    const t=document.createElement('div');t.className='sp-thumb'+(i===spIdx?' sp-thumb-active':'');
+    t.onclick=()=>spShowSlide(i,i>spIdx?'next':'prev');
+    const inner=renderSlideEl(slide,sc);inner.className='sp-thumb-inner';inner.style.cssText='position:absolute;top:0;left:0;width:1280px;height:720px;transform:scale('+sc+');transform-origin:top left;pointer-events:none';
+    t.appendChild(inner);
+    const num=document.createElement('div');num.className='sp-thumb-num';num.textContent=i+1;t.appendChild(num);
+    strip.appendChild(t);
+  });
+}
+
+function toggleSpThumbs(){
+  spThumbsOpen=!spThumbsOpen;
+  const strip=document.getElementById('sp-thumbs');if(!strip)return;
+  strip.classList.toggle('open',spThumbsOpen);
+  if(spThumbsOpen)spBuildThumbs();
+}
+
+function spToggleExport(e){
+  const dd=document.getElementById('sp-export-dd');if(!dd)return;
+  spExportDDOpen=!spExportDDOpen;dd.classList.toggle('open',spExportDDOpen);
+  if(spExportDDOpen){const r=e.target.getBoundingClientRect();dd.style.top=(r.bottom+4)+'px';dd.style.right=(window.innerWidth-r.right)+'px'}
+}
+
+async function spExportPDF(){
+  const dd=document.getElementById('sp-export-dd');if(dd)dd.classList.remove('open');spExportDDOpen=false;
+  // Find all PDF buttons and set loading state
+  const pdfBtns=Array.from(document.querySelectorAll('.sfoot-btn,.sp-export-item')).filter(b=>b.textContent.includes('PDF'));
+  pdfBtns.forEach(b=>{b._origText=b.textContent;b.textContent='Generating...';b.disabled=true});
+  toast('Generating PDF...');
+  const root=nodes.find(n=>n.parentId===null);
+  const mapName=(root?.label||'mindmap').replace(/[^a-z0-9]/gi,'-').toLowerCase();
+  try{
+    // Approach 1: jsPDF + html2canvas
+    if(typeof window.jspdf==='undefined'||typeof html2canvas==='undefined')throw new Error('libs not loaded');
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'landscape',unit:'px',format:[1280,720],compress:true});
+    for(let i=0;i<slidesData.length;i++){
+      const el=renderSlideEl(slidesData[i],1);
+      el.style.cssText='position:fixed;left:-9999px;top:0;width:1280px;height:720px;overflow:hidden';
+      document.body.appendChild(el);
+      await new Promise(r=>setTimeout(r,60));
+      const canvas=await html2canvas(el,{scale:1,useCORS:true,backgroundColor:null,width:1280,height:720,logging:false});
+      el.remove();
+      const imgData=canvas.toDataURL('image/jpeg',0.95);
+      if(i>0)pdf.addPage();
+      pdf.addImage(imgData,'JPEG',0,0,1280,720);
+    }
+    pdf.save(mapName+'-slides.pdf');
+    toast('PDF downloaded!');
+  }catch(err){
+    // Approach 3 fallback: print dialog
+    const style=document.createElement('style');style.id='sp-print-css';
+    style.textContent=`@media print{body>*{display:none!important}#sp-print-area{display:block!important;margin:0;padding:0}@page{size:1280px 720px;margin:0}.sp-print-pg{page-break-after:always;width:1280px;height:720px;overflow:hidden}}`;
+    document.head.appendChild(style);
+    const area=document.createElement('div');area.id='sp-print-area';area.style.display='none';
+    slidesData.forEach(slide=>{const pg=document.createElement('div');pg.className='sp-print-pg';pg.appendChild(renderSlideEl(slide,1));area.appendChild(pg)});
+    document.body.appendChild(area);window.print();
+    setTimeout(()=>{area.remove();style.remove()},3000);
+    toast('Set "Save as PDF" in the print dialog');
+  }finally{
+    pdfBtns.forEach(b=>{b.textContent=b._origText||'↓ PDF';b.disabled=false});
+  }
+}
+
+async function spExportPNG(){
+  const dd=document.getElementById('sp-export-dd');if(dd)dd.classList.remove('open');spExportDDOpen=false;
+  toast('Exporting PNGs...');
+  const root=nodes.find(n=>n.parentId===null);const mapName=(root?.label||'map').replace(/[^a-z0-9]/gi,'-').toLowerCase();
+  for(let i=0;i<slidesData.length;i++){
+    const el=renderSlideEl(slidesData[i],1);el.style.position='fixed';el.style.left='-9999px';el.style.top='0';document.body.appendChild(el);
+    await new Promise(res2=>setTimeout(res2,80));
+    try{
+      if(typeof html2canvas==='undefined'){toast('html2canvas not available — use PDF export');el.remove();break}
+      const canvas=await html2canvas(el,{width:1280,height:720,scale:1});
+      const a=document.createElement('a');a.download=`${mapName}-slide-${i+1}.png`;a.href=canvas.toDataURL('image/png');a.click();
+    }catch(e){}
+    el.remove();await new Promise(res2=>setTimeout(res2,200));
+  }
+}
+
+function spExportMarkdown(){
+  const dd=document.getElementById('sp-export-dd');if(dd)dd.classList.remove('open');spExportDDOpen=false;
+  const root=nodes.find(n=>n.parentId===null);let md=root?`# ${root.label}\n\n`:'';
+  gc(root?.id||0).forEach(branch=>{
+    md+=`## ${branch.label}\n`;
+    gc(branch.id).forEach(child=>{md+=`- ${child.label}\n`;gc(child.id).forEach(g=>{md+=`  - ${g.label}\n`})});
+    md+='\n';
+  });
+  navigator.clipboard.writeText(md.trim()).then(()=>toast('Markdown outline copied'));
+}
+
+// Slides keyboard navigation
+document.addEventListener('keydown',ev=>{
+  const pres=document.getElementById('slides-presenter');
+  if(!pres?.classList.contains('open'))return;
+  if(ev.key==='ArrowRight'||ev.key==='ArrowDown'||ev.key===' '){ev.preventDefault();spNext()}
+  else if(ev.key==='ArrowLeft'||ev.key==='ArrowUp'||ev.key==='Backspace'){ev.preventDefault();spPrev()}
+  else if(ev.key==='Escape'){ev.preventDefault();exitSlidePresentation()}
+  else if(ev.key==='Home'){ev.preventDefault();spShowSlide(0,'prev')}
+  else if(ev.key==='End'){ev.preventDefault();spShowSlide(slidesData.length-1,'next')}
+  else if(ev.key==='t'||ev.key==='T'){ev.preventDefault();toggleSpThumbs()}
+  else if(/^[1-9]$/.test(ev.key)){ev.preventDefault();const n=parseInt(ev.key)-1;if(n<slidesData.length)spShowSlide(n,n>spIdx?'next':'prev')}
+});
 
 // ━━━ PERSISTENCE ━━━
 function schSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,500)}
@@ -3002,11 +4048,119 @@ async function importFromContent(){
   }catch(e){if(res)res.innerHTML='<div style="font-size:11px;color:#f87171">Could not parse response</div>'}
 }
 
-// ── Patch setImportTab for 4 tabs ──
+// ── Patch setImportTab for 5 tabs ──
 setImportTab=function(idx){
   document.querySelectorAll('.modal-tab').forEach(function(t,i){t.classList.toggle('active',i===idx)});
-  for(let i=0;i<4;i++){const t=document.getElementById('import-tab-'+i);if(t)t.style.display=i===idx?'block':'none'}
+  for(let i=0;i<5;i++){const t=document.getElementById('import-tab-'+i);if(t)t.style.display=i===idx?'block':'none'}
 };
+
+// ── YouTube tab logic ──
+let _ytTabDebounce=null;
+function ytTabDetect(val){
+  const inp=document.getElementById('yt-url-inp');
+  const hint=document.getElementById('yt-tab-hint');
+  const preview=document.getElementById('yt-tab-preview');
+  const vid=ytDetect(val.trim());
+  if(inp)inp.style.borderColor=vid?'#6aaa00':'rgba(26,23,20,.15)';
+  if(hint)hint.style.display=vid?'block':'none';
+  if(!vid){if(preview)preview.style.display='none';return}
+  clearTimeout(_ytTabDebounce);
+  _ytTabDebounce=setTimeout(async()=>{
+    const meta=await ytFetchMeta(val.trim());
+    if(!meta)return;
+    document.getElementById('yt-tab-thumb').src='https://img.youtube.com/vi/'+vid+'/mqdefault.jpg';
+    document.getElementById('yt-tab-vtitle').textContent=meta.title||'';
+    document.getElementById('yt-tab-vauthor').textContent=meta.author_name||'';
+    if(preview){preview.style.display='flex';}
+  },600);
+}
+
+async function ytTabGenerate(){
+  const url=(document.getElementById('yt-url-inp')?.value||'').trim();
+  const vid=ytDetect(url);
+  if(!vid){toast('Enter a valid YouTube URL');return}
+  const showPanel=document.getElementById('yt-opt-panel')?.checked!==false;
+  const withTs=document.getElementById('yt-opt-ts')?.checked!==false;
+  const res=document.getElementById('yt-tab-result');
+  if(res)res.innerHTML='<div style="font-size:11px;color:var(--text3);padding:8px 0">🎬 Generating...</div>';
+  // Temporarily disable timestamps if unchecked by monkey-patching
+  const _origYtTs=ytTimestamps;
+  await importFromYouTube(url,vid);
+  if(!withTs){nodes.forEach(n=>{delete n.ytTimestamp;delete n.ytSeconds;delete n.youtubeVideoId});render()}
+  if(!showPanel)hideYTPanel();
+  if(res)res.innerHTML='';
+}
+
+// ── Backdrop click to close modals ──
+(function(){
+  // modal-overlay elements: clicking the backdrop (not the card) closes them
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+    overlay.addEventListener('click',function(e){
+      if(e.target===overlay){
+        // find close fn
+        const id=overlay.id;
+        if(id==='confirm-dialog')return; // confirm uses its own buttons
+        if(id==='templates-modal'){hideModal('templates-modal');return}
+        hideModal(id);
+      }
+    });
+    // stop clicks on the card from bubbling to overlay
+    const card=overlay.querySelector('.modal-card,.dlg-box');
+    if(card)card.addEventListener('click',function(e){e.stopPropagation()});
+  });
+
+  // templates-modal is full-screen, not modal-overlay style — add its own backdrop
+  const tplModal=document.getElementById('templates-modal');
+  if(tplModal){
+    tplModal.addEventListener('click',function(e){
+      if(e.target===tplModal)hideModal('templates-modal');
+    });
+    const inner=tplModal.querySelector('.tpl-header,.tpl-grid');
+    // block card clicks via CSS pointer-events: handled by structure
+  }
+
+  // health modal
+  const healthModal=document.getElementById('health-modal');
+  if(healthModal){
+    healthModal.addEventListener('click',function(e){
+      if(e.target===healthModal)closeHealthModal();
+    });
+    const hc=healthModal.querySelector('.health-card');
+    if(hc)hc.addEventListener('click',function(e){e.stopPropagation()});
+  }
+
+  // slides editor
+  const se=document.getElementById('slides-editor');
+  if(se){
+    se.addEventListener('click',function(e){
+      if(e.target===se)closeSlidesEditor();
+    });
+  }
+
+  // slide edit modal
+  const sem=document.getElementById('slide-edit-modal');
+  if(sem){
+    sem.addEventListener('click',function(e){
+      if(e.target===sem)closeSlideEdit();
+    });
+  }
+})();
+
+// ── Escape key closes any open modal ──
+document.addEventListener('keydown',function(evEsc){
+  if(evEsc.key!=='Escape')return;
+  // Don't close if typing inside the modal
+  const tag=document.activeElement?.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA')return;
+  // Check which modal is open and close it
+  if(document.getElementById('slides-presenter')?.classList.contains('open')){exitSlidePresentation();evEsc.stopPropagation();return}
+  if(document.getElementById('slides-editor')?.classList.contains('open')){closeSlidesEditor();evEsc.stopPropagation();return}
+  if(document.getElementById('slide-edit-modal')?.classList.contains('open')){closeSlideEdit();evEsc.stopPropagation();return}
+  if(document.getElementById('health-modal')?.classList.contains('open')){closeHealthModal();evEsc.stopPropagation();return}
+  const modals=['import-modal','newmap-modal','confirm-dialog'];
+  for(const id of modals){const m=document.getElementById(id);if(m?.classList.contains('visible')){hideModal(id);evEsc.stopPropagation();return}}
+  if(document.getElementById('templates-modal')?.classList.contains('visible')){hideModal('templates-modal');evEsc.stopPropagation();return}
+},true); // capture phase so it runs before other keydown handlers
 
 // ── New keyboard shortcuts ──
 document.addEventListener('keydown',function(ev2){
