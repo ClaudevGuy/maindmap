@@ -75,20 +75,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 
 /* Top Toolbar */
 @keyframes accentShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-#toolbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(18,16,14,.85);border:none;border-radius:14px;padding:0 14px;height:42px;display:flex;gap:0;align-items:center;justify-content:center;z-index:200;user-select:none;width:fit-content;overflow:hidden;transition:background .2s;flex-wrap:nowrap;scrollbar-width:none;box-shadow:0 2px 16px rgba(0,0,0,.15);backdrop-filter:blur(24px) saturate(1.2)}
+#toolbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(18,16,14,.85);border:none;border-radius:16px;padding:0 16px;height:48px;display:flex;gap:0;align-items:center;justify-content:center;z-index:200;user-select:none;width:fit-content;overflow:hidden;transition:background .2s;flex-wrap:nowrap;scrollbar-width:none;box-shadow:0 2px 16px rgba(0,0,0,.15);backdrop-filter:blur(24px) saturate(1.2)}
 #toolbar::-webkit-scrollbar{display:none}
 .tb-brand-section{display:flex;align-items:center;gap:8px;flex-shrink:0;padding:0 8px 0 4px}
-.tb-logo-mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(145deg,#a3e05a,#6aaa00);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.02em;box-shadow:0 1px 4px rgba(143,212,74,.35);transition:transform .15s}
+.tb-logo-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(145deg,#a3e05a,#6aaa00);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.02em;box-shadow:0 1px 4px rgba(143,212,74,.35);transition:transform .15s}
 .tb-logo-mark:hover{transform:scale(1.08)}
-.tb-brand-name{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:13px;font-weight:800;letter-spacing:-.03em;color:rgba(255,255,255,.82);flex-shrink:0;line-height:1}
+.tb-brand-name{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14px;font-weight:800;letter-spacing:-.03em;color:rgba(255,255,255,.82);flex-shrink:0;line-height:1}
 .tb-brand-ai{color:#8fd44a}
 .tb-group{display:flex;align-items:center;gap:2px;flex-shrink:0;padding:0 2px;border-radius:0;background:transparent;border:none;transition:none}
 .tb-group:hover{background:transparent}
-.tb-sep{width:1px;height:18px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 8px;border-radius:1px}
-.tb-zoom{font-family:'SF Mono','Cascadia Code',monospace;font-size:10px;color:rgba(255,255,255,.5);min-width:34px;text-align:center;flex-shrink:0;padding:4px 8px;cursor:pointer;border-radius:6px;background:transparent;transition:color .12s,background .12s;font-weight:600}
+.tb-sep{width:1px;height:22px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 8px;border-radius:1px}
+.tb-zoom{font-family:'SF Mono','Cascadia Code',monospace;font-size:11px;color:rgba(255,255,255,.5);min-width:38px;text-align:center;flex-shrink:0;padding:4px 8px;cursor:pointer;border-radius:6px;background:transparent;transition:color .12s,background .12s;font-weight:600}
 .tb-zoom:hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.06)}
-.tb-btn{height:30px;padding:0 10px;border-radius:7px;background:transparent;border:none;color:rgba(255,255,255,.7);font-size:10.5px;font-weight:600;font-family:'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:color .12s,background .12s,transform .08s;flex-shrink:0;white-space:nowrap;letter-spacing:-.01em;position:relative}
-.tb-btn svg{stroke-width:2;width:15px;height:15px}
+.tb-btn{height:34px;padding:0 12px;border-radius:8px;background:transparent;border:none;color:rgba(255,255,255,.7);font-size:11.5px;font-weight:600;font-family:'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:color .12s,background .12s,transform .08s;flex-shrink:0;white-space:nowrap;letter-spacing:-.01em;position:relative}
+.tb-btn svg{stroke-width:2;width:18px;height:18px}
 .tb-btn:hover{background:rgba(255,255,255,.08);color:#fff}
 .tb-btn:active{transform:scale(.95)}
 .tb-btn.disabled{opacity:.25;pointer-events:none}
@@ -195,32 +195,60 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .note-ctx-item.danger:hover{background:rgba(248,113,113,.1)}
 #note-mode-hint{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(143,212,74,.9);color:#fff;font-size:11px;padding:6px 14px;border-radius:100px;z-index:310;display:none;pointer-events:none;white-space:nowrap}
 
+/* Draw Text Format Toolbar */
+#text-fmt-bar{position:fixed;display:none;align-items:center;gap:3px;background:rgba(18,16,14,.92);border-radius:10px;padding:4px 6px;z-index:350;box-shadow:0 4px 20px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.06);backdrop-filter:blur(24px) saturate(1.2);animation:tfbIn .15s ease}
+@keyframes tfbIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+#text-fmt-bar.visible{display:flex}
+.tfb-btn{width:30px;height:28px;border:none;border-radius:6px;background:transparent;color:rgba(255,255,255,.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Plus Jakarta Sans',system-ui,sans-serif;transition:background .12s,color .12s}
+.tfb-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.tfb-btn.active{background:rgba(143,212,74,.2);color:#8fd44a}
+.tfb-btn svg{width:14px;height:14px;stroke-width:2}
+.tfb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);margin:0 2px;flex-shrink:0}
+.tfb-size{width:44px;height:28px;border:none;border-radius:6px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);font:600 11px/1 'SF Mono','Cascadia Code',monospace;text-align:center;cursor:pointer;transition:background .12s}
+.tfb-size:hover{background:rgba(255,255,255,.12);color:#fff}
+.tfb-colors{display:flex;gap:3px;align-items:center}
+.tfb-swatch{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .1s,border-color .15s;flex-shrink:0}
+.tfb-swatch:hover,.tfb-swatch.active{transform:scale(1.2);border-color:rgba(255,255,255,.5)}
+.bg-light #text-fmt-bar{background:rgba(255,255,255,.92);box-shadow:0 4px 20px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.06)}
+.bg-light .tfb-btn{color:rgba(0,0,0,.5)}
+.bg-light .tfb-btn:hover{background:rgba(0,0,0,.06);color:rgba(0,0,0,.8)}
+.bg-light .tfb-btn.active{background:rgba(90,154,0,.12);color:#5a9a00}
+.bg-light .tfb-sep{background:rgba(0,0,0,.08)}
+.bg-light .tfb-size{background:rgba(0,0,0,.04);color:rgba(0,0,0,.55)}
+.bg-light .tfb-size:hover{background:rgba(0,0,0,.08);color:rgba(0,0,0,.8)}
+
 /* Modals & Panels */
-.modal-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:400;background:rgba(0,0,0,.6)}
+.modal-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:400;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
 .modal-overlay.visible{display:flex}
-.modal-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:28px;max-width:540px;width:90vw;box-shadow:0 24px 64px rgba(20,15,8,.6);max-height:85vh;overflow-y:auto;animation:modalIn .2s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal-title{font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--text);margin-bottom:4px}
-.modal-sub{font-size:12px;color:var(--text3);margin-bottom:16px}
-.modal-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid var(--border)}
-.modal-tab{padding:8px 14px;font-size:12px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
-.modal-tab:hover{color:var(--text2)}
-.modal-tab.active{color:var(--accent);border-color:var(--accent)}
-.modal-textarea{width:100%;min-height:140px;background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:8px;padding:10px;font:12px 'Courier New',monospace;color:var(--text);resize:vertical;outline:none}
-.modal-textarea:focus{border-color:var(--accent)}
-.modal-textarea::placeholder{color:var(--text3)}
-.modal-btn{background:rgba(143,212,74,.12);border:1px solid rgba(143,212,74,.2);border-radius:100px;padding:9px 20px;font:600 12px 'Plus Jakarta Sans',system-ui;color:var(--accent);cursor:pointer;transition:all .15s,transform .1s;margin-top:10px;letter-spacing:-.01em}
-.modal-btn:hover{background:rgba(143,212,74,.2)}
+.modal-card{background:rgba(22,19,16,.95);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px 30px;max-width:540px;width:90vw;box-shadow:0 24px 64px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.03);max-height:85vh;overflow-y:auto;animation:modalIn .2s cubic-bezier(.2,.8,.3,1);backdrop-filter:blur(24px) saturate(1.2)}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-title{font:700 20px/1.2 'Plus Jakarta Sans',system-ui,sans-serif;color:rgba(255,255,255,.92);margin-bottom:4px;letter-spacing:-.03em}
+.modal-sub{font:500 12px/1 'Plus Jakarta Sans',system-ui,sans-serif;color:rgba(255,255,255,.35);margin-bottom:20px;letter-spacing:-.01em}
+.modal-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.modal-tab{padding:8px 14px;font:500 12px 'Plus Jakarta Sans',system-ui,sans-serif;color:rgba(255,255,255,.35);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;letter-spacing:-.01em}
+.modal-tab:hover{color:rgba(255,255,255,.65)}
+.modal-tab.active{color:#8fd44a;border-color:#8fd44a}
+.modal-textarea{width:100%;min-height:140px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;font:12px 'DM Mono','Courier New',monospace;color:rgba(255,255,255,.85);resize:vertical;outline:none;transition:border-color .15s}
+.modal-textarea:focus{border-color:rgba(143,212,74,.4)}
+.modal-textarea::placeholder{color:rgba(255,255,255,.2)}
+.modal-btn{background:#8fd44a;border:none;border-radius:10px;padding:10px 22px;font:600 12px 'Plus Jakarta Sans',system-ui;color:#111;cursor:pointer;transition:all .15s,transform .1s;margin-top:12px;letter-spacing:-.01em}
+.modal-btn:hover{background:#9de058;box-shadow:0 0 16px rgba(143,212,74,.3)}
 .modal-btn:active{transform:scale(.97)}
-.modal-btn:disabled{opacity:.4;pointer-events:none}
-.modal-cancel{background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;margin-top:10px;display:block}
-.modal-preview{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:10px;font:11px 'Courier New',monospace;color:var(--text3);max-height:160px;overflow-y:auto;margin-top:8px;white-space:pre;line-height:1.5}
-.nm-options{display:flex;gap:12px;margin-bottom:16px}
-.nm-opt{flex:1;padding:20px 14px;border-radius:12px;border:1px solid var(--border);cursor:pointer;text-align:center;transition:all .15s}
-.nm-opt:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
-.nm-opt-icon{font-size:30px;color:var(--text3);margin-bottom:8px}
-.nm-opt-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
-.nm-opt-desc{font-size:10px;color:var(--text3)}
+.modal-btn:disabled{opacity:.3;pointer-events:none}
+.modal-cancel{background:none;border:none;color:rgba(255,255,255,.3);font:500 12px 'Plus Jakarta Sans',system-ui,sans-serif;cursor:pointer;margin-top:12px;display:block;transition:color .12s;letter-spacing:-.01em}
+.modal-cancel:hover{color:rgba(255,255,255,.6)}
+.modal-preview{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;font:11px 'DM Mono','Courier New',monospace;color:rgba(255,255,255,.4);max-height:160px;overflow-y:auto;margin-top:8px;white-space:pre;line-height:1.5}
+.nm-options{display:flex;gap:10px;margin-bottom:16px}
+.nm-opt{flex:1;padding:22px 14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.06);cursor:pointer;text-align:center;transition:all .18s;background:rgba(255,255,255,.02);position:relative;overflow:hidden}
+.nm-opt::before{content:'';position:absolute;inset:0;border-radius:12px;background:linear-gradient(135deg,rgba(143,212,74,.06),transparent 60%);opacity:0;transition:opacity .18s}
+.nm-opt:hover{border-color:rgba(143,212,74,.25);background:rgba(255,255,255,.04);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.nm-opt:hover::before{opacity:1}
+.nm-opt:hover .nm-opt-icon{color:#8fd44a}
+.nm-opt:active{transform:translateY(0);box-shadow:none}
+.nm-opt-icon{font-size:24px;color:rgba(255,255,255,.3);margin-bottom:10px;transition:color .18s;display:flex;align-items:center;justify-content:center}
+.nm-opt-icon svg{stroke:currentColor}
+.nm-opt-title{font:600 13px/1 'Plus Jakarta Sans',system-ui,sans-serif;color:rgba(255,255,255,.85);margin-bottom:4px;letter-spacing:-.01em}
+.nm-opt-desc{font:400 10.5px/1 'Plus Jakarta Sans',system-ui,sans-serif;color:rgba(255,255,255,.3)}
 
 /* Shortcuts panel */
 #shortcuts-panel{position:fixed;right:16px;top:50%;transform:translateY(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px;width:300px;max-height:80vh;overflow-y:auto;z-index:250;display:none;box-shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -523,8 +551,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 @keyframes voicePulse{0%,100%{box-shadow:0 0 0 4px rgba(248,113,113,.12)}50%{box-shadow:0 0 0 8px rgba(248,113,113,.06)}}
 
 /* Voice panel */
-#voice-panel{position:fixed;bottom:0;left:0;right:0;height:0;background:var(--bg2);border-top:1px solid var(--border);z-index:190;overflow:hidden;transition:height .3s;display:flex;align-items:center;padding:0 24px;gap:20px}
-#voice-panel.open{height:110px}
+#voice-panel{position:fixed;bottom:28px;left:0;right:0;height:0;background:var(--bg2);border-top:1px solid var(--border);z-index:201;overflow:hidden;transition:height .3s;display:flex;align-items:center;padding:0 24px;gap:20px}
+#voice-panel.open{height:80px}
+body.voice-open #minimap{bottom:118px}
 #voice-transcript{flex:1;font:italic 14px system-ui;color:rgba(255,255,255,.8);overflow:hidden;max-height:80px}
 #voice-transcript .placeholder{color:var(--text3);font-style:italic}
 #voice-wave{display:flex;align-items:center;gap:2px;height:50px;flex-shrink:0}
@@ -863,13 +892,25 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .theme-light .ctx-item:hover,.theme-portent.bg-light .ctx-item:hover{background:rgba(26,23,20,.05)}
 .theme-light .ctx-sep,.theme-portent.bg-light .ctx-sep{background:rgba(26,23,20,.06)}
 .theme-light .ctx-item.danger,.theme-portent.bg-light .ctx-item.danger{color:#dc2626}
-.theme-light .modal-overlay,.theme-portent.bg-light .modal-overlay{background:rgba(0,0,0,.4)}
-.theme-light .modal-card,.theme-portent.bg-light .modal-card{background:#ffffff;border-color:rgba(26,23,20,.1)}
-.theme-light .modal-title,.theme-portent.bg-light .modal-title{color:#1a1714}
-.theme-light .modal-sub,.theme-portent.bg-light .modal-sub{color:rgba(26,23,20,.5)}
-.theme-light .modal-textarea,.theme-portent.bg-light .modal-textarea{background:#f7f3ec;border-color:rgba(26,23,20,.15);color:#1a1714}
-.theme-light .modal-textarea::placeholder,.theme-portent.bg-light .modal-textarea::placeholder{color:rgba(26,23,20,.35)}
-.theme-light .modal-tab,.theme-portent.bg-light .modal-tab{color:rgba(26,23,20,.45)}
+.theme-light .modal-overlay,.theme-portent.bg-light .modal-overlay{background:rgba(0,0,0,.3);backdrop-filter:blur(6px)}
+.theme-light .modal-card,.theme-portent.bg-light .modal-card{background:rgba(255,255,255,.95);border-color:rgba(0,0,0,.06);box-shadow:0 24px 64px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.04)}
+.theme-light .modal-title,.theme-portent.bg-light .modal-title{color:rgba(0,0,0,.88)}
+.theme-light .modal-sub,.theme-portent.bg-light .modal-sub{color:rgba(0,0,0,.4)}
+.theme-light .modal-textarea,.theme-portent.bg-light .modal-textarea{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08);color:rgba(0,0,0,.85)}
+.theme-light .modal-textarea::placeholder,.theme-portent.bg-light .modal-textarea::placeholder{color:rgba(0,0,0,.25)}
+.theme-light .modal-tab,.theme-portent.bg-light .modal-tab{color:rgba(0,0,0,.35)}
+.theme-light .modal-tab.active,.theme-portent.bg-light .modal-tab.active{color:#4a8a00;border-color:#4a8a00}
+.theme-light .modal-btn,.theme-portent.bg-light .modal-btn{background:#5a9a00;color:#fff}
+.theme-light .modal-btn:hover,.theme-portent.bg-light .modal-btn:hover{background:#4a8a00;box-shadow:0 0 16px rgba(90,154,0,.2)}
+.theme-light .modal-cancel,.theme-portent.bg-light .modal-cancel{color:rgba(0,0,0,.3)}
+.theme-light .modal-cancel:hover,.theme-portent.bg-light .modal-cancel:hover{color:rgba(0,0,0,.6)}
+.theme-light .nm-opt,.theme-portent.bg-light .nm-opt{border-color:rgba(0,0,0,.06);background:rgba(0,0,0,.02)}
+.theme-light .nm-opt:hover,.theme-portent.bg-light .nm-opt:hover{border-color:rgba(90,154,0,.3);background:rgba(0,0,0,.03);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.theme-light .nm-opt:hover .nm-opt-icon,.theme-portent.bg-light .nm-opt:hover .nm-opt-icon{color:#5a9a00}
+.theme-light .nm-opt::before,.theme-portent.bg-light .nm-opt::before{background:linear-gradient(135deg,rgba(90,154,0,.06),transparent 60%)}
+.theme-light .nm-opt-icon,.theme-portent.bg-light .nm-opt-icon{color:rgba(0,0,0,.25)}
+.theme-light .nm-opt-title,.theme-portent.bg-light .nm-opt-title{color:rgba(0,0,0,.8)}
+.theme-light .nm-opt-desc,.theme-portent.bg-light .nm-opt-desc{color:rgba(0,0,0,.35)}
 .theme-light .dropdown,.theme-portent.bg-light .dropdown{background:#ffffff;border-color:rgba(26,23,20,.1)}
 .theme-light .dd-item,.theme-portent.bg-light .dd-item{color:rgba(26,23,20,.7)}
 .theme-light .dd-item:hover,.theme-portent.bg-light .dd-item:hover{background:rgba(26,23,20,.05)}
@@ -1088,7 +1129,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #welcome-key-save:hover{background:#2c2a26}
 #welcome-generating{font-size:12px;color:#6aaa00;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px;font-family:'Courier New',monospace}
 /* ━━━ TAB BAR ━━━ */
-#tab-bar{position:fixed;top:56px;left:50%;transform:translateX(-50%);width:fit-content;height:32px;background:rgba(14,12,10,.85);border:none;border-radius:10px;display:flex;align-items:center;padding:0 8px;gap:0;z-index:199;overflow:hidden;backdrop-filter:blur(24px) saturate(1.2);box-shadow:0 2px 12px rgba(0,0,0,.1)}
+#tab-bar{position:fixed;top:62px;left:50%;transform:translateX(-50%);width:fit-content;height:32px;background:rgba(14,12,10,.85);border:none;border-radius:10px;display:flex;align-items:center;padding:0 8px;gap:0;z-index:199;overflow:hidden;backdrop-filter:blur(24px) saturate(1.2);box-shadow:0 2px 12px rgba(0,0,0,.1)}
 #tab-bar::before{display:none}
 #tab-bar::after{display:none}
 .tab-scroll{display:flex;align-items:center;flex:1;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;position:relative;z-index:1;gap:4px;padding:0}
@@ -1277,7 +1318,7 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
 
 /* ━━━ FEATURE GUIDE ━━━ */
 #guide-btn{display:none}
-#btn-guide-inline{font:700 13px 'Plus Jakarta Sans',system-ui,sans-serif!important;width:30px;height:30px;padding:0!important;border-radius:50%!important}
+#btn-guide-inline{font:700 14px 'Plus Jakarta Sans',system-ui,sans-serif!important;width:34px;height:34px;padding:0!important;border-radius:50%!important}
 #feature-guide{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;overflow:hidden}
 #feature-guide.open{display:flex}
 #feature-guide .fg-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(20px);animation:fgFadeIn .35s ease}
@@ -1608,8 +1649,12 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
 <div class="modal-overlay" id="confirm-dialog"><div class="dlg-box"><div class="dlg-msg" id="confirm-msg"></div><div class="dlg-actions"><button class="dlg-btn cancel" onclick="closeConfirm(false)">Cancel</button><button class="dlg-btn danger" onclick="closeConfirm(true)">Delete</button></div></div></div>
 <div class="modal-overlay" id="newmap-modal">
   <div class="modal-card">
-    <div class="modal-title">Create new map</div><div class="modal-sub">Start fresh or load a template</div>
-    <div class="nm-options"><div class="nm-opt" onclick="newBlankMap()"><div class="nm-opt-icon">+</div><div class="nm-opt-title">Blank map</div><div class="nm-opt-desc">Single root node</div></div><div class="nm-opt" onclick="newTemplateMap()"><div class="nm-opt-icon">&#9741;</div><div class="nm-opt-title">Portent map</div><div class="nm-opt-desc">Full architecture</div></div></div>
+    <div class="modal-title">Create new map</div><div class="modal-sub">Choose how to start</div>
+    <div class="nm-options">
+      <div class="nm-opt" onclick="newBlankMap()"><div class="nm-opt-icon">+</div><div class="nm-opt-title">Blank map</div><div class="nm-opt-desc">Single root node</div></div>
+      <div class="nm-opt" onclick="hideModal('newmap-modal');showTemplatesGallery()"><div class="nm-opt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><div class="nm-opt-title">From template</div><div class="nm-opt-desc">Pre-built layouts</div></div>
+      <div class="nm-opt" onclick="hideModal('newmap-modal');showImportModal();setTimeout(()=>setImportTab(2),10)"><div class="nm-opt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div><div class="nm-opt-title">AI generate</div><div class="nm-opt-desc">Describe a topic</div></div>
+    </div>
     <button class="modal-cancel" onclick="hideModal('newmap-modal')">Cancel</button>
   </div>
 </div>
@@ -1659,6 +1704,27 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
 
 <div id="note-mode-hint"></div>
 <div id="note-ctx-menu" class="note-ctx"></div>
+<div id="text-fmt-bar">
+  <button class="tfb-btn" data-act="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+  <button class="tfb-btn" data-act="italic" title="Italic (Ctrl+I)"><i style="font-style:italic">I</i></button>
+  <div class="tfb-sep"></div>
+  <button class="tfb-btn tfb-size" data-act="size-down" title="Smaller">A&#8595;</button>
+  <button class="tfb-btn tfb-size" data-act="size-up" title="Bigger">A&#8593;</button>
+  <div class="tfb-sep"></div>
+  <div class="tfb-colors">
+    <div class="tfb-swatch" data-color="#ffffff" style="background:#ffffff" title="White"></div>
+    <div class="tfb-swatch" data-color="#8fd44a" style="background:#8fd44a" title="Green"></div>
+    <div class="tfb-swatch" data-color="#f0b43c" style="background:#f0b43c" title="Amber"></div>
+    <div class="tfb-swatch" data-color="#60a5fa" style="background:#60a5fa" title="Blue"></div>
+    <div class="tfb-swatch" data-color="#f87171" style="background:#f87171" title="Red"></div>
+    <div class="tfb-swatch" data-color="#c084fc" style="background:#c084fc" title="Purple"></div>
+    <div class="tfb-swatch" data-color="#1a1714" style="background:#1a1714;border:1px solid rgba(255,255,255,.2)" title="Dark"></div>
+  </div>
+  <div class="tfb-sep"></div>
+  <button class="tfb-btn" data-act="edit" title="Edit text">&#9998;</button>
+  <button class="tfb-btn" data-act="duplicate" title="Duplicate">&#10697;</button>
+  <button class="tfb-btn" data-act="delete" title="Delete" style="color:#f87171">&#215;</button>
+</div>
 <div id="focus-exit" onclick="exitFocus()">&#10005; Exit focus</div>
 <div id="zen-exit" onclick="toggleZen()">Zen mode &nbsp;·&nbsp; press <kbd>Alt</kbd>+<kbd>Z</kbd> to exit</div>
 <div id="minimap" class="visible"><div id="minimap-header"><div id="minimap-label">OVERVIEW</div><div id="minimap-zoom">100%</div></div><canvas id="minimap-canvas" width="320" height="200"></canvas></div>
@@ -2451,7 +2517,10 @@ requestAnimationFrame(()=>{
 drawSvg.addEventListener('contextmenu',e=>{
   e.preventDefault();e.stopPropagation();
   const hit=e.target.closest('[data-idx]');
-  if(hit){snap();drawElements.splice(parseInt(hit.dataset.idx),1);selectedDrawIdx=null;render();schSave();toast('Removed')}
+  if(!hit)return;
+  const idx=parseInt(hit.dataset.idx);const el=drawElements[idx];
+  if(el&&el.type==='text'){selectedDrawIdx=idx;renderDrawElements();render();setTimeout(showTextFmtBar,10);return}
+  snap();drawElements.splice(idx,1);selectedDrawIdx=null;hideTextFmtBar();render();schSave();toast('Removed')
 });
 function renderDrawElements(){drawSvg.innerHTML='';
 const isLight=document.body.classList.contains('bg-light');
@@ -2485,7 +2554,8 @@ else if(el.type==='text'){
   const tv=document.createElementNS('http://www.w3.org/2000/svg','text');
   tv.setAttribute('x',el.x1);tv.setAttribute('y',el.y1);
   tv.setAttribute('font-size',fs);tv.setAttribute('font-family','system-ui,-apple-system,sans-serif');
-  tv.setAttribute('font-weight','500');
+  tv.setAttribute('font-weight',el.fontWeight||'500');
+  if(el.fontStyle==='italic')tv.setAttribute('font-style','italic');
   tv.setAttribute('fill',sel?'#6aaa00':(el.color||(isLight?'rgba(26,23,20,.82)':'rgba(255,255,255,.88)')));
   tv.style.pointerEvents='none';tv.textContent=txt;drawSvg.appendChild(tv);
   // Selection box
@@ -2513,7 +2583,11 @@ function _startTextEdit(wx,wy,existingIdx){
   ed.contentEditable='true';
   ed.spellcheck=false;
   ed.textContent=existingText;
-  ed.style.cssText=`position:fixed;left:${sx}px;top:${sy-6}px;min-width:140px;max-width:500px;padding:7px 12px;font:500 18px/1.4 system-ui,-apple-system,sans-serif;color:${isLight?'#1a1714':'#f2ede3'};background:${isLight?'rgba(255,255,255,.97)':'rgba(26,23,20,.97)'};border:2px solid #6aaa00;border-radius:8px;outline:none;z-index:5000;box-shadow:0 4px 20px rgba(0,0,0,.25);white-space:pre;cursor:text`;
+  const _fw=existing?existing.fontWeight||'500':'500';
+  const _fi=existing&&existing.fontStyle==='italic'?'italic':'normal';
+  const _fc=existing&&existing.color?existing.color:(isLight?'#1a1714':'#f2ede3');
+  const _fs=existing?Math.round((existing.fontSize||36)*zoom*0.5):18;
+  ed.style.cssText=`position:fixed;left:${sx}px;top:${sy-6}px;min-width:140px;max-width:500px;padding:7px 12px;font:${_fw} ${_fs}px/1.4 system-ui,-apple-system,sans-serif;font-style:${_fi};color:${_fc};background:${isLight?'rgba(255,255,255,.97)':'rgba(26,23,20,.97)'};border:2px solid #6aaa00;border-radius:8px;outline:none;z-index:5000;box-shadow:0 4px 20px rgba(0,0,0,.25);white-space:pre;cursor:text`;
   document.body.appendChild(ed);
   requestAnimationFrame(()=>{
     ed.focus();
@@ -2542,12 +2616,52 @@ function _startTextEdit(wx,wy,existingIdx){
   ed.addEventListener('blur',()=>setTimeout(commit,120));
 }
 
+// ━━━ TEXT FORMAT TOOLBAR ━━━
+const TEXT_SIZES=[18,24,36,48,64,80,100];
+function showTextFmtBar(){
+  const bar=document.getElementById('text-fmt-bar');
+  if(selectedDrawIdx===null||!drawElements[selectedDrawIdx]||drawElements[selectedDrawIdx].type!=='text'){bar.classList.remove('visible');return}
+  const el=drawElements[selectedDrawIdx];
+  const fs=el.fontSize||36;
+  // Position above the text element
+  const sx=Math.round(el.x1*zoom+panX);
+  const sy=Math.round((el.y1-fs*0.88)*zoom+panY-44);
+  bar.style.left=Math.max(8,Math.min(sx,window.innerWidth-bar.offsetWidth-8))+'px';
+  bar.style.top=Math.max(8,sy)+'px';
+  bar.classList.add('visible');
+  // Update button states
+  bar.querySelector('[data-act="bold"]').classList.toggle('active',el.fontWeight==='800');
+  bar.querySelector('[data-act="italic"]').classList.toggle('active',el.fontStyle==='italic');
+  bar.querySelectorAll('.tfb-swatch').forEach(s=>s.classList.toggle('active',s.dataset.color===(el.color||'')));
+}
+function hideTextFmtBar(){document.getElementById('text-fmt-bar').classList.remove('visible')}
+// Handle format bar clicks
+document.getElementById('text-fmt-bar').addEventListener('mousedown',e=>e.stopPropagation());
+document.getElementById('text-fmt-bar').addEventListener('click',e=>{
+  e.stopPropagation();
+  if(selectedDrawIdx===null||!drawElements[selectedDrawIdx]||drawElements[selectedDrawIdx].type!=='text')return;
+  const el=drawElements[selectedDrawIdx];
+  const btn=e.target.closest('.tfb-btn');
+  const swatch=e.target.closest('.tfb-swatch');
+  if(btn){
+    const act=btn.dataset.act;
+    if(act==='bold'){snap();el.fontWeight=el.fontWeight==='800'?'500':'800';render();showTextFmtBar();schSave()}
+    else if(act==='italic'){snap();el.fontStyle=el.fontStyle==='italic'?'normal':'italic';render();showTextFmtBar();schSave()}
+    else if(act==='size-down'){snap();const ci=TEXT_SIZES.indexOf(el.fontSize||36);el.fontSize=TEXT_SIZES[Math.max(0,(ci>=0?ci:2)-1)];render();showTextFmtBar();schSave()}
+    else if(act==='size-up'){snap();const ci=TEXT_SIZES.indexOf(el.fontSize||36);el.fontSize=TEXT_SIZES[Math.min(TEXT_SIZES.length-1,(ci>=0?ci:2)+1)];render();showTextFmtBar();schSave()}
+    else if(act==='edit'){_startTextEdit(el.x1,el.y1,selectedDrawIdx);hideTextFmtBar()}
+    else if(act==='duplicate'){snap();const dup=JSON.parse(JSON.stringify(el));dup.x1+=40;dup.y1+=40;drawElements.push(dup);selectedDrawIdx=drawElements.length-1;render();showTextFmtBar();schSave();toast('Duplicated')}
+    else if(act==='delete'){snap();drawElements.splice(selectedDrawIdx,1);selectedDrawIdx=null;hideTextFmtBar();render();schSave();toast('Removed')}
+  }
+  if(swatch){snap();el.color=swatch.dataset.color;render();showTextFmtBar();schSave()}
+});
+
 // ━━━ DRAWING TOOLS ━━━
 function setTool(t){currentTool=t;document.querySelectorAll('.dt-btn').forEach(b=>b.classList.toggle('active',b.dataset.tool==='select'?t==='select'||t==='boxsel':b.dataset.tool===t));
 viewport.classList.toggle('tool-crosshair',['rect','ellipse','diamond','arrow','line','pen','boxsel'].includes(t));
 viewport.classList.toggle('tool-text',t==='text');
 viewport.classList.toggle('tool-select',t==='select'||t==='boxsel');
-if(t!=='select'){selectedDrawIdx=null;renderDrawElements()}}
+if(t!=='select'){selectedDrawIdx=null;hideTextFmtBar();renderDrawElements()}}
 
 function screenToWorld(sx,sy){return{x:(sx-panX)/zoom,y:(sy-panY)/zoom}}
 
@@ -2578,7 +2692,7 @@ document.body.appendChild(m);
 setTimeout(()=>{function rm(){m.remove();document.removeEventListener('mousedown',rm)}document.addEventListener('mousedown',rm)},50)}
 
 function handleCanvasMouseDown(e){
-if(e.target.closest('.node')||e.target.closest('.canvas-note')||e.target.closest('#toolbar')||e.target.closest('#draw-toolbar')||e.target.closest('#ctx-menu')||e.target.closest('#note-ctx-menu')||e.target.closest('.modal-overlay')||e.target.closest('#ai-panel')||e.target.closest('#style-panel')||e.target.closest('#align-bar')||e.target.closest('#shortcuts-panel')||e.target.closest('#tag-editor')||e.target.closest('#emoji-picker')||e.target.closest('.dropdown'))return;
+if(e.target.closest('.node')||e.target.closest('.canvas-note')||e.target.closest('#toolbar')||e.target.closest('#draw-toolbar')||e.target.closest('#ctx-menu')||e.target.closest('#note-ctx-menu')||e.target.closest('#text-fmt-bar')||e.target.closest('.modal-overlay')||e.target.closest('#ai-panel')||e.target.closest('#style-panel')||e.target.closest('#align-bar')||e.target.closest('#shortcuts-panel')||e.target.closest('#tag-editor')||e.target.closest('#emoji-picker')||e.target.closest('.dropdown'))return;
 hideAllPopups();hideNoteCtx();
 if(noteMode){const wp=screenToWorld(e.clientX,e.clientY);createCanvasNote(wp.x,wp.y);return;}
 if(_noteConnectMode!==null){cancelNoteConnect();return;}
@@ -2598,13 +2712,14 @@ if(tool==='boxsel'||tool==='select'){
     }
     _lastDrawHit={time:now,idx};
     selectedDrawIdx=idx;multiSel.clear();renderDrawElements();render();
+    if(drawElements[idx]&&drawElements[idx].type==='text')setTimeout(showTextFmtBar,10);else hideTextFmtBar();
     const de=drawElements[idx];
     _drawDragState={idx,sx:e.clientX,sy:e.clientY,moved:false,
       ox1:de.x1,oy1:de.y1,ox2:de.x2,oy2:de.y2,
       origPoints:de.points?de.points.map(p=>[...p]):null};
     return;
   }
-  selectedDrawIdx=null;multiSel.clear();render();selBoxStart={sx:e.clientX,sy:e.clientY,wx:wp.x,wy:wp.y};return}
+  selectedDrawIdx=null;multiSel.clear();hideTextFmtBar();render();selBoxStart={sx:e.clientX,sy:e.clientY,wx:wp.x,wy:wp.y};return}
 if(tool==='hand'){isPanning=true;psx=e.clientX;psy=e.clientY;ppx=panX;ppy=panY;viewport.classList.add('grabbing');return}
 if(tool==='boundary'){_drawingBoundary={x1:wp.x,y1:wp.y,x2:wp.x,y2:wp.y};return}
 if(['rect','ellipse','diamond','arrow','line'].includes(tool)){drawingShape={type:tool,x1:wp.x,y1:wp.y,x2:wp.x,y2:wp.y};return}
@@ -2648,7 +2763,7 @@ const wp1=screenToWorld(x,y),wp2=screenToWorld(x+w,y+h);
 selBoxEl.style.left=wp1.x+'px';selBoxEl.style.top=wp1.y+'px';selBoxEl.style.width=(wp2.x-wp1.x)+'px';selBoxEl.style.height=(wp2.y-wp1.y)+'px'}});
 
 window.addEventListener('mouseup',e=>{
-if(_drawDragState){if(_drawDragState.moved)schSave();_drawDragState=null;}
+if(_drawDragState){if(_drawDragState.moved){schSave();if(selectedDrawIdx!==null&&drawElements[selectedDrawIdx]&&drawElements[selectedDrawIdx].type==='text')setTimeout(showTextFmtBar,10)}_drawDragState=null;}
 if(isPanning){isPanning=false;viewport.classList.remove('grabbing')}
 if(_drawingBoundary){const pv=document.getElementById('boundary-preview');if(pv)pv.remove();
 const bw=Math.abs(_drawingBoundary.x2-_drawingBoundary.x1),bh=Math.abs(_drawingBoundary.y2-_drawingBoundary.y1);
@@ -2672,7 +2787,7 @@ if(e.shiftKey){multiSel.has(node.id)?multiSel.delete(node.id):multiSel.add(node.
 const isMultiDrag=multiSel.size>1&&multiSel.has(node.id);
 if(multiSel.size>0&&!multiSel.has(node.id)){multiSel.clear()}
 if(!isMultiDrag)selectedId=node.id;
-selectedDrawIdx=null;
+selectedDrawIdx=null;hideTextFmtBar();
 // Directly toggle CSS — do NOT call render() here, it destroys elements needed for drag
 var _s=new Set(multiSel);if(selectedId!==null)_s.add(selectedId);
 document.querySelectorAll('.node').forEach(function(el){var nid=parseInt(el.dataset.id);el.classList.toggle('selected',_s.has(nid));el.classList.toggle('soft-dim',_s.size>0&&!_s.has(nid));});
@@ -2735,7 +2850,7 @@ function addChild(){if(selectedId===null)return;const p=gn(selectedId);if(!p)ret
 function addSibling(){if(selectedId===null)return;const n=gn(selectedId);if(!n||n.parentId===null)return;snap();const nn={id:nextId++,label:'New node',parentId:n.parentId,color:n.color,x:n.x,y:n.y+50};nodes.splice(nodes.indexOf(n)+1,0,nn);selectedId=nn.id;_newNodeIds.add(nn.id);_newConnIds.add(nn.id);layoutAll();render();schSave();setTimeout(()=>startEdit(nn.id),30)}
 function delSel(){
 // Handle draw element delete
-if(selectedDrawIdx!==null&&selectedDrawIdx<drawElements.length){snap();drawElements.splice(selectedDrawIdx,1);selectedDrawIdx=null;render();schSave();toast('Removed');return}
+if(selectedDrawIdx!==null&&selectedDrawIdx<drawElements.length){snap();drawElements.splice(selectedDrawIdx,1);selectedDrawIdx=null;hideTextFmtBar();render();schSave();toast('Removed');return}
 // Handle multi-select delete
 if(multiSel.size>0){delMulti();return}
 if(selectedId===null){toast('Select a node first');return}
@@ -2835,7 +2950,7 @@ function closeConfirm(y){document.getElementById('confirm-dialog').classList.rem
 function toast(m){document.querySelectorAll('.toast').forEach(e=>e.remove());const el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},1800)}
 
 // ━━━ TRANSFORM ━━━
-function apT(){world.style.transform=`translate(${panX}px,${panY}px) scale(${zoom})`;updateMinimap();}
+function apT(){world.style.transform=`translate(${panX}px,${panY}px) scale(${zoom})`;updateMinimap();if(document.getElementById('text-fmt-bar').classList.contains('visible'))showTextFmtBar()}
 function updZoom(){document.getElementById('zoomText').textContent=Math.round(zoom*100)+'%'}
 function fitToScreen(){const vis=nodes.filter(n=>!isHidden(n));if(!vis.length)return;let mx1=Infinity,my1=Infinity,mx2=-Infinity,my2=-Infinity;vis.forEach(n=>{const d=gd(n),w=nW(n.label,d)/2,h=nH(d)/2;mx1=Math.min(mx1,n.x-w);my1=Math.min(my1,n.y-h);mx2=Math.max(mx2,n.x+w);my2=Math.max(my2,n.y+h)});const pd=80,bw=mx2-mx1+pd*2,bh=my2-my1+pd*2;const vw=aiOpen?window.innerWidth-340:window.innerWidth,vh=window.innerHeight;zoom=Math.min(vw/bw,vh/bh,3);zoom=Math.max(zoom,.12);panX=vw/2-((mx1+mx2)/2)*zoom;panY=vh/2-((my1+my2)/2)*zoom;apT();updZoom()}
 function centerMapHalf(){const vis=nodes.filter(n=>!isHidden(n));if(!vis.length)return;let mx1=Infinity,my1=Infinity,mx2=-Infinity,my2=-Infinity;vis.forEach(n=>{const d=gd(n),w=nW(n.label,d)/2,h=nH(d)/2;mx1=Math.min(mx1,n.x-w);my1=Math.min(my1,n.y-h);mx2=Math.max(mx2,n.x+w);my2=Math.max(my2,n.y+h)});const vw=aiOpen?window.innerWidth-340:window.innerWidth,vh=window.innerHeight;zoom=0.5;panX=vw/2-((mx1+mx2)/2)*zoom;panY=vh/2-((my1+my2)/2)*zoom;apT();updZoom()}
@@ -3417,7 +3532,7 @@ if(isEditing||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
 if(document.getElementById('feature-guide').classList.contains('open'))return;
 if(presActive){if(e.key==='Escape')endPresentation();if(e.key==='ArrowRight'||e.key===' ')presGoTo(Math.min(presStep+1,presBranches.length-1));if(e.key==='ArrowLeft')presGoTo(Math.max(presStep-1,-1));return}
 if(e.altKey&&e.key==='z'){e.preventDefault();toggleZen();return}
-if(e.key==='Escape'){if(noteMode){noteMode=false;const _bN=document.getElementById('btn-note');if(_bN)_bN.classList.remove('active');document.getElementById('note-mode-hint').style.display='none';return}if(_noteConnectMode!==null){cancelNoteConnect();return}if(document.getElementById('confirm-dialog').classList.contains('visible')){closeConfirm(false);return}hideAllPopups();hideModal('newmap-modal');hideModal('import-modal');if(document.getElementById('shortcuts-panel').classList.contains('visible')){toggleShortcuts();return}if(searchActive){closeSearch();return}if(focusedBranchId){exitFocus();return}selectedId=null;multiSel.clear();filterTag=null;render();return}
+if(e.key==='Escape'){if(document.getElementById('text-fmt-bar').classList.contains('visible')){selectedDrawIdx=null;hideTextFmtBar();renderDrawElements();return}if(noteMode){noteMode=false;const _bN=document.getElementById('btn-note');if(_bN)_bN.classList.remove('active');document.getElementById('note-mode-hint').style.display='none';return}if(_noteConnectMode!==null){cancelNoteConnect();return}if(document.getElementById('confirm-dialog').classList.contains('visible')){closeConfirm(false);return}hideAllPopups();hideModal('newmap-modal');hideModal('import-modal');if(document.getElementById('shortcuts-panel').classList.contains('visible')){toggleShortcuts();return}if(searchActive){closeSearch();return}if(focusedBranchId){exitFocus();return}selectedId=null;multiSel.clear();filterTag=null;render();return}
 if((e.ctrlKey||e.metaKey)&&e.shiftKey&&(e.key==='v'||e.key==='V')){e.preventDefault();toggleVoice();return}
 if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();doUndo();return}
 if((e.ctrlKey||e.metaKey)&&(e.key==='y'||(e.shiftKey&&e.key==='Z'))){e.preventDefault();doRedo();return}
@@ -4443,8 +4558,8 @@ document.addEventListener('keydown',ev=>{
 
 // ━━━ PERSISTENCE ━━━
 function schSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,500)}
-function saveNow(){try{localStorage.setItem(SK,JSON.stringify({nodes,nextId,collapsed:[...collapsedSet],notes:noteMap,tags:tagMap,icons:iconMap,styles:styleMap,draws:drawElements,layout:currentLayout,canvasNotes,noteIdSeq,connLabels,boundaries,boundaryIdSeq}));lastSaveTime=Date.now()}catch(e){}}
-function loadStorage(){try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);if(d.nodes&&d.nodes.length){nodes=d.nodes;nextId=d.nextId||nodes.reduce((m,n)=>Math.max(m,n.id),0)+1;collapsedSet=new Set(d.collapsed||[]);noteMap=d.notes||{};tagMap=d.tags||{};iconMap=d.icons||{};styleMap=d.styles||{};drawElements=d.draws||[];if(d.layout)currentLayout=d.layout;canvasNotes=d.canvasNotes||[];if(d.noteIdSeq)noteIdSeq=d.noteIdSeq;connLabels=d.connLabels||{};boundaries=d.boundaries||[];if(d.boundaryIdSeq)boundaryIdSeq=d.boundaryIdSeq;return true}}}catch(e){}return false}
+function saveNow(){try{localStorage.setItem(SK,JSON.stringify({nodes,nextId,collapsed:[...collapsedSet],notes:noteMap,tags:tagMap,icons:iconMap,styles:styleMap,draws:drawElements,layout:currentLayout,canvasNotes,noteIdSeq,connLabels,boundaries,boundaryIdSeq,viewState:{zoom,panX,panY}}));lastSaveTime=Date.now()}catch(e){}}
+function loadStorage(){try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);if(d.nodes&&d.nodes.length){nodes=d.nodes;nextId=d.nextId||nodes.reduce((m,n)=>Math.max(m,n.id),0)+1;collapsedSet=new Set(d.collapsed||[]);noteMap=d.notes||{};tagMap=d.tags||{};iconMap=d.icons||{};styleMap=d.styles||{};drawElements=d.draws||[];if(d.layout)currentLayout=d.layout;canvasNotes=d.canvasNotes||[];if(d.noteIdSeq)noteIdSeq=d.noteIdSeq;connLabels=d.connLabels||{};boundaries=d.boundaries||[];if(d.boundaryIdSeq)boundaryIdSeq=d.boundaryIdSeq;if(d.viewState){zoom=d.viewState.zoom||1;panX=d.viewState.panX||0;panY=d.viewState.panY||0;apT();updZoom()}return true}}}catch(e){}return false}
 function resetToDefault(){showConfirm('Reset to default?',()=>{localStorage.removeItem(SK);nodes=buildData();collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;boundaries=[];boundaryIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());undoStack=[];redoStack=[];selectedId=null;currentLayout='radial';layoutAll();render();fitToScreen();schSave();toast('Reset')})}
 function loadShareLink(){const h=location.hash;if(!h.startsWith('#data='))return false;try{const d=JSON.parse(decodeURIComponent(escape(atob(h.slice(6)))));if(d.nodes){nodes=d.nodes;nextId=nodes.reduce((m,n)=>Math.max(m,n.id),0)+1;collapsedSet=new Set(d.collapsed||[]);noteMap=d.notes||{};tagMap=d.tags||{};iconMap=d.icons||{};return true}}catch(e){}return false}
 
@@ -4467,6 +4582,7 @@ voiceRecognition=new SR();voiceRecognition.continuous=true;voiceRecognition.inte
 voiceActive=true;voiceNodes=[];voiceContext=null;
 document.getElementById('voice-btn').classList.add('recording');
 document.getElementById('voice-panel').classList.add('open');
+document.body.classList.add('voice-open');
 document.getElementById('voice-transcript').innerHTML='<span class="placeholder">Speak to build your map...</span>';
 
 // If map is empty, voice will create root
@@ -4539,6 +4655,7 @@ layoutAll();render();schSave();
 function stopVoice(){voiceActive=false;if(voiceRecognition){try{voiceRecognition.stop()}catch(e){}}
 document.getElementById('voice-btn').classList.remove('recording');
 document.getElementById('voice-panel').classList.remove('open');
+document.body.classList.remove('voice-open');
 document.querySelectorAll('.wave-bar').forEach(b=>{b.style.height='4px';b.classList.remove('active')});
 // Show summary
 if(voiceNodes.length>0){
@@ -4550,6 +4667,7 @@ if(voiceNodes.length>0){
 function cancelVoice(){voiceActive=false;if(voiceRecognition){try{voiceRecognition.stop()}catch(e){}}
 document.getElementById('voice-btn').classList.remove('recording');
 document.getElementById('voice-panel').classList.remove('open');
+document.body.classList.remove('voice-open');
 // Restore pre-voice state
 if(voicePreSnap)restoreS(voicePreSnap);voicePreSnap=null;toast('Voice cancelled')}
 function keepVoiceMap(){document.getElementById('voice-summary').classList.remove('visible');voicePreSnap=null;toast('Map saved');fitToScreen()}
@@ -4713,7 +4831,7 @@ let currentBg='#ffffff';
 const _lightBgs=new Set(['#ffffff','#f2ede3','#e8e8e8']);
 function isLightBg(bg){return _lightBgs.has(bg)}
 function showBgMenu(e){hideDD();const m=document.getElementById('bg-menu');const b=e.target.closest('.tb-btn').getBoundingClientRect();m.style.left=b.left+'px';m.style.top=(b.bottom+4)+'px';m.classList.add('visible');e.stopPropagation()}
-function setBg(bg){hideDD();currentBg=bg;viewport.style.background=bg;document.body.classList.toggle('bg-light',isLightBg(bg));document.querySelectorAll('#bg-menu .bg-option').forEach(el=>{el.querySelector('.bg-check').textContent=el.dataset.bg===bg?'✓':''});try{localStorage.setItem('mindmap-bg',bg)}catch(e){}render()}
+function setBg(bg){hideDD();currentBg=bg;viewport.style.background=bg;document.body.classList.toggle('bg-light',isLightBg(bg));document.querySelectorAll('#bg-menu .bg-option').forEach(el=>{el.querySelector('.bg-check').textContent=el.dataset.bg===bg?'✓':''});try{localStorage.setItem('mindmap-bg',bg)}catch(e){}render();applyBgMode();if(window._saveTabState)window._saveTabState()}
 function setPalette(name){activePalette=name;try{localStorage.setItem('mindmap-palette',name)}catch(e){}
 // Recolor existing branch nodes with new palette
 const pal=getPalette();const branches=nodes.filter(n=>{const p=gn(n.parentId);return p&&p.parentId===null});
@@ -5376,8 +5494,9 @@ const savedBg=localStorage.getItem('mindmap-bg')||'#ffffff';currentBg=savedBg;do
 applyCanvasBg();
 document.querySelectorAll('#layout-menu .dd-item').forEach(d=>{d.classList.toggle('active',d.dataset.layout===currentLayout);d.querySelector('.check').textContent=d.dataset.layout===currentLayout?'✓':''});
 if(loadShareLink()){layoutAll();render();centerMapHalf();renderCanvasNotes();return}
-if(!loadStorage()){nodes=buildData();layoutAll()}else{const hasPos=nodes.some(n=>n.x&&n.x!==0);if(!hasPos)layoutAll()}
-render();centerMapHalf();updUndo();renderCanvasNotes();positionToolbar();})();
+let _restoredView=false;
+if(!loadStorage()){nodes=buildData();layoutAll()}else{const hasPos=nodes.some(n=>n.x&&n.x!==0);if(!hasPos)layoutAll();if(zoom!==1||panX!==0||panY!==0)_restoredView=true}
+render();if(!_restoredView)centerMapHalf();updUndo();renderCanvasNotes();positionToolbar();})();
 
 // ━━━ MULTI-MAP TAB SYSTEM ━━━
 (function(){
@@ -5811,8 +5930,8 @@ document.getElementById('welcome-key-inp').addEventListener('keydown',function(e
 // ━━━ INTERACTIVE TUTORIAL ━━━
 const TUTORIAL_STEPS=[
 {target:'#toolbar',title:'Your Toolbar',desc:'Everything you need is here — add nodes, change styles, export your map, and more. Explore each button!',pos:'bottom'},
-{target:'.node[data-id="1"]',title:'Click Any Node',desc:'Click to select, then press Tab to add a child node or Enter for a sibling. Double-click the canvas to add nodes anywhere.',pos:'right'},
-{target:'#draw-toolbar',title:'Drawing Tools',desc:'Sketch shapes, draw arrows, add text, or create boundary regions (G) to group related ideas.',pos:'right'},
+{target:'.node[data-id="1"]',title:'Click Any Node',desc:'Click to select, then press Tab to add a child node or Enter for a sibling. Double-click a node to open its document editor. Right-click for the full context menu.',pos:'right'},
+{target:'#draw-toolbar',title:'Drawing Tools',desc:'Sketch shapes, draw arrows, and add text with formatting (bold, italic, color, size). Create boundary regions (G) to group related ideas.',pos:'right'},
 {target:'#btn-export',title:'Export & Share',desc:'Export as PNG, SVG, PDF, Markdown, and more. Share a link or generate a social card for your map.',pos:'bottom'},
 {target:'#ai-toggle',title:'AI Magic',desc:'Open the AI panel to auto-generate branches, ask questions about your map, or expand any node with AI. Type / in a node for slash commands!',pos:'left'}
 ];
@@ -5880,15 +5999,16 @@ function skipTutorial(){const ov=document.getElementById('tutorial-overlay');if(
   }
 })();
 
+window._saveTabState=saveAllTabs;
 })(); // end tab system
 
 // ━━━ FEATURE GUIDE ━━━
 const GUIDE_CARDS=[
-{cat:'Getting Started',title:'Welcome to mAIndmap',icon:'🧠',desc:'Your AI-powered mind mapping canvas. Create, connect, and organize ideas with a beautiful visual interface. This guide walks you through every feature — from basic node editing to AI-powered generation.',shortcuts:[{key:'Tab',label:'Add child node'},{key:'Enter',label:'Add sibling'},{key:'F2',label:'Edit node'},{key:'Del',label:'Delete node'},{key:'Double-click',label:'Add anywhere'}],glyphs:['✨','🗺️','💡']},
-{cat:'Node Editing',title:'Nodes & Structure',icon:'🔗',desc:'Every idea starts as a node. Press Tab to grow branches, Enter to add siblings. Double-click the canvas to place a node anywhere. Right-click any node for a rich context menu with colors, icons, tags, notes, images, tasks, shapes, and more. Drag nodes to reposition — hover over another node to reparent.',shortcuts:[{key:'Tab',label:'Add child'},{key:'Enter',label:'Sibling'},{key:'/',label:'Slash commands'},{key:'Right-click',label:'Full context menu'},{key:'Shift+click',label:'Multi-select'},{key:'Ctrl+C / V',label:'Copy & paste'}],glyphs:['📝','🎨','🏷️']},
+{cat:'Getting Started',title:'Welcome to mAIndmap',icon:'🧠',desc:'Your AI-powered mind mapping canvas. Create, connect, and organize ideas with a beautiful visual interface. This guide walks you through every feature — from basic node editing to AI-powered generation.',shortcuts:[{key:'Tab',label:'Add child node'},{key:'Enter',label:'Add sibling'},{key:'F2',label:'Edit node'},{key:'Del',label:'Delete node'},{key:'Ctrl+K',label:'Command palette'}],glyphs:['✨','🗺️','💡']},
+{cat:'Node Editing',title:'Nodes & Structure',icon:'🔗',desc:'Every idea starts as a node. Press Tab to grow branches, Enter to add siblings. Right-click any node for a rich context menu with colors, icons, tags, notes, images, tasks, shapes, and more. Drag nodes to reposition — hover over another node to reparent. Double-click a node to open its document.',shortcuts:[{key:'Tab',label:'Add child'},{key:'Enter',label:'Sibling'},{key:'/',label:'Slash commands'},{key:'Right-click',label:'Full context menu'},{key:'Shift+click',label:'Multi-select'},{key:'Ctrl+C / V',label:'Copy & paste'}],glyphs:['📝','🎨','🏷️']},
 {cat:'AI Magic',title:'AI-Powered Creation',icon:'🤖',desc:'Open the AI panel to generate entire branch trees from a single prompt. Ask questions about your map, find hidden connections, or expand any node with intelligent suggestions. Type / inside a node for slash commands like /image, /color, /tag. Import from URLs, YouTube videos, or paste an image to generate a map automatically.',shortcuts:[{key:'AI Panel',label:'Generate & chat'},{key:'/image',label:'Add image via AI'},{key:'/color',label:'Change color'},{key:'Image-to-Map',label:'Vision AI import'},{key:'URL Import',label:'Webpage to map'}],glyphs:['⚡','🔮','🌐']},
 {cat:'Visual Design',title:'Layouts & Styles',icon:'🎨',desc:'Six layouts to organize your thinking: Radial for brainstorming, Left-Right for hierarchies, Top-Down for processes, Org Chart for teams, Fishbone for root-cause analysis, and Free for unconstrained placement. Eight visual styles from Modern to Retro, plus six curated color palettes.',shortcuts:[{key:'Radial',label:'Default brainstorm'},{key:'LR / TD',label:'Linear layouts'},{key:'Org Chart',label:'Team hierarchies'},{key:'Fishbone',label:'Cause & effect'},{key:'8 Styles',label:'Modern → Forest'},{key:'6 Palettes',label:'Vibrant → Cool'}],glyphs:['📐','🖌️','🌈']},
-{cat:'Canvas Tools',title:'Drawing & Annotations',icon:'✏️',desc:'A full creative toolkit lives in the left sidebar. Draw rectangles, ellipses, diamonds, and triangles. Add arrows and connectors between any elements. Place sticky notes for quick thoughts. Create boundary regions (press G) to visually group related branches. Add text annotations anywhere on the canvas.',shortcuts:[{key:'H',label:'Pan tool'},{key:'R',label:'Rectangle'},{key:'E',label:'Ellipse'},{key:'A',label:'Arrow / line'},{key:'N',label:'Sticky note'},{key:'G',label:'Boundary region'}],glyphs:['📏','🔶','📌']},
+{cat:'Canvas Tools',title:'Drawing & Annotations',icon:'✏️',desc:'A full creative toolkit lives in the left sidebar. Draw rectangles, ellipses, diamonds, and arrows. Place sticky notes for quick thoughts. Create boundary regions (press G) to visually group related branches. Add text annotations anywhere — then select them to access the format toolbar with bold, italic, font size, and color options.',shortcuts:[{key:'H',label:'Pan tool'},{key:'R',label:'Rectangle'},{key:'E',label:'Ellipse'},{key:'A',label:'Arrow / line'},{key:'T',label:'Text (with formatting)'},{key:'N',label:'Sticky note'},{key:'G',label:'Boundary region'}],glyphs:['📏','🔶','📌']},
 {cat:'Presentations',title:'Slides & Present',icon:'📽️',desc:'Turn your mind map into a presentation instantly. The Slides Editor lets you reorder branches as slides, add custom titles and notes per slide, and present full-screen with smooth animated transitions. Navigate with arrow keys. Perfect for meetings, pitches, and brainstorm recaps.',shortcuts:[{key:'Slides Editor',label:'Reorder & customize'},{key:'Present Mode',label:'Full-screen show'},{key:'← →',label:'Navigate slides'},{key:'Esc',label:'Exit presentation'}],glyphs:['🎬','📊','🖥️']},
 {cat:'Documents',title:'Rich Documents on Nodes',icon:'📄',desc:'Every node can hold a full document. Right-click any node and open the Document editor — write rich formatted text with headings, bold, lists, and more. Choose from templates (meeting notes, project brief, SWOT analysis) or let AI generate a document that fits the node\'s context.',shortcuts:[{key:'Right-click → Doc',label:'Open doc editor'},{key:'Templates',label:'Pre-built structures'},{key:'AI Generate',label:'Auto-fill content'}],glyphs:['📋','📑','✍️']},
 {cat:'Export & Share',title:'Export Everything',icon:'📦',desc:'Share your work in 11 formats. Export as PNG, SVG, or PDF for print. Markdown and JSON for data. OPML for other tools. Generate a shareable link with a beautiful interactive preview. Create social cards optimized for Twitter/LinkedIn. Copy as formatted text to paste anywhere.',shortcuts:[{key:'PNG / SVG',label:'Image export'},{key:'PDF',label:'Print-ready'},{key:'Markdown',label:'Text format'},{key:'Share Link',label:'Interactive preview'},{key:'Social Card',label:'OG image'}],glyphs:['🔗','🖼️','📤']},

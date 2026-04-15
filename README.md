@@ -36,32 +36,40 @@ That's it. No `npm install`, no build, no server required.
 
 ### Core
 
-- **Infinite canvas** — pan and zoom a 10,000 × 10,000 px world
+- **Infinite canvas** — pan and zoom a 10,000 x 10,000 px world
 - **Multi-tab maps** — open up to 10 independent maps in tabs, each with its own pan/zoom/style/background
 - **Auto-save** — every change is debounced and written to `localStorage`
+- **Persistent view state** — background, zoom, pan position, layout, and style all restore on reload
 - **Undo / Redo** — full history stack (50 levels)
 - **Version history** — named snapshots with side-by-side restore (`Ctrl+Shift+H`)
 - **Multiple root nodes** — place independent trees on the same canvas (`Ctrl+Shift+N`)
+- **Command palette** — quick access to any action (`Ctrl+K`)
 
 ### Nodes
 
-- Root → Branch → Child → Grandchild hierarchy
+- Root, Branch, Child, Grandchild hierarchy with gradient-colored branches
 - Drag to reposition freely or use auto-layout
-- Inline editing (double-click or `F2`)
+- **Drag-to-reparent** — hover over another node while dragging to move a branch to a new parent
+- Inline editing (`F2`), double-click to open the node's document
 - Per-node icons (emoji picker), color, tags, notes, custom shape (pill / rect / circle / hex)
 - Collapse/expand subtrees
+- **Slash commands** — type `/` while editing a node label for quick actions (`/image`, `/color`, `/tag`, `/bold`, etc.)
 - Markdown rendering in labels — `**bold**`, `_italic_`, `` `code` ``, `[link](url)`
-- File attachments — drag any file onto a node to attach it (📎 indicator)
-- Audio notes — record a voice memo per node (`R` key, 🎵 indicator)
+- File attachments — drag any file onto a node to attach it
+- Audio notes — record a voice memo per node (`R` key)
+- **Hover previews** — hover over a node to see notes, tags, and image thumbnails in a tooltip
 
 ### Node-to-Document
 
-Double-click any node that already has a document, or press `Ctrl+Enter` on a selected node to open a full rich-text document panel:
+Double-click any node or press `Ctrl+Enter` on a selected node to open a full rich-text document panel:
 
 | Feature | Description |
 |---------|-------------|
 | **Rich text editor** | Bold, italic, underline, strikethrough, inline code, lists, links |
 | **Slash commands** | Type `/` in the editor for heading, quote, code block, divider, checklist, and more |
+| **11 smart templates** | Meeting notes, decision log, product spec, project plan, research, person, goal, problem, idea, process, general note |
+| **AI template detection** | Automatically suggests the best template based on node label |
+| **AI pre-fill** | Stream AI-generated content into a template based on the node's context |
 | **AI Write** | Stream AI-generated content directly into the document |
 | **AI Summary** | Summarise the document in one click |
 | **AI Todo** | Extract action items from the document into a checklist |
@@ -73,8 +81,9 @@ Double-click any node that already has a document, or press `Ctrl+Enter` on a se
 | Layout | Description |
 |--------|-------------|
 | Radial | Default — branches radiate from center |
-| Left → Right | Horizontal tree |
-| Top → Down | Vertical tree |
+| Left to Right | Horizontal tree |
+| Top to Down | Vertical tree |
+| Org Chart | Hierarchical org-style layout |
 | Fishbone | Ishikawa / cause-and-effect diagram |
 | Free | No automatic positioning |
 
@@ -91,15 +100,34 @@ Double-click any node that already has a document, or press `Ctrl+Enter` on a se
 | **Retro** | Special Elite typewriter font, aged paper |
 | **Forest** | Deep green organic palette, rounded nodes |
 
-Switch style via the **Style ▾** button in the toolbar.
+Switch style via the **Style** button in the toolbar.
+
+### Color Palettes
+
+Six curated palettes for harmonious branch coloring:
+
+| Palette | Character |
+|---------|-----------|
+| Vibrant | Bold, high-contrast primary colors |
+| Pastel | Soft, muted tones |
+| Earth | Warm browns, greens, terracotta |
+| Ocean | Blues, teals, aqua |
+| Warm | Reds, oranges, yellows |
+| Cool | Blues, purples, greens |
+
+Colors are assigned sequentially (not randomly) to branches. Switch via the palette picker.
 
 ### Background Picker
 
-Five canvas backgrounds — **White / Cream / Gray / Dark / Black** — via the **BG ▾** button. The toolbar, left panel, minimap, and status bar all adapt automatically to light or dark backgrounds.
+Five canvas backgrounds — **White / Cream / Gray / Dark / Black** — via the **BG** button. The toolbar, panels, minimap, and status bar all adapt automatically to light or dark backgrounds. Your background choice persists across sessions.
+
+### Themes
+
+Four UI themes: **Dark** (default), **Light**, **Midnight**, and **Portent**. All themes adapt properly to both light and dark canvas backgrounds.
 
 ### AI Features
 
-Click the **✦ AI** button (bottom-right) to open the AI panel. Requires an Anthropic API key (stored locally, never sent anywhere except Anthropic's API):
+Click the **AI** button to open the AI panel. Requires an Anthropic API key (stored locally, never sent anywhere except Anthropic's API):
 
 | Feature | What it does |
 |---------|-------------|
@@ -119,7 +147,7 @@ A full drawing toolbar on the left side of the canvas:
 
 | Tool | Key | Description |
 |------|-----|-------------|
-| Select | `V` | Select and move nodes; click a drawn shape to select it, then `Del` to delete |
+| Select | `V` | Select and move drawn elements; `Del` to delete |
 | Pan | `H` | Pan the canvas |
 | Box select | `S` | Drag to select multiple nodes |
 | Rectangle | `R` | Draw a rectangle shape |
@@ -128,13 +156,36 @@ A full drawing toolbar on the left side of the canvas:
 | Arrow | `A` | Draw an arrow |
 | Line | `L` | Draw a line |
 | Pen | `P` | Freehand drawing |
-| Text | `T` | Place a floating text box |
+| Text | `T` | Place text with full formatting toolbar |
 | Image | `9` | Place an image from file |
-| Frame | `F` | Draw a labeled container |
 | Eraser | `E` | Remove drawn elements |
 | Note | `N` | Place a sticky note |
+| Boundary | `G` | Draw a named boundary region to group nodes |
 
-> **Tip:** Right-click any drawn shape (rectangle, diamond, ellipse, etc.) to instantly delete it.
+### Text Formatting
+
+Select any text element on the canvas to open the floating format toolbar:
+
+- **Bold / Italic** toggle
+- **Font size** — 7 sizes from 18px to 100px
+- **Color** — 7 color swatches (white, green, amber, blue, red, purple, dark)
+- **Edit** — re-edit text content
+- **Duplicate / Delete**
+
+Double-click a text element to re-edit its content directly.
+
+### Connector Labels
+
+Right-click a node to label the connection to its parent. Labels appear on the connection line — useful for relationships like "causes", "depends on", "leads to". Double-click a label to edit, right-click to delete.
+
+### Boundary Regions
+
+Press `G` or use the boundary tool to draw named regions around groups of related nodes. Boundaries have:
+
+- Customizable label and color
+- Low-opacity fill with dashed border
+- Drag to move, drag corners to resize
+- Right-click to rename, recolor, or delete
 
 ### Import
 
@@ -151,28 +202,43 @@ A full drawing toolbar on the left side of the canvas:
 
 | Format | Description |
 |--------|-------------|
-| PNG | High-resolution 2× image |
+| PNG | High-resolution 2x image |
 | SVG | Infinitely scalable vector |
-| PDF | A4 landscape via browser print |
 | Markdown | Nested `#` heading outline |
 | CSV | One row per node — label, parent, depth, branch, tags |
 | JSON | Full map data for re-import |
-| Text outline | Indented plain text |
+| Text outline | Indented plain text (copied to clipboard) |
+| Notion | Formatted for pasting into Notion |
+| Obsidian vault | `.zip` with interlinked `.md` files |
+| Share as HTML | Self-contained interactive HTML file |
+| Social card | 1200x630 OG image for social sharing |
 | Share link | Entire map encoded as a base64 URL hash |
+
+### Presentations
+
+- **Slides editor** — reorder branches as slides, add custom titles and notes per slide
+- **Present mode** — full-screen presentation with smooth animated transitions
+- **PDF / PNG export** — export all slides as PDF or individual PNGs
+- Navigate with arrow keys, `Esc` to exit
+
+### Gantt / Timeline View
+
+Open with `Alt+T` to see task nodes on a timeline. Set start/end dates on nodes via the context menu to plan projects visually.
 
 ### Other Tools
 
 - **Minimap** — live overview bottom-left, click to navigate, reflects zoom/pan in real time (toggle `M`)
-- **Presentation mode** — animate through branches cinematically (`▷` in toolbar)
 - **Voice input** — dictate nodes via Web Speech API, real-time node creation (`Ctrl+Shift+V`)
 - **Canvas sticky notes** — floating notes anywhere on canvas, 6 colors, resizable, connectable to nodes
 - **Focus mode** — dims everything except the selected branch (`Space`)
-- **Zen mode** — hides all UI chrome for distraction-free mapping (`Alt+Z`); a dismiss notice appears top-right
+- **Zen mode** — hides all UI chrome for distraction-free mapping (`Alt+Z`)
 - **Smart search** — highlights matching nodes, cycles through results (`Ctrl+F` or `/`)
 - **Multi-select** — `Shift+click` or box select, then drag all selected nodes together
 - **Align tools** — align/distribute multiple selected nodes (top, bottom, left, right, center, distribute)
 - **Templates gallery** — 20 pre-built maps: SWOT, Business Model Canvas, OKRs, Project Plan, and more
-- **Toggle grid** — dots or lines grid overlay via the `☰` menu; active state shown with a checkmark
+- **Feature guide** — interactive walkthrough of all features (`?` button in toolbar)
+- **Map health** — AI-powered analysis of your map's completeness and structure
+- **Toggle grid** — dots or lines grid overlay via the menu
 
 ---
 
@@ -185,6 +251,7 @@ A full drawing toolbar on the left side of the canvas:
 | `Scroll` | Zoom in/out |
 | `F` | Fit to screen |
 | `Ctrl+F` or `/` | Search nodes |
+| `Ctrl+K` | Command palette |
 | `M` | Toggle minimap |
 | Arrow keys | Navigate between nodes |
 
@@ -194,7 +261,8 @@ A full drawing toolbar on the left side of the canvas:
 |----------|--------|
 | `Tab` | Add child node |
 | `Enter` | Add sibling node |
-| `F2` / double-click | Edit label |
+| `F2` | Edit label |
+| `Double-click` | Open node document |
 | `Del` / `Backspace` | Delete selected node or drawn shape |
 | `Ctrl+Z` | Undo |
 | `Ctrl+Y` | Redo |
@@ -203,7 +271,6 @@ A full drawing toolbar on the left side of the canvas:
 | `Ctrl+D` | Duplicate node |
 | `Ctrl+Shift+N` | New root node |
 | `R` | Record audio note on selected node |
-| `N` | Place sticky note (then click canvas) |
 
 ### Documents
 
@@ -219,6 +286,7 @@ A full drawing toolbar on the left side of the canvas:
 | `Ctrl+S` | Save named snapshot |
 | `Ctrl+Shift+H` | Open version history |
 | `Ctrl+Shift+O` | Import from file or URL |
+| `Ctrl+Shift+S` | Save snapshot |
 
 ### Tabs
 
@@ -228,7 +296,7 @@ A full drawing toolbar on the left side of the canvas:
 | `Ctrl+W` | Close current tab |
 | `Ctrl+Tab` | Next tab |
 | `Ctrl+Shift+Tab` | Previous tab |
-| `Ctrl+1–9` | Switch to tab by number |
+| `Ctrl+1-9` | Switch to tab by number |
 
 ### View
 
@@ -236,6 +304,7 @@ A full drawing toolbar on the left side of the canvas:
 |----------|--------|
 | `Space` | Focus / unfocus branch |
 | `Alt+Z` | Zen mode |
+| `Alt+T` | Gantt / timeline view |
 | `Ctrl+Shift+V` | Voice input |
 | `?` | Keyboard shortcuts panel |
 
@@ -252,10 +321,10 @@ A full drawing toolbar on the left side of the canvas:
 | `A` | Arrow |
 | `L` | Line |
 | `P` | Pen |
-| `T` | Text box |
+| `T` | Text (with formatting toolbar) |
 | `E` | Eraser |
-| `F` | Frame |
 | `N` | Sticky note |
+| `G` | Boundary region |
 
 ---
 
@@ -263,7 +332,7 @@ A full drawing toolbar on the left side of the canvas:
 
 All data is stored **locally in your browser** via `localStorage`. Nothing is ever sent to any server unless you use the AI feature — which calls the Anthropic API directly from your browser using your own key.
 
-**To back up your maps:** Export → JSON from the toolbar. Drag the `.json` file back onto the canvas to restore.
+**To back up your maps:** Export as JSON from the toolbar. Drag the `.json` file back onto the canvas to restore.
 
 > **Note:** Clearing your browser cache or history will delete your maps. Export regularly to keep permanent backups.
 
