@@ -98,6 +98,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .tb-btn.danger-active{background:rgba(248,113,113,.15);color:#f87171;font-weight:700}
 .tb-btn-health{background:#8fd44a!important;color:#111!important;font-weight:700!important;padding:0 14px!important;border:none!important;border-radius:7px!important;box-shadow:0 0 12px rgba(143,212,74,.3)!important}
 .tb-btn-health:hover{background:#9de058!important;box-shadow:0 0 16px rgba(143,212,74,.4)!important}
+/* ━━━ EMPTY CANVAS HINT ━━━ */
+#empty-hint{position:fixed;top:68px;left:50%;transform:translateX(-50%);display:none;flex-direction:column;align-items:center;gap:0;z-index:200;pointer-events:none;animation:ehFadeIn .5s ease .2s both}
+#empty-hint.visible{display:flex}
+#empty-hint .eh-arrow{width:40px;height:48px;animation:ehBounce 1.6s ease-in-out infinite}
+#empty-hint .eh-arrow svg{filter:drop-shadow(0 2px 6px rgba(143,212,74,.35))}
+#empty-hint .eh-label{background:rgba(143,212,74,.12);color:#8fd44a;font-size:13px;font-weight:600;padding:6px 16px;border-radius:20px;border:1px solid rgba(143,212,74,.25);backdrop-filter:blur(12px);letter-spacing:.3px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.bg-light #empty-hint .eh-label{background:rgba(90,154,0,.1);color:#4a8a00;border-color:rgba(90,154,0,.2);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+@keyframes ehFadeIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes ehBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 .tb-btn-slides{background:rgba(255,255,255,.06)!important;color:rgba(255,255,255,.7)!important;font-weight:600!important;border-radius:7px!important}
 /* ━━━ BG PICKER ━━━ */
 #bg-menu{position:fixed;display:none;background:#1c1917;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:6px;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:9999}
@@ -1451,6 +1460,12 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
   <div class="dd-item" onclick="toggleShortcuts();hideDD()">&#9000; Shortcuts</div>
 </div>
 
+<!-- EMPTY CANVAS HINT -->
+<div id="empty-hint">
+  <div class="eh-arrow"><svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M12 16 L20 6 L28 16" stroke="#8fd44a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 8 L20 42" stroke="#8fd44a" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+  <div class="eh-label">Click <b>+</b> to add your first node</div>
+</div>
+
 <!-- LEFT DRAWING TOOLBAR -->
 <div id="draw-toolbar">
   <button class="dt-btn active" data-tool="hand" onclick="setTool('hand')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v0"/><path d="M14 10V4a2 2 0 0 0-4 0v2"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><span class="lbtn-tooltip">Pan <kbd>H</kbd></span></button>
@@ -2490,6 +2505,8 @@ if(depth===1){
 world.appendChild(el)});
 
 updStatus();updUndo();updateMinimap();updateStylePanel();updateAlignBar();updateMultiBar();updDeleteBtn();if(aiOpen)renderAI();
+const _emptyHint=document.getElementById('empty-hint');
+if(nodes.length===0){_emptyHint.classList.add('visible');const _abtn=document.getElementById('btn-add-node');if(_abtn){const _r=_abtn.getBoundingClientRect();_emptyHint.style.left=(_r.left+_r.width/2)+'px';_emptyHint.style.transform='translateX(-50%)'}}else{_emptyHint.classList.remove('visible')}
 world.insertBefore(document.getElementById('main-conn-layer'),world.firstChild);
 // ── Apply entrance animations (must run after DOM is settled) ──
 requestAnimationFrame(()=>{
@@ -3149,7 +3166,7 @@ const pd=60,bw=mx2-mx1+pd*2,bh=my2-my1+pd*2,vw=window.innerWidth,vh=window.inner
 // ━━━ NEW MAP ━━━
 function showNewMapModal(){document.getElementById('newmap-modal').classList.add('visible')}
 function hideModal(id){document.getElementById(id).classList.remove('visible')}
-function newBlankMap(){hideModal('newmap-modal');snap();nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];nextId=2;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());selectedId=1;render();fitToScreen();schSave()}
+function newBlankMap(){hideModal('newmap-modal');snap();nodes=[];nextId=1;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());selectedId=null;render();fitToScreen();schSave()}
 function newTemplateMap(){hideModal('newmap-modal');nodes=buildData();collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());undoStack=[];redoStack=[];selectedId=null;layoutAll();render();fitToScreen();schSave();toast('Loaded')}
 
 // ━━━ IMPORT ━━━
