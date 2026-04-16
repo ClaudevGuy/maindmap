@@ -2875,7 +2875,6 @@ if(selectedDrawIdx!==null&&selectedDrawIdx<drawElements.length){snap();drawEleme
 if(multiSel.size>0){delMulti();return}
 if(selectedId===null){toast('Select a node first');return}
 const n=gn(selectedId);if(!n)return;
-if(n.parentId===null&&nodes.length<=1){toast('Cannot delete the last node');return}
 const childCount=gall(n.id).length;
 function doDelete(){snap();const rm=new Set([n.id,...gall(n.id)]);nodes=nodes.filter(n2=>!rm.has(n2.id));rm.forEach(id=>{collapsedSet.delete(id);delete noteMap[id];delete tagMap[id];delete iconMap[id];delete styleMap[id]});selectedId=null;layoutAll();render();schSave();toast('Deleted')}
 function animThenDelete(cb){const nodeEl=world.querySelector(`.node[data-id="${n.id}"]`);if(nodeEl){nodeEl.classList.add('node-exit');setTimeout(cb,185)}else{cb()}}
@@ -2953,7 +2952,7 @@ btn.classList.toggle('disabled',!hasSelection)}
 
 // ━━━ CONTEXT MENU ━━━
 function showCtx(x,y,node){const m=document.getElementById('ctx-menu');m.classList.add('visible');m.style.left=x+'px';m.style.top=y+'px';m.style.maxHeight='';requestAnimationFrame(()=>{const r=m.getBoundingClientRect();let nx=x,ny=y;if(r.right>window.innerWidth)nx=x-r.width;if(r.bottom>window.innerHeight)ny=y-r.height;if(ny<4){ny=4;m.style.maxHeight=(window.innerHeight-8)+'px';}if(nx<4)nx=4;m.style.left=nx+'px';m.style.top=ny+'px'});
-m.querySelector('[data-a="paste"]').classList.toggle('disabled',!clipboard);m.querySelector('[data-a="delete"]').classList.toggle('disabled',node.parentId===null&&nodes.length<=1);m.querySelector('[data-a="add-sibling"]').classList.toggle('disabled',node.parentId===null);m.querySelector('[data-a="conn-label"]').classList.toggle('disabled',node.parentId===null);
+m.querySelector('[data-a="paste"]').classList.toggle('disabled',!clipboard);m.querySelector('[data-a="delete"]').classList.toggle('disabled',false);m.querySelector('[data-a="add-sibling"]').classList.toggle('disabled',node.parentId===null);m.querySelector('[data-a="conn-label"]').classList.toggle('disabled',node.parentId===null);
 const docLbl=document.getElementById('ctx-doc-label');if(docLbl)docLbl.textContent=node.document&&node.document.content?'Open document ●':'Open document';}
 function hideCtx(){document.getElementById('ctx-menu').classList.remove('visible')}
 function hideDD(){document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('visible'))}
