@@ -26,7 +26,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 #grid-overlay{position:absolute;inset:0;pointer-events:none;display:none}
 #grid-overlay.dots{display:block;background-image:radial-gradient(circle,var(--grid-color) 1.2px,transparent 1.2px);background-size:28px 28px}
 #grid-overlay.lines{display:block;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:28px 28px}
-#draw-layer{position:absolute;top:0;left:0;width:10000px;height:10000px}
+#draw-layer{position:absolute;top:0;left:0;width:10000px;height:10000px;pointer-events:none}
+#draw-layer [data-idx]{pointer-events:auto}
 #connections{position:absolute;top:0;left:0;width:10000px;height:10000px;pointer-events:none}
 .sel-box{position:absolute;border:1px dashed var(--accent);background:rgba(143,212,74,.05);pointer-events:none;z-index:40}
 
@@ -1403,6 +1404,7 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
     <button class="tb-btn disabled" onclick="doUndo()" id="btn-undo" title="Undo (Ctrl+Z)"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 C4 4 6 2 9 2 C12 2 14 4.5 14 7 C14 9.5 12 12 9 12 L5 12"/><polyline points="4,9 4,6 7,6"/></svg></button>
     <button class="tb-btn disabled" onclick="doRedo()" id="btn-redo" title="Redo (Ctrl+Y)"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6 C12 4 10 2 7 2 C4 2 2 4.5 2 7 C2 9.5 4 12 7 12 L11 12"/><polyline points="12,9 12,6 9,6"/></svg></button>
     <button class="tb-btn disabled" onclick="delSelSmart()" id="btn-delete" title="Delete selected (Del)"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 14,4"/><path d="M6 4 L6 2 L10 2 L10 4"/><path d="M4 4 L4.5 13 L11.5 13 L12 4"/></svg></button>
+    <button class="tb-btn" onclick="addNodeToMap()" id="btn-add-node" title="Add node"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
   </div>
   <!-- Search -->
   <div class="tb-sep"></div>
@@ -2837,7 +2839,7 @@ const v=input.value;const slashPos=v.lastIndexOf('/');
 if(slashPos>=0&&(slashPos===0||v[slashPos-1]===' ')){const partial=v.slice(slashPos).split(' ')[0];_showSlashMenu(input,partial)}
 else if(_slashMenu){_slashMenu.remove();_slashMenu=null}
 if(v.trim().length<3||!node.parentId)return;if(!v.includes('/'))_ghostTimer=setTimeout(()=>fetchGhostSuggestions(node,v.trim(),input),600)});
-function fin(s){clearTimeout(_ghostTimer);dismissGhosts();if(_slashMenu){_slashMenu.remove();_slashMenu=null}isEditing=false;if(s&&input.value.trim()){snap();node.label=input.value.trim();schSave()}render()}
+function fin(s){clearTimeout(_ghostTimer);dismissGhosts();if(_slashMenu){_slashMenu.remove();_slashMenu=null}const detached=!document.body.contains(input);if(!detached)isEditing=false;if(s&&input.value.trim()&&input.value.trim()!==node.label){node.label=input.value.trim();schSave()}if(!detached)render()}
 input.addEventListener('blur',()=>setTimeout(()=>fin(true),150));input.addEventListener('keydown',e=>{
 if(_slashMenu){const items=_slashMenu.querySelectorAll('.dd-item');const filtered=_slashCmds.filter(c=>c.cmd.includes((input.value.slice(input.value.lastIndexOf('/')).split(' ')[0]||'/').toLowerCase()));
 if(e.key==='ArrowDown'){e.preventDefault();_slashIdx=Math.min(_slashIdx+1,items.length-1);items.forEach((x,j)=>x.classList.toggle('active',j===_slashIdx));return}
@@ -2848,6 +2850,7 @@ if(e.key==='Enter'){e.preventDefault();input.blur()}if(e.key==='Escape'){e.preve
 
 function addChild(){if(selectedId===null)return;const p=gn(selectedId);if(!p)return;snap();if(collapsedSet.has(p.id))collapsedSet.delete(p.id);const nn={id:nextId++,label:'New node',parentId:p.id,color:p.color,x:p.x+140,y:p.y};nodes.push(nn);selectedId=nn.id;_newNodeIds.add(nn.id);_newConnIds.add(nn.id);layoutAll();render();schSave();toast('Added');setTimeout(()=>startEdit(nn.id),30)}
 function addSibling(){if(selectedId===null)return;const n=gn(selectedId);if(!n||n.parentId===null)return;snap();const nn={id:nextId++,label:'New node',parentId:n.parentId,color:n.color,x:n.x,y:n.y+50};nodes.splice(nodes.indexOf(n)+1,0,nn);selectedId=nn.id;_newNodeIds.add(nn.id);_newConnIds.add(nn.id);layoutAll();render();schSave();setTimeout(()=>startEdit(nn.id),30)}
+function addNodeToMap(){if(selectedId!==null){addChild();return}snap();const pal=getPalette();const col=pal[0]||'#6aaa00';const vr=viewport.getBoundingClientRect();const cx=((-panX+vr.width/2)/zoom);const cy=((-panY+vr.height/2)/zoom);const nn={id:nextId++,label:'New node',parentId:null,color:col,x:Math.round(cx),y:Math.round(cy)};nodes.push(nn);selectedId=nn.id;_newNodeIds.add(nn.id);layoutAll();render();schSave();toast('Added root node');setTimeout(()=>startEdit(nn.id),30)}
 function delSel(){
 // Handle draw element delete
 if(selectedDrawIdx!==null&&selectedDrawIdx<drawElements.length){snap();drawElements.splice(selectedDrawIdx,1);selectedDrawIdx=null;hideTextFmtBar();render();schSave();toast('Removed');return}
@@ -3147,7 +3150,7 @@ const pd=60,bw=mx2-mx1+pd*2,bh=my2-my1+pd*2,vw=window.innerWidth,vh=window.inner
 // ━━━ NEW MAP ━━━
 function showNewMapModal(){document.getElementById('newmap-modal').classList.add('visible')}
 function hideModal(id){document.getElementById(id).classList.remove('visible')}
-function newBlankMap(){hideModal('newmap-modal');snap();nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];nextId=2;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());selectedId=1;render();fitToScreen();schSave();setTimeout(()=>startEdit(1),100)}
+function newBlankMap(){hideModal('newmap-modal');snap();nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];nextId=2;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());selectedId=1;render();fitToScreen();schSave()}
 function newTemplateMap(){hideModal('newmap-modal');nodes=buildData();collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};drawElements=[];canvasNotes=[];noteIdSeq=1;world.querySelectorAll('.canvas-note').forEach(e=>e.remove());undoStack=[];redoStack=[];selectedId=null;layoutAll();render();fitToScreen();schSave();toast('Loaded')}
 
 // ━━━ IMPORT ━━━
@@ -7386,13 +7389,12 @@ function getRichMapContext(){
 })();
 
 document.addEventListener('mousedown', function(e) {
+  if(e.target.closest('.nc-btn'))return;
   var nodeEl = e.target.closest('.node');
   if (nodeEl) {
     selectedId = parseInt(nodeEl.dataset.id);
-    render();
-  } else if (e.target.closest('#viewport') && !e.target.closest('#toolbar') && !e.target.closest('#draw-toolbar') && !e.target.closest('.nc-btn') && !e.target.closest('#ai-panel') && !e.target.closest('#ctx-menu') && !e.target.closest('.modal-overlay') && !e.target.closest('.dropdown') && !e.target.closest('#style-panel') && !e.target.closest('.canvas-note')) {
+  } else if (e.target.closest('#viewport') && !e.target.closest('#toolbar') && !e.target.closest('#draw-toolbar') && !e.target.closest('#ai-panel') && !e.target.closest('#ctx-menu') && !e.target.closest('.modal-overlay') && !e.target.closest('.dropdown') && !e.target.closest('#style-panel') && !e.target.closest('.canvas-note')) {
     selectedId = null;
-    render();
   }
 }, true);
 
