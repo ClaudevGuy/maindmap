@@ -1668,7 +1668,7 @@ body.outline-open #minimap{left:calc(272px + 20px);transition:left .3s}
   <div class="modal-card">
     <div class="modal-title">Create new map</div><div class="modal-sub">Choose how to start</div>
     <div class="nm-options">
-      <div class="nm-opt" onclick="newBlankMap()"><div class="nm-opt-icon">+</div><div class="nm-opt-title">Blank map</div><div class="nm-opt-desc">Single root node</div></div>
+      <div class="nm-opt" onclick="newBlankMap()"><div class="nm-opt-icon">+</div><div class="nm-opt-title">Blank map</div><div class="nm-opt-desc">Empty canvas</div></div>
       <div class="nm-opt" onclick="hideModal('newmap-modal');showTemplatesGallery()"><div class="nm-opt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><div class="nm-opt-title">From template</div><div class="nm-opt-desc">Pre-built layouts</div></div>
       <div class="nm-opt" onclick="hideModal('newmap-modal');showImportModal();setTimeout(()=>setImportTab(2),10)"><div class="nm-opt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div><div class="nm-opt-title">AI generate</div><div class="nm-opt-desc">Describe a topic</div></div>
     </div>
@@ -5879,12 +5879,10 @@ function _welcomeSyncTab(){
 }
 function welcomeBlank(){
   _welcomeDismiss();
-  nodes=[{id:1,label:'My Map',parentId:null,color:'#6aaa00',x:CX,y:CY}];
-  nextId=2;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};
+  nodes=[];nextId=1;collapsedSet.clear();noteMap={};tagMap={};iconMap={};styleMap={};
   drawElements=[];canvasNotes=[];noteIdSeq=1;selectedId=null;undoStack=[];redoStack=[];
   world.querySelectorAll('.canvas-note').forEach(e=>e.remove());
   render();fitToScreen();schSave();_welcomeSyncTab();
-  setTimeout(()=>startEdit(1),100);
 }
 function welcomeExample(){
   _welcomeDismiss();
